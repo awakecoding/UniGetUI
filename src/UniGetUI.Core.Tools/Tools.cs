@@ -4,8 +4,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
+#if WINDOWS
 using Windows.Networking.Connectivity;
 using ABI.Windows.ApplicationModel.UserDataTasks;
+#endif
 using UniGetUI.Core.Classes;
 using UniGetUI.Core.Data;
 using UniGetUI.Core.Language;
@@ -637,6 +639,7 @@ namespace UniGetUI.Core.Tools
             Logger.Debug("Checking for internet connectivity...");
             bool internetLost = false;
 
+#if WINDOWS
             var profile = NetworkInformation.GetInternetConnectionProfile();
             while (profile is null || profile.GetNetworkConnectivityLevel() is not NetworkConnectivityLevel.InternetAccess)
             {
@@ -648,6 +651,18 @@ namespace UniGetUI.Core.Tools
                     internetLost = true;
                 }
             }
+#else
+            // Cross-platform internet check using DNS lookup
+            while (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                Thread.Sleep(1000);
+                if (!internetLost)
+                {
+                    Logger.Warn("User is not connected to the internet, waiting for an internet connection to be available...");
+                    internetLost = true;
+                }
+            }
+#endif
             Logger.Debug("Internet connectivity was established.");
         }
 

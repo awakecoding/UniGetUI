@@ -1,8 +1,10 @@
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
-using Windows.Security.Credentials;
 using UniGetUI.Core.Logging;
+#if WINDOWS
+using Windows.Security.Credentials;
+#endif
 
 namespace UniGetUI.Core.SettingsEngine;
 
@@ -42,6 +44,7 @@ public partial class Settings
 
     public static NetworkCredential? GetProxyCredentials()
     {
+#if WINDOWS
         try
         {
             var vault = new PasswordVault();
@@ -59,10 +62,15 @@ public partial class Settings
             Logger.Error(ex);
             return null;
         }
+#else
+        Logger.Warn("Proxy credentials storage not yet implemented for non-Windows platforms");
+        return null;
+#endif
     }
 
     public static void SetProxyCredentials(string username, string password)
     {
+#if WINDOWS
         try
         {
             var vault = new PasswordVault();
@@ -74,6 +82,10 @@ public partial class Settings
             Logger.Error("Cannot save Proxy credentials");
             Logger.Error(ex);
         }
+#else
+        Logger.Warn("Proxy credentials storage not yet implemented for non-Windows platforms");
+        SetValue(K.ProxyUsername, username);
+#endif
     }
 
     public static JsonSerializerOptions SerializationOptions = new()
