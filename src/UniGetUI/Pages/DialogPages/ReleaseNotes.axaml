@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Dialogs.ReleaseNotes"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    mc:Ignorable="d">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
+            CornerRadius="6">
+            <!-- Note: Avalonia doesn't have WebView2 - need alternative -->
+            <TextBlock Text="WebView not yet implemented for Avalonia" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" />
+        </Border>
+        <ProgressBar
+            Name="ProgressBar"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            CornerRadius="4,4,0,0"
+            IsIndeterminate="True" />
+        <widgets:DialogCloseButton Margin="0,-63,-24,0" Click="CloseButton_Click" />
+    </Grid>
+</UserControl>

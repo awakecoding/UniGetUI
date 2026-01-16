@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.AboutUniGetUI"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    MaxWidth="650"
+    MaxHeight="600"
+    mc:Ignorable="d">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Note: SelectorBar doesn't exist in Avalonia - using TabControl instead -->
+        <TabControl
+            x:Name="SelectorBar"
+            Grid.Row="0"
+            HorizontalAlignment="Center"
+            SelectionChanged="SelectorBar_SelectionChanged">
+            <TabItem x:Name="SelectorBarItemPage1" IsSelected="True">
+                <TabItem.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="&#xE946;" />
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="SelectorBarItemPage2">
+                <TabItem.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="&#xE8A5;" />
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="SelectorBarItemPage3">
+                <TabItem.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="&#xEBDA;" />
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="SelectorBarItemPage4">
+                <TabItem.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="&#xF2B7;" />
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="SelectorBarItemPage5">
+                <TabItem.Header>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="&#xED56;" />
+                </TabItem.Header>
+            </TabItem>
+        </TabControl>
+
+        <ContentControl
+            x:Name="ContentFrame"
+            Grid.Row="1"
+            Margin="10,0,10,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" />
+
+        <!--  Close Button  -->
+        <widgets:DialogCloseButton Margin="0,-24,-24,0" Click="CloseButton_Click" />
+    </Grid>
+
+</UserControl>
