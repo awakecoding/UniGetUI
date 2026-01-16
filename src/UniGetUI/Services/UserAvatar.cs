@@ -31,8 +31,8 @@ namespace UniGetUI.Services
     {
         public UserAvatar()
         {
-            VerticalContentAlignment = VerticalAlignment.Center;
-            HorizontalContentAlignment = HorizontalAlignment.Center;
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center;
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
             _ = RefreshStatus();
             GitHubAuthService.AuthStatusChanged += GitHubAuthService_AuthStatusChanged;
         }
@@ -108,27 +108,37 @@ namespace UniGetUI.Services
 
         private PointButton GenerateLoginControl()
         {
-            var personPicture = new PersonPicture
+            // PersonPicture doesn't exist in Avalonia, use Border with Ellipse instead
+            var personPicture = new Border
             {
                 Width = 36,
                 Height = 36,
+                CornerRadius = new CornerRadius(18),
+                Background = Brushes.Gray,
+                Child = new TextBlock
+                {
+                    Text = "?",
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                    Foreground = Brushes.White
+                }
             };
 
             var translatedTextBlock = new TextBlock
             {
                 Margin = new Thickness(4),
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Text = CoreTools.Translate("Log in with GitHub to enable cloud package backup.")
             };
 
             var hyperlinkButton = new HyperlinkButton
             {
                 Padding = new Thickness(0),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("More details"),
-                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };
@@ -194,17 +204,23 @@ namespace UniGetUI.Services
                 return GenerateLoginControl();
             }
 
-            var personPicture = new PersonPicture
+            var personPicture = new Border
             {
                 Width = 36,
                 Height = 36,
-                ProfilePicture = new BitmapImage(new Uri(user.AvatarUrl))
+                CornerRadius = new CornerRadius(18),
+                ClipToBounds = true,
+                Child = new Image
+                {
+                    Source = new BitmapImage(new Uri(user.AvatarUrl)),
+                    Stretch = Stretch.UniformToFill
+                }
             };
 
             var text1 = new TextBlock
             {
                 Margin = new Thickness(4),
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Text = CoreTools.Translate("You are logged in as {0} (@{1})", user.Name, user.Login)
             };
 
