@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Page
+<UserControl
     x:Class="UniGetUI.Pages.SettingsPages.GeneralPages.Updates"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:UniGetUI.Pages.SettingsPages.GeneralPages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
-    Background="Transparent"
     mc:Ignorable="d">
 
     <ScrollViewer
@@ -48,7 +47,7 @@
             <widgets:CheckboxCard
                 x:Name="AutomaticallyUpdatePackages"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{x:Bind DisableAutoCheckForUpdates._checkbox.IsOn, Mode=OneWay}"
+                IsEnabled="{Binding #DisableAutoCheckForUpdates._checkbox.IsOn}"
                 SettingName="AutomaticallyUpdatePackages"
                 Text="Install available updates automatically" />
 
@@ -56,7 +55,7 @@
                 BorderThickness="1,0"
                 CornerRadius="0"
                 ForceInversion="True"
-                IsEnabled="{x:Bind AutomaticallyUpdatePackages._checkbox.IsOn, Mode=OneWay}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
                 SettingName="DisableAUPOnMeteredConnections"
                 Text="Do not automatically install updates when the network connection is metered" />
 
@@ -64,14 +63,14 @@
                 BorderThickness="1,1,1,0"
                 CornerRadius="0"
                 ForceInversion="True"
-                IsEnabled="{x:Bind AutomaticallyUpdatePackages._checkbox.IsOn, Mode=OneWay}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
                 SettingName="DisableAUPOnBattery"
                 Text="Do not automatically install updates when the device runs on battery" />
 
             <widgets:CheckboxCard
                 CornerRadius="0,0,8,8"
                 ForceInversion="True"
-                IsEnabled="{x:Bind AutomaticallyUpdatePackages._checkbox.IsOn, Mode=OneWay}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
                 SettingName="DisableAUPOnBatterySaver"
                 Text="Do not automatically install updates when the battery saver is on" />
 
@@ -114,4 +113,4 @@
 
         </StackPanel>
     </ScrollViewer>
-</Page>
+</UserControl>
