@@ -1,12 +1,8 @@
 <Project>
     <PropertyGroup>
         <ImplicitUsings>enable</ImplicitUsings>
-        <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
-        <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-        <!-- IF BUILD FAILS DUE TO MISSING Microsoft.Management.Deployment NAMESPACE,
-            TOGGLE THE LAST NUMBER OF THE LINE BELOW 1 UNIT UP OR DOWN, AND REBUILD-->
-        <WindowsSdkPackageVersion>10.0.26100.56</WindowsSdkPackageVersion>
-
+        <TargetFramework>net8.0</TargetFramework>
+        
         <SdkVersion>8.0.407</SdkVersion>
         <Authors>Martí Climent and the contributors</Authors>
         <PublisherName>Martí Climent</PublisherName>
@@ -14,9 +10,9 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-        <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
-        <RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>
+        <RuntimeIdentifiers>win-x64;win-arm64;linux-x64;osx-x64;osx-arm64</RuntimeIdentifiers>
+        <RuntimeIdentifier Condition="'$(Platform)' == 'x64' And $([MSBuild]::IsOSPlatform('Windows'))">win-x64</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="'$(Platform)' == 'ARM64' And $([MSBuild]::IsOSPlatform('Windows'))">win-arm64</RuntimeIdentifier>
         <Platforms>x64</Platforms>
         <PublishSelfContained>true</PublishSelfContained>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="UniGetUI.Interface.MainWindow"
+        Title="UniGetUI"
+        Width="1200" Height="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/Images/icon.ico"
+        TransparencyLevelHint="Blur"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        ExtendClientAreaTitleBarHeightHint="40">
+    
+    <Window.Styles>
+        <Style Selector="Window">
+            <Setter Property="Background" Value="{DynamicResource SystemChromeLowColor}"/>
+        </Style>
+    </Window.Styles>
+    
+    <Grid Name="MainContentGrid" RowDefinitions="Auto,Auto,*">
+        
+        <!-- Title Bar Area (Row 0) -->
+        <Grid Grid.Row="0" Height="40" Background="Transparent" Name="TitleBarArea">
+            <!-- Custom title bar content will go here -->
+            <TextBlock Text="UniGetUI" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
+                       FontSize="12"/>
+        </Grid>
+        
+        <!-- Info Banners (Row 1) -->
+        <StackPanel Grid.Row="1" Spacing="4">
+            <!-- Note: Avalonia doesn't have InfoBar by default, need to create custom notification controls -->
+            <!-- Placeholder for notification banners -->
+        </StackPanel>
+        
+        <!-- Main Content Area (Row 2) -->
+        <Grid Grid.Row="2" Name="MainContent">
+            <TextBlock Text="Main Content Area - Migration in Progress"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"/>
+        </Grid>
+        
+    </Grid>
+</Window>

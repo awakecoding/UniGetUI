@@ -1,6 +1,9 @@
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
-using Microsoft.Windows.AppLifecycle;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using UniGetUI.Core.Data;
 using UniGetUI.Core.Logging;
 
@@ -11,7 +14,6 @@ namespace UniGetUI
         [STAThread]
         private static void Main(string[] args)
         {
-            // Having an async main method breaks WebView2
             try
             {
                 if (args.Contains(CLIHandler.HELP))
@@ -77,7 +79,7 @@ namespace UniGetUI
                 else
                 {
                     CoreData.WasDaemon = CoreData.IsDaemon = args.Contains(CLIHandler.DAEMON);
-                    _ = AsyncMain();
+                    StartAvaloniaApp(args);
                 }
             }
             catch (Exception e)
@@ -87,9 +89,9 @@ namespace UniGetUI
         }
 
         /// <summary>
-        /// UniGetUI app main entry point
+        /// UniGetUI Avalonia app entry point
         /// </summary>
-        private static async Task AsyncMain()
+        private static void StartAvaloniaApp(string[] args)
         {
             try
             {
@@ -108,20 +110,9 @@ namespace UniGetUI
                 Logger.ImportantInfo($"Data directory {CoreData.UniGetUIDataDirectory}");
                 Logger.ImportantInfo($"Encoding Code Page set to {CoreData.CODE_PAGE}");
 
-                // WinRT single-instance fancy stuff
-                WinRT.ComWrappersSupport.InitializeComWrappers();
-                bool isRedirect = await DecideRedirection();
-
-                // If this is the main instance, start the app
-                if (!isRedirect)
-                {
-                    Application.Start((_) =>
-                    {
-                        DispatcherQueueSynchronizationContext context = new(DispatcherQueue.GetForCurrentThread());
-                        SynchronizationContext.SetSynchronizationContext(context);
-                        var app = new MainApp();
-                    });
-                }
+                // Build and run Avalonia app
+                BuildAvaloniaApp()
+                    .StartWithClassicDesktopLifetime(args);
             }
             catch (Exception e)
             {
@@ -130,40 +121,12 @@ namespace UniGetUI
         }
 
         /// <summary>
-        /// Default WinUI Redirector
+        /// Configure and build the Avalonia application
         /// </summary>
-        private static async Task<bool> DecideRedirection()
-        {
-            try
-            {
-                // IDK how does this work, I copied it from the MS Docs
-                // example on single-instance apps using unpackaged AppSdk + WinUI3
-                bool isRedirect = false;
-
-                var keyInstance = AppInstance.FindOrRegisterForKey(CoreData.MainWindowIdentifier);
-                if (keyInstance.IsCurrent)
-                {
-                    keyInstance.Activated += async (_, e) =>
-                    {
-                        if (Application.Current is MainApp baseInstance)
-                        {
-                            await baseInstance.ShowMainWindowFromRedirectAsync(e);
-                        }
-                    };
-                }
-                else
-                {
-                    isRedirect = true;
-                    AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
-                    await keyInstance.RedirectActivationToAsync(args);
-                }
-                return isRedirect;
-            }
-            catch (Exception e)
-            {
-                Logger.Warn(e);
-                return false;
-            }
-        }
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<MainApp>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace();
     }
 }
