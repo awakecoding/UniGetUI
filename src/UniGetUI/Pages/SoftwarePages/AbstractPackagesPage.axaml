@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.AbstractPackagesPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pkgClasses="using:UniGetUI.PackageEngine.PackageClasses"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    Name="ABSTRACT_PAGE"
+    SizeChanged="ABSTRACT_PAGE_SizeChanged"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="PackageTemplate_List">
+            <widgets:PackageItemContainer
+                CornerRadius="4"
+                DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
+                Package="{Binding Package}"
+                PreviewKeyDown="{Binding PackageItemContainer_PreviewKeyDown}"
+                RightTapped="{Binding PackageItemContainer_RightTapped}"
+                Wrapper="{Binding Self}">
+
+                <Grid
+                    Padding="12,3,8,3"
+                    ColumnSpacing="4"
+                    Opacity="{Binding ListedOpacity}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="*" MinWidth="125" />
+                        <ColumnDefinition Width="*" MinWidth="125" />
+                        <ColumnDefinition Width="*" MaxWidth="150" />
+                        <ColumnDefinition Width="*" MaxWidth="{Binding NewVersionLabelWidth}" />
+                        <ColumnDefinition Width="*" MaxWidth="175" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Width="24"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="Package"
+                        FontSize="24"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding ShowDefaultPackageIcon}" />
+
+                    <Image
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Width="24"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="{Binding MainIconSource}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding ShowCustomPackageIcon}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Width="20"
+                        Height="20"
+                        Margin="8,0,-4,-2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
+                        FontSize="20"
+                        FontWeight="ExtraLight"
+                        Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Width="20"
+                        Height="20"
+                        Margin="8,0,-4,-2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding MainIconId}"
+                        FontSize="20"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="28,-2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding Package.Name}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="Id"
+                        FontSize="24"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding Package.Id}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="28,-2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding Package.Id}"
+                        ToolTip.Tip="{Binding Package.Id}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="version"
+                        FontSize="24"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding Package.VersionString}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Margin="28,-2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding Package.VersionString}"
+                        ToolTip.Tip="{Binding Package.VersionString}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="4"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="download"
+                        FontSize="24"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding Package.NewVersionString}"
+                        IsVisible="{Binding Package.IsUpgradable}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="4"
+                        Margin="28,-2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding Package.NewVersionString}"
+                        ToolTip.Tip="{Binding Package.NewVersionString}"
+                        IsVisible="{Binding Package.IsUpgradable}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="{Binding Package.Source.IconId}"
+                        FontSize="24"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding Package.Source.AsString_DisplayName}" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="5"
+                        Margin="28,-2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding Package.Source.AsString_DisplayName}"
+                        ToolTip.Tip="{Binding Package.Source.AsString_DisplayName}" />
+                </Grid>
+            </widgets:PackageItemContainer>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PackageTemplate_Grid">
+            <widgets:PackageItemContainer
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                CornerRadius="4"
+                DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
+                Package="{Binding Package}"
+                PreviewKeyDown="{Binding PackageItemContainer_PreviewKeyDown}"
+                RightTapped="{Binding PackageItemContainer_RightTapped}"
+                Wrapper="{Binding Self}">
+
+                <Grid
+                    Padding="4,4,4,4"
+                    HorizontalAlignment="Stretch"
+                    ColumnSpacing="4"
+                    Opacity="{Binding ListedOpacity}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="22" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="Package"
+                        FontSize="48"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ExtendedTooltip}"
+                        IsVisible="{Binding ShowDefaultPackageIcon}" />
+
+                    <Image
+                        Grid.Column="0"
+                        Width="44"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="{Binding MainIconSource}"
+                        ToolTip.Tip="{Binding ExtendedTooltip}"
+                        IsVisible="{Binding ShowCustomPackageIcon}" />
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,-4,-2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
+                        FontSize="30"
+                        FontWeight="ExtraLight"
+                        Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="0,0,-4,-2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding MainIconId}"
+                        FontSize="30"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <CheckBox
+                        Grid.Column="2"
+                        Margin="1,-4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+
+                    <Button
+                        Grid.Column="2"
+                        Width="22"
+                        Height="22"
+                        Padding="0"
+                        VerticalAlignment="Bottom"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="{Binding RightClick}"
+                        Tapped="ContextMenuButton_Tapped">
+                        <TextBlock widgets:IconBuilder.Glyph="&#xE712;" FontSize="18" />
+                    </Button>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Top"
+                        FontFamily="Segoe UI Variable Text"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Text="{Binding Package.Name}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI Variable Text"
+                        FontSize="11"
+                        Opacity="0.8"
+                        Text="{Binding Package.Id}"
+                        ToolTip.Tip="{Binding Package.Id}" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom"
+                        FontFamily="Segoe UI Variable Text"
+                        FontSize="11"
+                        Opacity="0.5"
+                        Text="{Binding VersionComboString}"
+                        ToolTip.Tip="{Binding Package.VersionString}" />
+                </Grid>
+            </widgets:PackageItemContainer>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PackageTemplate_Icons">
+            <widgets:PackageItemContainer
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                CornerRadius="4"
+                DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
+                Package="{Binding Package}"
+                PreviewKeyDown="{Binding PackageItemContainer_PreviewKeyDown}"
+                RightTapped="{Binding PackageItemContainer_RightTapped}"
+                Wrapper="{Binding Self}">
+
+                <Grid
+                    Padding="4,4,4,4"
+                    HorizontalAlignment="Stretch"
+                    Opacity="{Binding ListedOpacity}"
+                    RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="22" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="15" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Height="64"
+                        Margin="0,-8,0,4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        widgets:IconBuilder.Icon="Package"
+                        FontSize="74"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ExtendedTooltip}"
+                        IsVisible="{Binding ShowDefaultPackageIcon}" />
+
+                    <Image
+                        Grid.Row="1"
+                        Width="64"
+                        Height="64"
+                        Margin="0,-8,0,4"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="{Binding MainIconSource}"
+                        ToolTip.Tip="{Binding ExtendedTooltip}"
+                        IsVisible="{Binding ShowCustomPackageIcon}" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,0,20,-2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
+                        FontSize="40"
+                        FontWeight="ExtraLight"
+                        Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,0,20,-2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        widgets:IconBuilder.Icon="{Binding MainIconId}"
+                        FontSize="40"
+                        FontWeight="ExtraLight"
+                        ToolTip.Tip="{Binding ListedNameTooltip}"
+                        IsVisible="{Binding AlternateIdIconVisible}" />
+
+                    <CheckBox
+                        Grid.Row="0"
+                        Margin="1,-4,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        IsChecked="{Binding IsChecked, Mode=TwoWay}" />
+                    <Button
+                        Grid.Row="0"
+                        Width="22"
+                        Height="22"
+                        Padding="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="{Binding RightClick}"
+                        Tapped="ContextMenuButton_Tapped">
+                        <TextBlock widgets:IconBuilder.Glyph="&#xE712;" FontSize="18" />
+                    </Button>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        MaxWidth="120"
+                        MaxHeight="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe UI Variable Text"
+                        FontSize="12"
+                        FontWeight="SemiBold"
+                        HorizontalTextAlignment="Left"
+                        Text="{Binding Package.Name}"
+                        TextWrapping="Wrap"
+                        ToolTip.Tip="{Binding ListedNameTooltip}" />
+
+                    <TextBlock
+                        Grid.Row="3"
+                        HorizontalAlignment="Center"
+                        FontFamily="Segoe UI Variable Text"
+                        FontSize="11"
+                        Opacity="0.5"
+                        Text="{Binding VersionComboString}"
+                        ToolTip.Tip="{Binding Package.VersionString}" />
+                </Grid>
+            </widgets:PackageItemContainer>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid Padding="0" BorderThickness="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1000000*" MaxWidth="2000" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid
+            Name="MainHeader"
+            Grid.Row="0"
+            Grid.Column="1"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                x:Name="HeaderIcon"
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="60"
+                MinHeight="60"
+                Margin="0,0,-8,0"
+                FontSize="50"
+                FontWeight="Normal" />
+
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Orientation="Vertical"
+                Spacing="0">
+                <TextBlock
+                    x:Name="MainTitle"
+                    MaxHeight="70"
+                    HorizontalAlignment="Left"
+                    FontFamily="Segoe UI Variable Display"
+                    FontSize="30"
+                    FontWeight="Bold"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    x:Name="MainSubtitle"
+                    MaxHeight="40"
+                    HorizontalAlignment="Left"
+                    FontSize="11"
+                    FontWeight="Normal"
+                    Foreground="{DynamicResource AppBarItemDisabledForegroundThemeBrush}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                ColumnSpacing="8"
+                RowSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    x:Name="OrderByContainer"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <widgets:TranslatedTextBlock VerticalAlignment="Center" Text="Order by:" />
+                    <Button x:Name="OrderByButton">
+                        <Button.Flyout>
+                            <widgets:BetterMenu Placement="Bottom">
+                                <widgets:BetterToggleMenuItem x:Name="OrderByName_Menu" Text="Name" />
+                                <widgets:BetterToggleMenuItem x:Name="OrderById_Menu" Text="Id" />
+                                <widgets:BetterToggleMenuItem x:Name="OrderByVer_Menu" Text="Version" />
+                                <widgets:BetterToggleMenuItem
+                                    x:Name="OrderByNewVer_Menu"
+                                    Text="New version"
+                                    IsVisible="{Binding RoleIsUpdateLike}" />
+                                <widgets:BetterToggleMenuItem x:Name="OrderBySrc_Menu" Text="Source" />
+                                <Separator />
+                                <widgets:BetterToggleMenuItem x:Name="OrderAsc_Menu" Text="Ascendant" />
+                                <widgets:BetterToggleMenuItem x:Name="OrderDesc_Menu" Text="Descendant" />
+                            </widgets:BetterMenu>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    x:Name="ViewModeContainer"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <widgets:TranslatedTextBlock VerticalAlignment="Center" Text="View mode:" />
+                    <StackPanel x:Name="ViewModeSelector" Orientation="Horizontal" Spacing="0">
+                        <RadioButton x:Name="Selector_List" GroupName="ViewMode">
+                            <TextBlock Text="&#xE8FD;" />
+                        </RadioButton>
+                        <RadioButton x:Name="Selector_Grid" GroupName="ViewMode">
+                            <TextBlock Text="&#xF168;" />
+                        </RadioButton>
+                        <RadioButton x:Name="Selector_Icons" GroupName="ViewMode">
+                            <TextBlock Text="&#xF0E2;" />
+                        </RadioButton>
+                    </StackPanel>
+                </StackPanel>
+                <Button
+                    x:Name="ReloadButton"
+                    Grid.Column="1"
+                    Width="32"
+                    Height="32"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    CornerRadius="4">
+                    <TextBlock FontSize="16" Text="&#xE72C;" />
+                </Button>
+            </Grid>
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    x:Name="ToggleFiltersButtonWidth"
+                    Margin="0,0,13,0"
+                    Orientation="Horizontal">
+                    <ToggleButton
+                        x:Name="ToggleFiltersButton"
+                        Grid.Column="0"
+                        Height="36"
+                        Margin="1,4"
+                        Padding="8,4"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="ToggleFiltersButton_Click"
+                        CornerRadius="4"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock
+                                FontSize="20"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="&#xE71C;" />
+                            <widgets:TranslatedTextBlock
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="Medium"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                Text="Filters" />
+                        </StackPanel>
+                    </ToggleButton>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button
+                        x:Name="MainToolbarButton"
+                        Height="36"
+                        Margin="0,0,1,0"
+                        BorderThickness="0"
+                        CornerRadius="4,0,0,4">
+                        <StackPanel
+                            VerticalAlignment="Stretch"
+                            Orientation="Horizontal"
+                            Spacing="4">
+                            <widgets:LocalIcon
+                                x:Name="MainToolbarButtonIcon"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                x:Name="MainToolbarButtonText"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                FontWeight="SemiBold" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        x:Name="MainToolbarButtonDropdown"
+                        Width="30"
+                        Height="36"
+                        Padding="4"
+                        BorderThickness="0"
+                        CornerRadius="0,4,4,0">
+                        <TextBlock FontSize="14" Text="&#xE70D;" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel
+                    Name="ToolBar"
+                    Grid.Column="2"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal" />
+            </Grid>
+        </Grid>
+
+
+        <SplitView
+            Name="FilteringPanel"
+            Grid.Row="2"
+            Grid.Column="1"
+            BorderThickness="0"
+            DisplayMode="Inline"
+            PaneBackground="Transparent"
+            PaneClosing="FilteringPanel_PaneClosing"
+            PanePlacement="Left"
+            SizeChanged="FilteringPanel_SizeChanged">
+            <SplitView.Pane>
+                <ScrollViewer
+                    Name="SidePanel"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="{DynamicResource AccentAAFillColorDefaultBrush}"
+                    HorizontalScrollBarVisibility="Disabled"
+                    SizeChanged="SidepanelWidth_SizeChanged">
+                    <Grid Name="SidePanelGrid" RowSpacing="8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Expander
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="4,4,4,8"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{DynamicResource SystemFillColorNeutralBackgroundBrush}"
+                            CornerRadius="8"
+                            IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock FontSize="20" Text="&#xE74C;" />
+                                    <widgets:TranslatedTextBlock
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Sources" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <StackPanel Orientation="Vertical">
+                                    <widgets:TranslatedTextBlock
+                                        x:Name="SourcesPlaceholderText"
+                                        MinHeight="60"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center"
+                                        FontSize="15"
+                                        FontWeight="Bold"
+                                        Opacity="0.5"
+                                        Text="Search for packages to start"
+                                        TextWrapping="Wrap" />
+                                    <Grid
+                                        Name="SourcesTreeViewGrid"
+                                        HorizontalAlignment="Stretch"
+                                        ColumnSpacing="4"
+                                        RowSpacing="4"
+                                        IsVisible="False">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Button
+                                            Name="SelectAllSourcesButton"
+                                            Grid.Column="0"
+                                            Padding="2"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Center"
+                                            Click="SelectAllSourcesButton_Click">
+                                            <widgets:TranslatedTextBlock
+                                                FontSize="12"
+                                                FontWeight="SemiBold"
+                                                Text="Select all" />
+                                        </Button>
+                                        <Button
+                                            Name="ClearSourceSelectionButton"
+                                            Grid.Column="1"
+                                            Padding="2"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Center"
+                                            Click="ClearSourceSelectionButton_Click">
+                                            <widgets:TranslatedTextBlock
+                                                FontSize="12"
+                                                FontWeight="SemiBold"
+                                                Text="Clear selection" />
+                                        </Button>
+                                        <TreeView
+                                            Name="SourcesTreeView"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            Padding="0"
+                                            HorizontalAlignment="Stretch"
+                                            SelectionChanged="SourcesTreeView_SelectionChanged"
+                                            SelectionMode="Multiple" />
+                                    </Grid>
+
+                                </StackPanel>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Padding="16,8,16,8"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{DynamicResource SystemFillColorNeutralBackgroundBrush}"
+                            CornerRadius="8"
+                            IsExpanded="False">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock FontSize="20" Text="&#xE71C;" />
+                                    <widgets:TranslatedTextBlock
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Filters" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <StackPanel
+                                    HorizontalAlignment="Stretch"
+                                    Orientation="Vertical"
+                                    Spacing="0">
+                                    <CheckBox
+                                        x:Name="InstantSearchCheckbox"
+                                        IsCheckedChanged="InstantSearchValueChanged">
+                                        <CheckBox.Content>
+                                            <widgets:TranslatedTextBlock Text="Instant search" TextWrapping="Wrap" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <CheckBox
+                                        x:Name="UpperLowerCaseCheckbox"
+                                        IsCheckedChanged="FilterOptionsChanged">
+                                        <CheckBox.Content>
+                                            <widgets:TranslatedTextBlock Text="Distinguish between uppercase and lowercase" TextWrapping="Wrap" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <CheckBox
+                                        x:Name="IgnoreSpecialCharsCheckbox"
+                                        IsChecked="True"
+                                        IsCheckedChanged="FilterOptionsChanged">
+                                        <CheckBox.Content>
+                                            <widgets:TranslatedTextBlock Text="Ignore special characters" TextWrapping="Wrap" />
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                </StackPanel>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Padding="16,8,16,8"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{DynamicResource SystemFillColorNeutralBackgroundBrush}"
+                            CornerRadius="8"
+                            IsExpanded="True">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock FontSize="20" Text="&#xE773;" />
+                                    <widgets:TranslatedTextBlock
+                                        VerticalAlignment="Center"
+                                        FontWeight="SemiBold"
+                                        Text="Search mode" />
+                                </StackPanel>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <StackPanel
+                                    Name="QueryOptionsGroup"
+                                    HorizontalAlignment="Stretch"
+                                    Orientation="Vertical"
+                                    Spacing="0">
+                                    <RadioButton
+                                        x:Name="QueryNameRadio"
+                                        Height="30"
+                                        Margin="0,-2,0,-2"
+                                        GroupName="QueryMode">
+                                        <RadioButton.Content>
+                                            <widgets:TranslatedTextBlock Text="Package Name" TextWrapping="Wrap" />
+                                        </RadioButton.Content>
+                                    </RadioButton>
+                                    <RadioButton
+                                        x:Name="QueryIdRadio"
+                                        Height="30"
+                                        Margin="0,-2,0,-2"
+                                        GroupName="QueryMode">
+                                        <RadioButton.Content>
+                                            <widgets:TranslatedTextBlock Text="Package ID" TextWrapping="Wrap" />
+                                        </RadioButton.Content>
+                                    </RadioButton>
+                                    <RadioButton
+                                        x:Name="QueryBothRadio"
+                                        Height="30"
+                                        Margin="0,-2,0,-2"
+                                        GroupName="QueryMode"
+                                        IsChecked="True">
+                                        <RadioButton.Content>
+                                            <widgets:TranslatedTextBlock Text="Both" TextWrapping="Wrap" />
+                                        </RadioButton.Content>
+                                    </RadioButton>
+                                    <RadioButton
+                                        x:Name="QueryExactMatch"
+                                        Height="30"
+                                        Margin="0,-2,0,-2"
+                                        GroupName="QueryMode">
+                                        <RadioButton.Content>
+                                            <widgets:TranslatedTextBlock Text="Exact match" TextWrapping="Wrap" />
+                                        </RadioButton.Content>
+                                    </RadioButton>
+                                    <RadioButton
+                                        x:Name="QuerySimilarResultsRadio"
+                                        Height="30"
+                                        Margin="0,-2,0,-2"
+                                        GroupName="QueryMode">
+                                        <RadioButton.Content>
+                                            <widgets:TranslatedTextBlock Text="Show similar packages" TextWrapping="Wrap" />
+                                        </RadioButton.Content>
+                                    </RadioButton>
+                                </StackPanel>
+                            </Expander.Content>
+                        </Expander>
+                    </Grid>
+                </ScrollViewer>
+            </SplitView.Pane>
+            <Grid Name="PackagesListGrid" Margin="0">
+                <ProgressBar
+                    x:Name="LoadingProgressBar"
+                    Margin="1,-6,1,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    IsIndeterminate="True"
+                    IsVisible="True" />
+
+                <Grid
+                    Padding="4,6,4,6"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="{DynamicResource SystemFillColorNeutralBackgroundBrush}"
+                    BorderBrush="{StaticResource ExpanderContentBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        Margin="4,2,4,5"
+                        ColumnSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="32" />
+                            <ColumnDefinition Width="28" />
+                            <ColumnDefinition Width="*" MinWidth="100" />
+                            <ColumnDefinition Width="32" />
+                            <ColumnDefinition Width="*" MinWidth="100" />
+                            <ColumnDefinition Width="32" />
+                            <ColumnDefinition Width="*" MaxWidth="125" />
+                            <ColumnDefinition Width="32" MaxWidth="{Binding NewVersionIconWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{Binding NewVersionLabelWidth}" />
+                            <ColumnDefinition Width="32" />
+                            <ColumnDefinition Width="*" MaxWidth="150" />
+                            <ColumnDefinition Width="11" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Name="CheckboxHeader"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Padding="0"
+                            HorizontalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="4,0,0,4">
+                            <CheckBox
+                                Name="SelectAllCheckBox"
+                                Margin="12,4,4,4"
+                                IsCheckedChanged="SelectAllCheckBox_ValueChanged" />
+                        </Button>
+                        <Button
+                            Name="NameHeader"
+                            Grid.Column="3"
+                            Grid.ColumnSpan="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="0" />
+                        <Button
+                            Name="IdHeader"
+                            Grid.Column="4"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="0" />
+                        <Button
+                            Name="VersionHeader"
+                            Grid.Column="6"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="0" />
+                        <Button
+                            Name="NewVersionHeader"
+                            Grid.Column="8"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="0"
+                            IsVisible="{Binding RoleIsUpdateLike}" />
+                        <Button
+                            Name="SourceHeader"
+                            Grid.Column="10"
+                            Grid.ColumnSpan="3"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="0"
+                            CornerRadius="0,4,4,0" />
+                    </Grid>
+
+                    <Panel
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <ItemsControl
+                            x:Name="PackageList_List"
+                            Padding="4,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            ItemTemplate="{StaticResource PackageTemplate_List}"
+                            ItemsSource="{Binding FilteredPackages}"
+                            IsVisible="{Binding #Selector_List.IsChecked}" />
+                        <ItemsControl
+                            x:Name="PackageList_Grid"
+                            Padding="4,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            ItemTemplate="{StaticResource PackageTemplate_Grid}"
+                            ItemsSource="{Binding FilteredPackages}"
+                            IsVisible="{Binding #Selector_Grid.IsChecked}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        <ItemsControl
+                            x:Name="PackageList_Icons"
+                            Padding="4,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            ItemTemplate="{StaticResource PackageTemplate_Icons}"
+                            ItemsSource="{Binding FilteredPackages}"
+                            IsVisible="{Binding #Selector_Icons.IsChecked}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Panel>
+
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Name="BackgroundText"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe UI Variable Display"
+                            FontSize="30"
+                            FontWeight="Bold"
+                            Opacity="0.5"
+                            Text="Hello World Lorem Ipsum dolor sit amet"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+                    </Grid>
+
+                </Grid>
+
+                <GridSplitter
+                    x:Name="FiltersResizer"
+                    Width="12"
+                    Margin="-12,0,0,0"
+                    Padding="0,0,0,0"
+                    HorizontalAlignment="Left"
+                    CornerRadius="2"
+                    ResizeDirection="Columns"
+                    IsVisible="{Binding FilteringPanel.IsPaneOpen}">
+                    <GridSplitter.RenderTransform>
+                        <TranslateTransform X="0" />
+                    </GridSplitter.RenderTransform>
+                </GridSplitter>
+
+
+                <Grid
+                    x:Name="MegaQueryBlockGrid"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    IsVisible="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8*" MaxWidth="800" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        x:Name="MegaQueryBlock"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Padding="20,11,10,11"
+                        CornerRadius="8,0,0,8"
+                        FontSize="40"
+                        FontWeight="SemiBold" />
+                    <Button
+                        x:Name="MegaFindButton"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Width="80"
+                        Height="80"
+                        Padding="12"
+                        CornerRadius="0,8,8,0">
+                        <TextBlock Text="&#xE721;" FontSize="40" />
+                    </Button>
+
+                </Grid>
+            </Grid>
+        </SplitView>
+    </Grid>
+</UserControl>

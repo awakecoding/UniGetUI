@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Avalonia.Controls"
+    xmlns:controls1="using:UniGetUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interface="using:UniGetUI.Interface"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:operationWidgets="using:UniGetUI.Controls.OperationWidgets"
+    xmlns:operations="using:UniGetUI.PackageOperations"
+    xmlns:pages="using:UniGetUI.Interface"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    MinWidth="200"
+    MinHeight="200"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <widgets:BetterMenu x:Name="MoreNavButtonMenu" Placement="Right">
+                <widgets:BetterMenuItem
+                    Name="WingetUILogs"
+                    Click="UniGetUILogs_Click"
+                    IconName="buggy"
+                    Text="WingetUI Log" />
+                <widgets:BetterMenuItem
+                    Name="ManagerLogsMenu"
+                    Click="ManagerLogsMenu_Click"
+                    IconName="console"
+                    Text="Package Manager logs" />
+                <widgets:BetterMenuItem
+                    Name="OperationHistoryMenu"
+                    Click="OperationHistoryMenu_Click"
+                    IconName="history"
+                    Text="Operation history" />
+                <Separator Height="5" />
+                <widgets:BetterMenuItem
+                    x:Name="VersionMenuItem"
+                    IconName="info_round"
+                    IsEnabled="False" />
+                <widgets:BetterMenuItem
+                    Name="ReleaseNotesMenu"
+                    Click="ReleaseNotesMenu_Click"
+                    IconName="megaphone"
+                    Text="Release notes" />
+                <Separator Height="5" />
+                <widgets:BetterMenuItem
+                    Name="HelpMenu"
+                    Click="HelpMenu_Click"
+                    IconName="help"
+                    Text="Help" />
+                <widgets:BetterMenuItem
+                    Name="InfoMenu"
+                    Click="AboutNavButton_Click"
+                    IconName="Info_Round"
+                    Text="About" />
+                <Separator Height="5" />
+                <widgets:BetterMenuItem
+                    Name="QuitWingetUI"
+                    Click="QuitUniGetUI_Click"
+                    IconName="close_round"
+                    Text="Quit WingetUI" />
+            </widgets:BetterMenu>
+
+            <widgets:BetterMenu x:Name="OperationListMenu" Placement="Bottom">
+                <widgets:BetterMenuItem
+                    Name="RetryFailedOps"
+                    Click="RetryFailedOps_Click"
+                    IconName="Reload"
+                    Text="Retry failed operations" />
+                <Separator />
+                <widgets:BetterMenuItem
+                    Name="ClearSuccessful"
+                    Click="ClearSuccessfulOps_Click"
+                    IconName="ClipboardList"
+                    Text="Clear successful operations" />
+                <widgets:BetterMenuItem
+                    Name="ClearAllFinished"
+                    Click="ClearAllFinished_OnClick"
+                    IconName="ClipboardList"
+                    Text="Clear finished operations" />
+                <Separator />
+                <widgets:BetterMenuItem
+                    Name="CancellAllOps"
+                    Click="CancellAllOps_Click"
+                    IconName="Cross"
+                    Text="Cancel all operations" />
+            </widgets:BetterMenu>
+
+            <DataTemplate x:Key="OperationBadgeTemplate">
+                <Button
+                    Width="32"
+                    Height="32"
+                    Margin="6,0,0,0"
+                    Padding="0"
+                    CornerRadius="6"
+                    ToolTip.Tip="{Binding Tooltip}">
+                    <widgets:LocalIcon Icon="{Binding Icon}" />
+                    <Button.Flyout>
+                        <widgets:BetterFlyout>
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <widgets:LocalIcon Icon="{Binding Icon}" />
+                                <StackPanel Orientation="Vertical" Spacing="6">
+                                    <TextBlock
+                                        MaxWidth="200"
+                                        Text="{Binding PrimaryBanner}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        MaxWidth="200"
+                                        Opacity="0.6"
+                                        Text="{Binding SecondaryBanner}"
+                                        TextWrapping="Wrap"
+                                        IsVisible="{Binding SecondaryBannerVisible}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </widgets:BetterFlyout>
+                    </Button.Flyout>
+                </Button>
+            </DataTemplate>
+
+            <DataTemplate x:Key="OperationTemplate">
+                <Grid
+                    Padding="8"
+                    Background="{Binding Background}"
+                    ColumnSpacing="0"
+                    RowSpacing="6">
+                    <Grid.Styles>
+                        <Style Selector="Grid">
+                            <Setter Property="Background" Value="{DynamicResource SystemFillColorNeutralBackgroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource ExpanderContentBorderBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="CornerRadius" Value="8" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </Grid.Styles>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="36" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style Selector="Button">
+                                <Setter Property="Height" Value="32" />
+                                <Setter Property="CornerRadius" Value="2" />
+                                <Setter Property="BorderThickness" Value="0" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <Image
+                        Grid.Column="0"
+                        Width="32"
+                        Height="24"
+                        Margin="0"
+                        VerticalAlignment="Center"
+                        Source="{Binding Icon}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="6,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Title}" />
+                    <Button
+                        Name="OutputViewewBlock"
+                        Grid.Column="2"
+                        Margin="12,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Left"
+                        Click="{Binding LiveLineClick}"
+                        Content="{Binding LiveLine}"
+                        CornerRadius="5"
+                        FontFamily="Consolas" />
+                    <Border
+                        Grid.Column="2"
+                        Height="12"
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Bottom"
+                        CornerRadius="6">
+                        <ProgressBar
+                            Height="6"
+                            Margin="0,0,0,-2"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="0,0,6,6"
+                            Foreground="{Binding ProgressForeground}"
+                            IsIndeterminate="{Binding ProgressIndeterminate}"
+                            Maximum="100"
+                            Value="{Binding ProgressValue}" />
+                    </Border>
+                    <Border
+                        Grid.Column="3"
+                        Margin="0,0,0,0"
+                        CornerRadius="6">
+                        <ItemsControl ItemTemplate="{StaticResource OperationBadgeTemplate}" ItemsSource="{Binding Badges}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="0" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Button
+                        Grid.Column="4"
+                        Margin="6,0,1,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Click="{Binding ButtonClick}"
+                        Content="{Binding ButtonText}"
+                        CornerRadius="6,0,0,6" />
+                    <Button
+                        Grid.Column="5"
+                        Height="32"
+                        Margin="0,0,0,0"
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        BorderThickness="0"
+                        CornerRadius="0,6,6,0"
+                        Flyout="{Binding OpMenu}"
+                        GotFocus="{Binding LoadMenu}"
+                        PointerEntered="{Binding LoadMenu}">
+                        <TextBlock Text="&#xE712;" />
+                    </Button>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <SplitView
+        Name="NavView"
+        Grid.Row="2"
+        Margin="0,-4,0,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        DisplayMode="CompactInline"
+        IsPaneOpen="False"
+        OpenPaneLength="250"
+        CompactPaneLength="68">
+
+        <SplitView.Pane>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                    <controls1:CustomNavViewItem
+                        x:Name="DiscoverNavBtn"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        GlyphIcon="&#xF6FA;"
+                        Tag="Discover"
+                        Text="Discover Packages" />
+
+                    <controls1:CustomNavViewItem
+                        x:Name="UpdatesNavBtn"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        GlyphIcon="&#xE895;"
+                        Tag="Updates"
+                        Text="Software Updates">
+                        <controls1:CustomNavViewItem.InfoBadge>
+                            <Border
+                                Name="UpdatesBadge"
+                                IsVisible="False">
+                                <TextBlock Text="0" />
+                            </Border>
+                        </controls1:CustomNavViewItem.InfoBadge>
+                    </controls1:CustomNavViewItem>
+                    <controls1:CustomNavViewItem
+                        x:Name="InstalledNavBtn"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        GlyphIcon="&#xE977;"
+                        Tag="Installed"
+                        Text="Installed Packages" />
+                    <controls1:CustomNavViewItem
+                        x:Name="BundlesNavBtn"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        GlyphIcon="&#xF133;"
+                        Tag="Bundles"
+                        Text="Package Bundles">
+                        <controls1:CustomNavViewItem.InfoBadge>
+                            <Border
+                                x:Name="BundlesBadge"
+                                Width="16"
+                                Height="16"
+                                Background="{DynamicResource SystemFillColorCautionBrush}"
+                                IsVisible="False">
+                                <TextBlock Text="&#xEDB1;" />
+                            </Border>
+                        </controls1:CustomNavViewItem.InfoBadge>
+                    </controls1:CustomNavViewItem>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <controls1:CustomNavViewItem
+                        x:Name="SettingsNavBtn"
+                        IconSize="20"
+                        Tag="Settings"
+                        Text="Settings">
+                        <controls1:CustomNavViewItem.Icon>
+                            <TextBlock Text="&#xE713;" FontSize="20" />
+                        </controls1:CustomNavViewItem.Icon>
+                    </controls1:CustomNavViewItem>
+                    <controls1:CustomNavViewItem
+                        x:Name="ManagersNavBtn"
+                        GlyphIcon="&#xE835;"
+                        IconSize="20"
+                        Tag="Managers"
+                        Text="Package managers" />
+                    <controls1:CustomNavViewItem
+                        x:Name="MoreNavBtn"
+                        Icon="More"
+                        IconSize="20"
+                        Tag="Null"
+                        Tapped="MoreNavBtn_Tapped"
+                        Text="More" />
+                </StackPanel>
+            </Grid>
+        </SplitView.Pane>
+
+        <Grid
+            Name="ContentGrid"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="8,8,8,8"
+            RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="16" />
+                <RowDefinition
+                    Height="Auto"
+                    MinHeight="0"
+                    MaxHeight="200" />
+            </Grid.RowDefinitions>
+            <ContentControl
+                Name="ContentFrame"
+                Grid.Row="0"
+                Grid.Column="0" />
+
+            <GridSplitter
+                x:Name="OperationSplitter"
+                Grid.Row="1"
+                Grid.Column="0"
+                Height="12"
+                Margin="1,0,1,0"
+                Padding="0,0,0,0"
+                CornerRadius="4"
+                ResizeDirection="Rows" />
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="15" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Name="ExpandCollapseOpList"
+                    Grid.Column="1"
+                    Height="12"
+                    Padding="12,0,12,0"
+                    Click="ExpandCollapseOpList_Click"
+                    CornerRadius="4"
+                    Foreground="{DynamicResource ScrollBarButtonPointerOverBackgroundThemeBrush}">
+                    <TextBlock FontSize="14" Text="&#xE96E;" />
+                </Button>
+                <Button
+                    Name="OperationSplitterMenuButton"
+                    Grid.Column="2"
+                    Height="12"
+                    Padding="12,0,12,0"
+                    Click="OperationSplitterMenuButton_Click"
+                    CornerRadius="4"
+                    Foreground="{DynamicResource ScrollBarButtonPointerOverBackgroundThemeBrush}">
+                    <TextBlock FontSize="24" Text="&#xE712;" />
+                </Button>
+            </Grid>
+            <ListBox
+                Name="OperationList"
+                Grid.Row="2"
+                Grid.Column="0"
+                ItemTemplate="{StaticResource OperationTemplate}"
+                SelectionMode="Single"
+                SizeChanged="OperationScrollView_SizeChanged">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel
+                            Margin="-16,0,-12,0"
+                            Orientation="Vertical"
+                            Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListBox.Resources>
+                    <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+                    <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+                </ListBox.Resources>
+            </ListBox>
+        </Grid>
+
+    </SplitView>
+</UserControl>
