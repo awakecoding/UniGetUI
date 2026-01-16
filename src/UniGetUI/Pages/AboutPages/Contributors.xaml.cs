@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia.Controls;
 using UniGetUI.Core.Classes;
 using UniGetUI.Core.Data;
 

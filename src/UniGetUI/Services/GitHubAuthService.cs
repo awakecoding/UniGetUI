@@ -5,7 +5,6 @@ using UniGetUI.Core.Data;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SecureSettings;
 using UniGetUI.Core.SettingsEngine;
-using Windows.System;
 using UniGetUI.Interface;
 
 namespace UniGetUI.Services

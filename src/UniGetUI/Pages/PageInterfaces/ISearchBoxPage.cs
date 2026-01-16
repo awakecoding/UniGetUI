@@ -1,6 +1,6 @@
 using System;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
+using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace UniGetUI.Pages.PageInterfaces;
 internal interface ISearchBoxPage

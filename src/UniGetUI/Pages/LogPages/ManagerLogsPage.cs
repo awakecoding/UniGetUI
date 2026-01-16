@@ -1,6 +1,5 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Media;
+using Avalonia;
+using Avalonia.Media;
 using UniGetUI.Core.Tools;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Interfaces;

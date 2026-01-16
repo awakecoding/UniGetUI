@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia;
+using Avalonia.Controls;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Pages;
 

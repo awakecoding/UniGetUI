@@ -1,5 +1,4 @@
-using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Media;
+using Avalonia.Media;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
 

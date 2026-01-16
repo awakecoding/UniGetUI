@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml.Documents;
-using UniGetUI.Core.SettingsEngine;
+﻿using UniGetUI.Core.SettingsEngine;
 
 namespace UniGetUI.Interface.Pages.LogPage
 {

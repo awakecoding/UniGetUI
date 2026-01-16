@@ -1,9 +1,8 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
+using Avalonia;
+using Avalonia.Controls;
 using UniGetUI.Core.Tools;
 using UniGetUI.PackageEngine.Interfaces;
-using System.Diagnostics;
 using UniGetUI.PackageEngine.Managers.WingetManager;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Managers.ChocolateyManager;

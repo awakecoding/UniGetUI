@@ -1,8 +1,7 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Media.Animation;
 using UniGetUI.Core.Tools;
-using Microsoft.UI.Xaml.Media.Animation;
 using UniGetUI.PackageEngine.ManagerClasses.Manager;
 using UniGetUI.Pages.SettingsPages.GeneralPages;
 using UniGetUI.Interface.Pages;

@@ -1,5 +1,6 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 using UniGetUI.Pages.DialogPages;
 using UniGetUI.PackageOperations;

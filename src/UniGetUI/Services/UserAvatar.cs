@@ -1,11 +1,9 @@
-using Windows.UI;
-using Microsoft.UI;
-using Microsoft.UI.Input;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Octokit;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
