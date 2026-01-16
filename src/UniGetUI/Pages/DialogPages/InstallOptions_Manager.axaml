@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Pages.DialogPages.InstallOptions_Manager"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Pages.DialogPages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="XamlAutoFontFamily" />
+            <Setter Property="FontSize" Value="{StaticResource BodyTextBlockFontSize}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid Margin="8,0,-16,0" RowDefinitions="Auto,Auto">
+        <Grid
+            Grid.Row="0"
+            Margin="16,0"
+            ColumnDefinitions="*,Auto,Auto">
+            <TextBlock x:Name="HeaderLabel" VerticalAlignment="Center" />
+            <Button
+                x:Name="ApplyButton"
+                Grid.Column="2"
+                Click="ApplyButton_Click" />
+            <Button
+                x:Name="ResetButton"
+                Grid.Column="1"
+                Click="ResetButton_Click" />
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            Padding="16,12,16,12"
+            HorizontalAlignment="Stretch"
+            Background="{DynamicResource SystemAltLowColor}"
+            CornerRadius="8"
+            Spacing="8">
+
+            <!--  ADMIN, HASH AND INTERACTIVE CHECKBOXES  -->
+            <WrapPanel
+                Padding="8,0"
+                HorizontalAlignment="Center">
+                <CheckBox Name="AdminCheckBox" Click="AdminCheckBox_Click" />
+                <CheckBox Name="InteractiveCheckBox" Click="InteractiveCheckBox_Click" />
+                <CheckBox Name="HashCheckBox" Click="HashCheckbox_Click" />
+                <CheckBox Name="PreReleaseCheckBox" Click="PreReleaseCheckBox_Click" />
+                <CheckBox Name="UninstallPreviousVerOnUpdate" Click="ClearPreviousOnUpdate_OnClick" />
+            </WrapPanel>
+            
+            <!--  ARCHITECTURE COMBOBOX  -->
+            <Grid ColumnDefinitions="*,200*">
+                <TextBlock
+                    x:Name="ArchLabel"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <ComboBox
+                    Name="ArchitectureCombo"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    SelectedIndex="0"
+                    SelectionChanged="ArchitectureComboBox_SelectionChanged" />
+            </Grid>
+            
+            <!--  SCOPE COMBOBOX  -->
+            <Grid ColumnDefinitions="*,200*">
+                <TextBlock
+                    x:Name="ScopeLabel"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <ComboBox
+                    Name="ScopeCombo"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    SelectionChanged="ScopeCombo_SelectionChanged" />
+            </Grid>
+
+            <!--  INSTALL LOCATION  -->
+            <Grid ColumnDefinitions="*,96*,96*" RowDefinitions="28,Auto">
+                <TextBlock
+                    x:Name="LocationLabel"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <Button
+                    x:Name="SelectDir"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="SelectDir_Click" />
+                <Button
+                    Name="ResetDir"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="ResetDir_Click" />
+                <TextBlock
+                    Name="CustomInstallLocation"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    MaxWidth="700"
+                    VerticalAlignment="Center"
+                    FontFamily="Consolas"
+                    Opacity="0.6"
+                    TextWrapping="Wrap" />
+            </Grid>
+
+            <widgets:TranslatedTextBlock
+                x:Name="CLIDisabled"
+                Margin="0,16,0,0"
+                Text="For security reasons, custom command-line arguments are disabled by default. Go to UniGetUI security settings to change this. ">
+                <widgets:TranslatedTextBlock.Styles>
+                    <Style Selector="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource SystemErrorTextColor}" />
+                    </Style>
+                </widgets:TranslatedTextBlock.Styles>
+            </widgets:TranslatedTextBlock>
+            <Button
+                x:Name="GoToCLISettings"
+                HorizontalAlignment="Center"
+                Click="GoToSecureSettings_Click">
+                <widgets:TranslatedTextBlock Text="Go to UniGetUI security settings" >
+                    <widgets:TranslatedTextBlock.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+                        </Style>
+                    </widgets:TranslatedTextBlock.Styles>
+                </widgets:TranslatedTextBlock>
+            </Button>
+
+            <!--  CUSTOM COMMAND-LINE ARGUMENTS  -->
+            <Grid ColumnDefinitions="*,2*" RowDefinitions="Auto,Auto,Auto">
+                <TextBlock
+                    x:Name="CustomCommandsLabel1"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Name="CustomParameters1"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Padding="5,7,5,5"
+                    FontFamily="Consolas"
+                    TextChanged="CustomParameters_TextChanged"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Name="CustomCommandsLabel2"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Name="CustomParameters2"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Padding="5,7,5,5"
+                    FontFamily="Consolas"
+                    TextChanged="CustomParameters_TextChanged"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Name="CustomCommandsLabel3"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalAlignment="Center" />
+                <TextBox
+                    Name="CustomParameters3"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Padding="5,7,5,5"
+                    FontFamily="Consolas"
+                    TextChanged="CustomParameters_TextChanged"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </StackPanel>
+
+        <ProgressRing
+            x:Name="LoadingIndicator"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsVisible="False" />
+    </Grid>
+</UserControl>

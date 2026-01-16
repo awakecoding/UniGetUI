@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Dialogs.InstallOptionsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    MaxWidth="700"
+    HorizontalAlignment="Stretch"
+    mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProcessTemplate" DataType="local:IOP_Proc">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Width="16">
+                    <TextBlock Text="&#xECAA;" />
+                </Viewbox>
+                <TextBlock Padding="8,0,0,0" Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid HorizontalAlignment="Stretch" RowDefinitions="*" ColumnDefinitions="*">
+        <ScrollViewer
+            Name="Scroller"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch">
+            <StackPanel
+                Name="LayoutGrid"
+                HorizontalAlignment="Stretch"
+                Spacing="16">
+
+                <!--  Title, Package Icon and operation profile selector  -->
+                <Grid
+                    x:Name="HeaderBar"
+                    Margin="8,0,16,0"
+                    ColumnDefinitions="Auto,2*,150*">
+                    <Image
+                        x:Name="PackageIcon"
+                        Grid.Column="0"
+                        Width="32"
+                        Height="32"
+                        VerticalAlignment="Center" />
+                    <TextBlock
+                        x:Name="DialogTitle"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Grid.Column="2"
+                        Spacing="4">
+                        <widgets:TranslatedTextBlock Margin="4,0" Text="Operation profile:" />
+                        <ComboBox x:Name="ProfileComboBox" HorizontalAlignment="Stretch" />
+                    </StackPanel>
+                </Grid>
+
+                <!--  Override global options switch  -->
+                <Border
+                    Padding="16,4,0,4"
+                    HorizontalAlignment="Stretch"
+                    Background="{DynamicResource SystemChromeAltHighColor}"
+                    CornerRadius="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <widgets:TranslatedTextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            FontWeight="SemiBold"
+                            Text="Use package-specific install options" />
+                        <ToggleSwitch
+                            x:Name="OverrideOptions"
+                            Grid.Column="1"
+                            IsChecked="True" />
+                    </Grid>
+                </Border>
+
+                <!--  Main Options Panel  -->
+                <StackPanel x:Name="OptionsPanel" Spacing="16">
+                    
+                    <!-- Version Selection -->
+                    <Grid ColumnDefinitions="*,200*">
+                        <widgets:TranslatedTextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="Version to install" />
+                        <ComboBox
+                            x:Name="VersionComboBox"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch" />
+                    </Grid>
+
+                    <!-- Architecture Selection -->
+                    <Grid ColumnDefinitions="*,200*">
+                        <widgets:TranslatedTextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="Architecture" />
+                        <ComboBox
+                            x:Name="ArchitectureComboBox"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch" />
+                    </Grid>
+
+                    <!-- Scope Selection -->
+                    <Grid ColumnDefinitions="*,200*">
+                        <widgets:TranslatedTextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="Installation scope" />
+                        <ComboBox
+                            x:Name="ScopeComboBox"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch" />
+                    </Grid>
+
+                    <!-- Installation Location -->
+                    <Grid ColumnDefinitions="*,96*,96*" RowDefinitions="28,Auto">
+                        <widgets:TranslatedTextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="Installation location" />
+                        <Button
+                            x:Name="SelectLocationButton"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch">
+                            <widgets:TranslatedTextBlock Text="Select" />
+                        </Button>
+                        <Button
+                            x:Name="ResetLocationButton"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HorizontalAlignment="Stretch">
+                            <widgets:TranslatedTextBlock Text="Reset" />
+                        </Button>
+                        <TextBlock
+                            x:Name="InstallationLocationTextBlock"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            FontFamily="Consolas"
+                            Opacity="0.6"
+                            TextWrapping="Wrap" />
+                    </Grid>
+
+                    <!-- Checkboxes -->
+                    <WrapPanel>
+                        <CheckBox x:Name="AdminCheckBox" Content="Run as administrator" />
+                        <CheckBox x:Name="InteractiveCheckBox" Content="Interactive installation" />
+                        <CheckBox x:Name="SkipHashCheckBox" Content="Skip hash check" />
+                        <CheckBox x:Name="PreReleaseCheckBox" Content="Include pre-release" />
+                    </WrapPanel>
+
+                    <!-- Custom Parameters -->
+                    <Border
+                        Padding="16"
+                        Background="{DynamicResource SystemAltLowColor}"
+                        CornerRadius="8">
+                        <StackPanel Spacing="8">
+                            <widgets:TranslatedTextBlock
+                                FontWeight="SemiBold"
+                                Text="Custom installation parameters" />
+                            <TextBox
+                                x:Name="CustomParametersTextBox"
+                                FontFamily="Consolas"
+                                TextWrapping="Wrap"
+                                Watermark="Additional command-line arguments" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!--  Action Buttons  -->
+                <Grid Margin="0,16,16,0" ColumnDefinitions="*,*,Auto">
+                    <Button
+                        x:Name="ResetButton"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Click="ResetButton_Click">
+                        <widgets:TranslatedTextBlock Text="Reset to defaults" />
+                    </Button>
+                    <Button
+                        x:Name="SaveButton"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        Click="SaveButton_Click">
+                        <widgets:TranslatedTextBlock Text="Save" />
+                    </Button>
+                    <Button
+                        x:Name="InstallButton"
+                        Grid.Column="2"
+                        MinWidth="120"
+                        HorizontalAlignment="Stretch"
+                        Click="InstallButton_Click"
+                        Classes="accent">
+                        <widgets:TranslatedTextBlock Text="Install" />
+                    </Button>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+        
+        <widgets:DialogCloseButton
+            Margin="0,-24,-24,0"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Click="CloseButton_Click" />
+            
+        <ProgressRing
+            x:Name="LoadingIndicator"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsVisible="False" />
+    </Grid>
+</UserControl>

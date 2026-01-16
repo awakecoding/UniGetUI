@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.DesktopShortcutsManager"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    MaxWidth="950"
+    MaxHeight="500"
+    mc:Ignorable="d">
+
+    <Grid
+        HorizontalAlignment="Stretch"
+        ColumnDefinitions="*,200"
+        RowDefinitions="Auto,*,Auto">
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4">
+            <widgets:TranslatedTextBlock FontWeight="Bold" Text="UniGetUI has detected the following desktop shortcuts which can be removed automatically on future upgrades" />
+            <widgets:TranslatedTextBlock Text="Here you can change UniGetUI's behaviour regarding the following shortcuts. Checking a shortcut will make UniGetUI delete it if if gets created on a future upgrade. Unchecking it will keep the shortcut intact" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Bottom"
+            Spacing="4">
+            <Button Margin="10,0,0,0" HorizontalAlignment="Stretch">
+                <widgets:TranslatedTextBlock Text="Reset list" />
+                <!-- Flyout placeholder - will need to be implemented with Avalonia Popup/Flyout -->
+            </Button>
+        </StackPanel>
+        
+        <ListBox
+            Name="DeletableDesktopShortcutsList"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0,4,0,0"
+            HorizontalAlignment="Stretch"
+            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
+            CornerRadius="6"
+            Items="{Binding Shortcuts}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="local:ShortcutEntry">
+                    <Grid Margin="8,4" ColumnDefinitions="Auto,2,24,200*,24,2*,Auto,Auto">
+                        <Border
+                            Grid.Column="0"
+                            Width="20"
+                            HorizontalAlignment="Center">
+                            <CheckBox
+                                MaxWidth="10"
+                                Margin="0,8,0,0"
+                                IsChecked="{Binding IsDeletable}" />
+                        </Border>
+                        <widgets:TranslatedTextBlock
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="10"
+                            Text="Delete?" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Width="24"
+                            Height="24"
+                            Text="&#xECAA;" />
+                        <TextBlock
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}"
+                            ToolTip.Tip="{Binding Name}" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Width="24"
+                            Height="24"
+                            Text="&#xE71B;" />
+                        <TextBlock
+                            Grid.Column="5"
+                            VerticalAlignment="Center"
+                            Text="{Binding Path}"
+                            ToolTip.Tip="{Binding Path}" />
+                        <Button
+                            Grid.Column="6"
+                            Width="32"
+                            Height="32"
+                            Padding="0"
+                            Command="{Binding OpenShortcutPath}"
+                            IsEnabled="{Binding ExistsOnDisk}">
+                            <widgets:LocalIcon
+                                Width="24"
+                                Height="24"
+                                Icon="launch" />
+                        </Button>
+                        <Button
+                            Grid.Column="7"
+                            Width="32"
+                            Height="32"
+                            Padding="0"
+                            Command="{Binding ResetShortcut}">
+                            <TextBlock FontSize="16" Text="&#xE74D;" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <CheckBox Name="AutoDeleteShortcutsCheckbox" Grid.Row="2" Grid.Column="0">
+            <widgets:TranslatedTextBlock Text="When new shortcuts are detected, delete them automatically instead of showing this dialog." />
+        </CheckBox>
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            Click="CloseSaveButton_Click"
+            Classes="accent">
+            <widgets:TranslatedTextBlock Text="Save and close" />
+        </Button>
+        <widgets:DialogCloseButton
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,-63,-24,0"
+            Click="CloseButton_Click" />
+    </Grid>
+</UserControl>

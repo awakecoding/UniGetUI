@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.IgnoredUpdatesManager"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    MaxWidth="1100"
+    MaxHeight="500"
+    mc:Ignorable="d">
+
+    <Grid
+        HorizontalAlignment="Stretch"
+        ColumnDefinitions="*,200*"
+        RowDefinitions="Auto,100*">
+        
+        <widgets:TranslatedTextBlock 
+            Grid.Row="0" 
+            Grid.Column="0"
+            Text="The packages listed here won't be taken in account when checking for updates. Double-click them or click the button on their right to stop ignoring their updates." />
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            MaxWidth="200"
+            HorizontalAlignment="Right">
+            <widgets:TranslatedTextBlock Text="Reset list" />
+            <!-- Flyout placeholder - will need to be implemented with Avalonia Popup/Flyout -->
+        </Button>
+        
+        <ListBox
+            Name="IgnoredUpdatesList"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0,8,0,0"
+            Padding="2,4,2,4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
+            CornerRadius="6">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="local:IgnoredPackageEntry">
+                    <Grid Padding="8,4" ColumnDefinitions="Auto,*,Auto,*,Auto,120*,Auto,170*,Auto,90*,Auto">
+                        <widgets:LocalIcon
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            Icon="package" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="{Binding Name}"
+                            ToolTip.Tip="{Binding Name}" />
+                        <widgets:LocalIcon
+                            Grid.Column="2"
+                            Width="24"
+                            Height="24"
+                            Icon="Id" />
+                        <TextBlock
+                            Grid.Column="3"
+                            VerticalAlignment="Center"
+                            Text="{Binding Id}"
+                            ToolTip.Tip="{Binding Id}" />
+                        <widgets:LocalIcon
+                            Grid.Column="4"
+                            Width="24"
+                            Height="24"
+                            Icon="version" />
+                        <TextBlock
+                            Grid.Column="5"
+                            VerticalAlignment="Center"
+                            Text="{Binding Version}"
+                            ToolTip.Tip="{Binding Version}" />
+                        <widgets:LocalIcon
+                            Grid.Column="6"
+                            Width="24"
+                            Height="24"
+                            Icon="Upgradable" />
+                        <TextBlock
+                            Grid.Column="7"
+                            VerticalAlignment="Center"
+                            Text="{Binding NewVersion}"
+                            ToolTip.Tip="{Binding NewVersion}" />
+                        <widgets:LocalIcon
+                            Grid.Column="8"
+                            Width="24"
+                            Height="24"
+                            Icon="{Binding Manager.Properties.IconId}" />
+                        <TextBlock
+                            Grid.Column="9"
+                            VerticalAlignment="Center"
+                            Text="{Binding Manager.DisplayName}"
+                            ToolTip.Tip="{Binding Manager.DisplayName}" />
+                        <Button
+                            Grid.Column="10"
+                            Width="32"
+                            Height="32"
+                            Padding="0"
+                            Command="{Binding RemoveFromIgnoredUpdates}">
+                            <TextBlock FontSize="16" Text="&#xE74D;" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <widgets:DialogCloseButton
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="0,-63,-24,0"
+            Click="CloseButton_Click" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Dialogs.PackageDetailsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer
+            Margin="0,0,-15,0"
+            Padding="0,0,15,0"
+            HorizontalAlignment="Stretch">
+            <Grid
+                Name="MainGrid">
+
+                <StackPanel Name="LeftPanel" Spacing="16">
+                    <!--  Title + Icon  -->
+                    <Grid
+                        Name="TitlePanel"
+                        HorizontalAlignment="Stretch"
+                        ColumnDefinitions="Auto,*">
+                        <Border
+                            Grid.Column="0"
+                            Width="128"
+                            Height="128"
+                            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
+                            BorderThickness="10"
+                            CornerRadius="24">
+                            <Image
+                                Name="PackageIcon"
+                                Width="80"
+                                Height="80"
+                                Margin="8" />
+                        </Border>
+
+                        <TextBlock
+                            Name="PackageName"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe UI Variable Display"
+                            FontSize="50"
+                            FontWeight="Bold"
+                            TextWrapping="Wrap" />
+                    </Grid>
+
+                    <!--  Tags + Description  -->
+                    <StackPanel
+                        Name="DescriptionPanel"
+                        VerticalAlignment="Top">
+                        <ItemsControl Name="TagGridView" Items="{Binding ShowableTags}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="TextBlock">
+                                    <Border
+                                        Height="24"
+                                        Margin="2"
+                                        Padding="8,2,8,2"
+                                        VerticalAlignment="Center"
+                                        Background="{DynamicResource AccentAAFillColorDefaultBrush}"
+                                        CornerRadius="12">
+                                        <TextBlock Foreground="{DynamicResource TextOnAccentAAFillColorPrimary}" Text="{Binding Text}" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <!--  Basic Info Panel  -->
+                    <TextBlock
+                        Name="BasicInfoPanelText"
+                        VerticalAlignment="Top"
+                        LineHeight="25"
+                        TextWrapping="Wrap" />
+
+                    <!--  Install and Share button  -->
+                    <Grid
+                        Name="ActionsPanel"
+                        VerticalAlignment="Top"
+                        ColumnDefinitions="250*,16,250*">
+                        <Button
+                            Name="ShareButton"
+                            Grid.Column="0"
+                            Height="40"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Click="ShareButton_Click"
+                            CornerRadius="8">
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <widgets:LocalIcon
+                                    Width="20"
+                                    Height="20"
+                                    Icon="share" />
+                                <widgets:TranslatedTextBlock VerticalAlignment="Center" Text="Share this package" />
+                            </StackPanel>
+                        </Button>
+
+                        <Grid Grid.Column="2" ColumnDefinitions="*,Auto">
+                            <Button
+                                Name="MainActionButton"
+                                Grid.Column="0"
+                                Height="40"
+                                HorizontalAlignment="Stretch"
+                                Click="ActionButton_Click"
+                                Content="Action!"
+                                CornerRadius="8,0,0,8"
+                                Classes="accent" />
+
+                            <Button
+                                Name="ExtendedActionButton"
+                                Grid.Column="1"
+                                Width="30"
+                                Height="40"
+                                Margin="1,0,0,0"
+                                Padding="0,0,2,0"
+                                CornerRadius="0,8,8,0"
+                                Classes="accent">
+                                <TextBlock FontSize="13" Text="&#xE70D;" />
+                                <!-- Flyout placeholder for extended actions menu -->
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                    <!--  Screenshots  -->
+                    <StackPanel
+                        Name="ScreenshotsPanel"
+                        Spacing="8">
+                        <Carousel Name="ScreenshotsCarroussel">
+                            <Grid Margin="30,10,30,10" ColumnDefinitions="*,Auto">
+                                <widgets:TranslatedTextBlock
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Text="This package has no screenshots or is missing the icon? Contrbute to WingetUI by adding the missing icons and screenshots to our open, public database."
+                                    TextWrapping="Wrap" />
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Stretch">
+                                    <widgets:TranslatedTextBlock VerticalAlignment="Center" Text="Become a contributor" />
+                                </Button>
+                            </Grid>
+                        </Carousel>
+
+                        <Grid Name="IconsExtraBanner" IsVisible="False" ColumnDefinitions="*,Auto">
+                            <widgets:TranslatedTextBlock
+                                Grid.Column="0"
+                                Text="This package has no screenshots or is missing the icon? Contrbute to WingetUI by adding the missing icons and screenshots to our open, public database."
+                                TextWrapping="Wrap" />
+                            <Button Grid.Column="1" VerticalAlignment="Stretch">
+                                <widgets:TranslatedTextBlock VerticalAlignment="Center" Text="Become a contributor" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+
+                    <!--  Install Options  -->
+                    <Border Name="InstallOptionsBorder">
+                        <Expander
+                            Name="InstallOptionsExpander"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch">
+                            <Expander.Header>
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <widgets:LocalIcon Grid.Column="0" Height="24" Icon="options" />
+                                    <widgets:TranslatedTextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        FontWeight="SemiBold"
+                                        Text="Installation options" />
+                                    <Button
+                                        x:Name="SaveInstallOptionsButton"
+                                        Grid.Column="2"
+                                        Height="34"
+                                        MinWidth="60"
+                                        Click="SaveInstallOptionsButton_Click"
+                                        CornerRadius="6"
+                                        IsEnabled="{Binding #InstallOptionsExpander.IsExpanded}"
+                                        Classes="accent">
+                                        <widgets:TranslatedTextBlock Text="Save" />
+                                    </Button>
+                                </Grid>
+                            </Expander.Header>
+                        </Expander>
+                    </Border>
+
+                    <!--  Package Details  -->
+                    <TextBlock
+                        Name="DetailsPanelText"
+                        VerticalAlignment="Top"
+                        LineHeight="25"
+                        TextWrapping="Wrap" />
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <widgets:DialogCloseButton Margin="0,-24,-24,0" Click="CloseButton_Click" />
+        <ProgressBar
+            Name="LoadingIndicator"
+            Margin="-30,-24,-30,0"
+            VerticalAlignment="Top"
+            IsIndeterminate="True" />
+    </Grid>
+</UserControl>
