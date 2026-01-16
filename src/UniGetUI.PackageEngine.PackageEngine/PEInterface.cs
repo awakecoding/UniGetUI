@@ -9,7 +9,9 @@ using UniGetUI.PackageEngine.Managers.PipManager;
 using UniGetUI.PackageEngine.Managers.PowerShell7Manager;
 using UniGetUI.PackageEngine.Managers.PowerShellManager;
 using UniGetUI.PackageEngine.Managers.ScoopManager;
+#if WINDOWS
 using UniGetUI.PackageEngine.Managers.WingetManager;
+#endif
 using UniGetUI.PackageEngine.Managers.VcpkgManager;
 using UniGetUI.PackageEngine.PackageClasses;
 using UniGetUI.PackageEngine.PackageLoader;
@@ -23,7 +25,9 @@ namespace UniGetUI.PackageEngine
     {
         private const int ManagerLoadTimeout = 60; // 60 seconds timeout for Package Manager initialization (in seconds)
 
+#if WINDOWS
         public static readonly WinGet WinGet = new();
+#endif
         public static readonly Scoop Scoop = new();
         public static readonly Chocolatey Chocolatey = new();
         public static readonly Npm Npm = new();
@@ -34,7 +38,12 @@ namespace UniGetUI.PackageEngine
         public static readonly Cargo Cargo = new();
         public static readonly Vcpkg Vcpkg = new();
 
-        public static readonly IPackageManager[] Managers = [WinGet, Scoop, Chocolatey, Npm, Pip, Cargo, Vcpkg, DotNet, PowerShell, PowerShell7];
+        public static readonly IPackageManager[] Managers = [
+#if WINDOWS
+            WinGet, 
+#endif
+            Scoop, Chocolatey, Npm, Pip, Cargo, Vcpkg, DotNet, PowerShell, PowerShell7
+        ];
 
         public static void LoadLoaders()
         {

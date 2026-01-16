@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-
+  <PropertyGroup Condition="'$([MSBuild]::IsOSPlatform(Windows))' == 'true'">
+    <DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UniGetUI.Core.Classes\UniGetUI.Core.Classes.csproj" />
@@ -20,7 +22,7 @@
     <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.PowerShell7\UniGetUI.PackageEngine.Managers.PowerShell7.csproj" />
     <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.PowerShell\UniGetUI.PackageEngine.Managers.PowerShell.csproj" />
     <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.Scoop\UniGetUI.PackageEngine.Managers.Scoop.csproj" />
-    <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.WinGet\UniGetUI.PackageEngine.Managers.WinGet.csproj" />
+    <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.WinGet\UniGetUI.PackageEngine.Managers.WinGet.csproj" Condition="'$([MSBuild]::IsOSPlatform(Windows))' == 'true'" />
     <ProjectReference Include="..\UniGetUI.PackageEngine.Managers.Vcpkg\UniGetUI.PackageEngine.Managers.Vcpkg.csproj" />
     <ProjectReference Include="..\UniGetUI.PackageEngine.Operations\UniGetUI.PackageEngine.Operations.csproj" />
     <ProjectReference Include="..\UniGetUI.PackageEngine.PackageLoader\UniGetUI.PackageEngine.PackageLoaders.csproj" />

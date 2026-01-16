@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Condition="'$([MSBuild]::IsOSPlatform(Windows))' == 'true'">
+    <DefineConstants>$(DefineConstants);WINDOWS</DefineConstants>
+  </PropertyGroup>
+
   <!-- Exclude Windows-specific files on non-Windows platforms -->
   <ItemGroup Condition="'$([MSBuild]::IsOSPlatform(Windows))' != 'true'">
     <Compile Remove="ClientHelpers\NativePackageHandler.cs" />
