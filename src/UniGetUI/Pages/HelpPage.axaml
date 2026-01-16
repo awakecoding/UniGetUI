@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Dialogs.HelpPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    mc:Ignorable="d">
+
+    <Grid
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        RowSpacing="4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="BackButton"
+                Grid.Column="0"
+                Width="35"
+                Height="35"
+                Padding="5"
+                Click="BackButton_Click"
+                CornerRadius="4,0,0,4">
+                <TextBlock FontSize="20" Text="&#xE76B;" />
+            </Button>
+            <Button
+                Name="RightButton"
+                Grid.Column="1"
+                Width="35"
+                Height="35"
+                Padding="5"
+                Click="RightButton_Click"
+                CornerRadius="0">
+                <TextBlock FontSize="20" Text="&#xE76C;" />
+            </Button>
+            <Button
+                Name="HomeButton"
+                Grid.Column="2"
+                Width="35"
+                Height="35"
+                Padding="5"
+                Click="HomeButton_Click"
+                CornerRadius="0">
+                <TextBlock FontSize="16" Text="&#xE80F;" />
+            </Button>
+            <Button
+                Name="ReloadButton"
+                Grid.Column="3"
+                Width="35"
+                Height="35"
+                Padding="5"
+                Click="ReloadButton_Click"
+                CornerRadius="0,4,4,0">
+                <TextBlock FontSize="16" Text="&#xE72C;" />
+            </Button>
+            <Button
+                Name="BrowserButton"
+                Grid.Column="5"
+                Height="35"
+                Click="BrowserButton_Click">
+                <widgets:TranslatedTextBlock Text="View page on browser" />
+            </Button>
+        </Grid>
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            x:Name="WebViewBorder"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            CornerRadius="6">
+            <!--controls:WebView2 Name="WebView" Source="https://www.google.com/" /-->
+        </Border>
+        <ProgressBar
+            Name="ProgressBar"
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            CornerRadius="4,4,0,0"
+            IsIndeterminate="True" />
+    </Grid>
+</UserControl>
