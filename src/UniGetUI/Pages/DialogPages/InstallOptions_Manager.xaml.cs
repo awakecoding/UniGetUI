@@ -16,7 +16,7 @@ using Architecture = UniGetUI.PackageEngine.Enums.Architecture;
 
 namespace UniGetUI.Pages.DialogPages;
 
-public sealed partial class InstallOptions_Manager : UserControl
+public partial class InstallOptions_Manager : UserControl
 {
     private readonly IPackageManager Manager;
     private static string DefaultLocationLabel = null!;

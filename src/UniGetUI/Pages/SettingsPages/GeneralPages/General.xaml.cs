@@ -15,7 +15,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class General : UserControl, ISettingsPage
+    public partial class General : UserControl, ISettingsPage
     {
         public General()
         {

@@ -40,7 +40,7 @@ namespace UniGetUI.Interface
         Null // Used for initializers
     }
 
-    public sealed partial class MainView : UserControl
+    public partial class MainView : UserControl
     {
         private DiscoverSoftwarePage DiscoverPage;
         private SoftwareUpdatesPage UpdatesPage;
@@ -179,7 +179,7 @@ namespace UniGetUI.Interface
             NavigateTo(type);
         }
 
-        private Page GetPageForType(PageType type)
+        private UserControl GetPageForType(PageType type)
             => type switch
             {
                 PageType.Discover => DiscoverPage,
@@ -487,7 +487,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void MoreNavBtn_Tapped(object sender, Microsoft.UI.Xaml.Input.Avalonia.Input.TappedEventArgs e)
+        private void MoreNavBtn_Tapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
             (VersionMenuItem as MenuItem).Text = CoreTools.Translate("WingetUI Version {0}", CoreData.VersionName);
             MoreNavButtonMenu.ShowAt(sender as Avalonia.Controls.Control);

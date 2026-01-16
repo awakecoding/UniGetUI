@@ -34,7 +34,7 @@ namespace UniGetUI.Interface.Widgets
         }
     }
 
-    public sealed partial class SourceManager : UserControl
+    public partial class SourceManager : UserControl
     {
         private IPackageManager Manager { get; set; }
         // ReSharper disable once FieldCanBeMadeReadOnly.Local

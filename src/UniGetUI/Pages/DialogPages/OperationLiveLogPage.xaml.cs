@@ -11,7 +11,7 @@ namespace UniGetUI.Pages.DialogPages;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class OperationLiveLogPage : UserControl
+public partial class OperationLiveLogPage : UserControl
 {
     public event EventHandler<EventArgs>? Close;
     private Avalonia.Controls.Documents.Paragraph par;

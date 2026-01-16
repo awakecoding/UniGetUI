@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Media.Animation;
 using UniGetUI.Core.Tools;
 using UniGetUI.PackageEngine.ManagerClasses.Manager;
 using UniGetUI.Pages.SettingsPages.GeneralPages;
@@ -15,7 +14,7 @@ namespace UniGetUI.Pages.SettingsPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsBasePage : UserControl, IEnterLeaveListener, IInnerNavigationPage
+    public partial class SettingsBasePage : UserControl, IEnterLeaveListener, IInnerNavigationPage
     {
         bool IsManagers;
         public SettingsBasePage(bool isManagers)

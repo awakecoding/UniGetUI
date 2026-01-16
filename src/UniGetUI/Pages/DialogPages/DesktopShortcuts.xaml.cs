@@ -18,7 +18,7 @@ namespace UniGetUI.Interface
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DesktopShortcutsManager : UserControl
+    public partial class DesktopShortcutsManager : UserControl
     {
         public event EventHandler? Close;
         private readonly ObservableCollection<ShortcutEntry> Shortcuts = [];

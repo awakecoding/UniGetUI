@@ -14,7 +14,6 @@ using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.SettingsEngine.SecureSettings;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface;
-using UniGetUI.Interface.BackgroundApi;
 using UniGetUI.Interface.Telemetry;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Classes.Manager.Classes;

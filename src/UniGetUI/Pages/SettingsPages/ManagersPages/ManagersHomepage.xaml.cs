@@ -18,7 +18,7 @@ namespace UniGetUI.Pages.SettingsPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ManagersHomepage : UserControl, ISettingsPage
+    public partial class ManagersHomepage : UserControl, ISettingsPage
     {
         public bool CanGoBack => false;
         public string ShortTitle => CoreTools.Translate("Package manager preferences");
@@ -124,7 +124,7 @@ namespace UniGetUI.Pages.SettingsPages
             last.CornerRadius = new CornerRadius(0, 0, 8, 8);
         }
 
-        protected override void OnNavigatedTo(object e)
+        protected virtual void OnNavigatedTo(object e)
         {
             _isLoadingToggles = true;
             for(int i = 0; i < managerControls.Count; i++)

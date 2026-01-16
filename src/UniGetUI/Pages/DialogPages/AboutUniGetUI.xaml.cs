@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Media.Animation;
 using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Pages.AboutPages;
@@ -14,7 +13,7 @@ namespace UniGetUI.Interface
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
 
-    public sealed partial class AboutUniGetUI : UserControl
+    public partial class AboutUniGetUI : UserControl
     {
 
         public event EventHandler? Close;
@@ -49,7 +48,7 @@ namespace UniGetUI.Interface
 
         }
 
-        private void CloseButton_Click(object sender, Microsoft.UI.Xaml.Avalonia.Interactivity.RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }

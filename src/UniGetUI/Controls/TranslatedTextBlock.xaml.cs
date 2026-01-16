@@ -8,7 +8,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class TranslatedTextBlock : UserControl
+    public partial class TranslatedTextBlock : UserControl
     {
         public string __text = "";
         public string Text

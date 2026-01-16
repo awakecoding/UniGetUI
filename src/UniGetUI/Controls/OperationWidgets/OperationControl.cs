@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;

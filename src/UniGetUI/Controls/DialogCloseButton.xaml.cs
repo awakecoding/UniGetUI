@@ -6,7 +6,7 @@ using Avalonia.Interactivity;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace UniGetUI.Interface.Widgets;
-public sealed partial class DialogCloseButton : UserControl
+public partial class DialogCloseButton : UserControl
 {
     public event EventHandler<Avalonia.Interactivity.RoutedEventArgs>? Click;
 

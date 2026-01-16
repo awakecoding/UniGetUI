@@ -4,7 +4,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Pages.LogPage
 {
-    public sealed partial class UniGetUILogPage : BaseLogPage
+    public partial class UniGetUILogPage : BaseLogPage
     {
         public UniGetUILogPage() : base(true)
         {

@@ -11,7 +11,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class Announcer : UserControl
+    public partial class Announcer : UserControl
     {
         public Uri Url
         {

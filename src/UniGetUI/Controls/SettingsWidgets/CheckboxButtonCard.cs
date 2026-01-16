@@ -14,7 +14,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class CheckboxButtonCard : CommunityToolkit.WinUI.Controls.SettingsCard
+    public partial class CheckboxButtonCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         public ToggleSwitch _checkbox;
         public TextBlock _textblock;

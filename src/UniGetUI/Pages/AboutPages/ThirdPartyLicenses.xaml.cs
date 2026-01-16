@@ -21,7 +21,7 @@ namespace UniGetUI.Interface.Pages.AboutPages
         public Uri? HomepageUrl { get; set; }
     }
 
-    public sealed partial class ThirdPartyLicenses : UserControl
+    public partial class ThirdPartyLicenses : UserControl
     {
         public ObservableCollection<LibraryLicense> Licenses = [];
 

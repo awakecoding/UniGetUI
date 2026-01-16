@@ -33,7 +33,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PackageManagerPage : UserControl, ISettingsPage
+    public partial class PackageManagerPage : UserControl, ISettingsPage
     {
         IPackageManager? Manager;
         public event EventHandler? RestartRequired;
@@ -48,7 +48,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(object e)
+        protected virtual void OnNavigatedTo(object e)
         {
             Manager = null;
             if (e.Parameter is not Type Manager_T) throw new InvalidDataException("The passed parameter was not a type");
