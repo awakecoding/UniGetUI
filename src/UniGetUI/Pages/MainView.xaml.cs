@@ -19,6 +19,7 @@ using UniGetUI.Controls;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.PackageLoader;
 using UniGetUI.Pages.PageInterfaces;
+using UniGetUI.Interface.Widgets;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -64,47 +65,44 @@ namespace UniGetUI.Interface
         {
             InitializeComponent();
             MainTextBlock = mainTextBlock;
-            OperationList.ItemContainerTransitions = null;
+            // ItemContainerTransitions not available in Avalonia
             OperationList.ItemsSource = MainApp.Operations._operationList;
             DiscoverPage = new DiscoverSoftwarePage();
             UpdatesPage = new SoftwareUpdatesPage();
             InstalledPage = new InstalledPackagesPage();
             BundlesPage = new PackageBundlesPage();
 
-            MoreNavButtonMenu.Closed += (_, _) => SelectNavButtonForPage(CurrentPage_t);
+            // MoreNavButtonMenu.Closed += (_, _) => SelectNavButtonForPage(CurrentPage_t);
             KeyDown += (s, e) =>
             {
-                if (e.KeyStatus.WasKeyDown)
-                {
-                    // ignore repeated KeyDown events when pressing and holding a key
-                    return;
-                }
+                // Avalonia doesn't have e.IsRepeat, so we'll skip the repeat check
+                // if (e.IsRepeat) return;
 
-                bool IS_CONTROL_PRESSED = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-                bool IS_SHIFT_PRESSED = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+                bool IS_CONTROL_PRESSED = e.KeyModifiers.HasFlag(KeyModifiers.Control);
+                bool IS_SHIFT_PRESSED = e.KeyModifiers.HasFlag(KeyModifiers.Shift);
 
-                Page currentPage = GetPageForType(CurrentPage_t);
-                if (e.Key is VirtualKey.Tab && IS_CONTROL_PRESSED)
+                object currentPage = GetPageForType(CurrentPage_t);
+                if (e.Key is Key.Tab && IS_CONTROL_PRESSED)
                 {
                     NavigateTo(IS_SHIFT_PRESSED ? GetPreviousPage(CurrentPage_t) : GetNextPage(CurrentPage_t));
                 }
-                else if (!IS_CONTROL_PRESSED && !IS_SHIFT_PRESSED && e.Key == VirtualKey.F1)
+                else if (!IS_CONTROL_PRESSED && !IS_SHIFT_PRESSED && e.Key == Key.F1)
                 {
                     NavigateTo(PageType.Help);
                 }
-                else if ((e.Key is VirtualKey.Q or VirtualKey.W) && IS_CONTROL_PRESSED)
+                else if ((e.Key is Key.Q or Key.W) && IS_CONTROL_PRESSED)
                 {
                     MainApp.Instance.MainWindow.Close();
                 }
-                else if (e.Key is VirtualKey.F5 || (e.Key is VirtualKey.R && IS_CONTROL_PRESSED))
+                else if (e.Key is Key.F5 || (e.Key is Key.R && IS_CONTROL_PRESSED))
                 {
                     (currentPage as IKeyboardShortcutListener)?.ReloadTriggered();
                 }
-                else if (e.Key is VirtualKey.F && IS_CONTROL_PRESSED)
+                else if (e.Key is Key.F && IS_CONTROL_PRESSED)
                 {
                     (currentPage as IKeyboardShortcutListener)?.SearchTriggered();
                 }
-                else if (e.Key is VirtualKey.A && IS_CONTROL_PRESSED)
+                else if (e.Key is Key.A && IS_CONTROL_PRESSED)
                 {
                     (currentPage as IKeyboardShortcutListener)?.SelectAllTriggered();
                 }
@@ -120,24 +118,27 @@ namespace UniGetUI.Interface
                 {  InstalledNavBtn,  InstalledPackagesLoader.Instance },
             })
             {
-                pair.Value.FinishedLoading += (_, _) => MainApp.Dispatcher.TryEnqueue(() => pair.Key.IsLoading = false);
-                pair.Value.StartedLoading += (_, _) => MainApp.Dispatcher.TryEnqueue(() => pair.Key.IsLoading = true);
+                pair.Value.FinishedLoading += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() => pair.Key.IsLoading = false);
+                pair.Value.StartedLoading += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() => pair.Key.IsLoading = true);
                 pair.Key.IsLoading = pair.Value.IsLoading;
             }
 
-            UpgradablePackagesLoader.Instance.PackagesChanged += (_, _) => MainApp.Dispatcher.TryEnqueue(() =>
+            UpgradablePackagesLoader.Instance.PackagesChanged += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
-                UpdatesBadge.Value = UpgradablePackagesLoader.Instance.Count();
-                UpdatesBadge.Visibility = UpdatesBadge.Value > 0 ? Visibility.Visible : Visibility.Collapsed;
+                int count = UpgradablePackagesLoader.Instance.Count();
+                // UpdatesBadge is an InfoBadge - needs special handling
+                // UpdatesBadge.Value = count;
+                UpdatesBadge.IsVisible = count > 0;
             });
-            UpdatesBadge.Value = UpgradablePackagesLoader.Instance.Count();
-            UpdatesBadge.Visibility = UpdatesBadge.Value > 0 ? Visibility.Visible : Visibility.Collapsed;
+            int initialCount = UpgradablePackagesLoader.Instance.Count();
+            // UpdatesBadge.Value = initialCount;
+            UpdatesBadge.IsVisible = initialCount > 0;
 
-            BundlesPage.UnsavedChangesStateChanged += (_, _) => MainApp.Dispatcher.TryEnqueue(() =>
+            BundlesPage.UnsavedChangesStateChanged += (_, _) => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
-                BundlesBadge.Visibility = BundlesPage.HasUnsavedChanges ? Visibility.Visible : Visibility.Collapsed;
+                BundlesBadge.IsVisible = BundlesPage.HasUnsavedChanges;
             });
-            BundlesBadge.Visibility = BundlesPage.HasUnsavedChanges ? Visibility.Visible : Visibility.Collapsed;
+            BundlesBadge.IsVisible = BundlesPage.HasUnsavedChanges;
 
             /*
              * End connecting stuff together
@@ -179,7 +180,7 @@ namespace UniGetUI.Interface
             NavigateTo(type);
         }
 
-        private UserControl GetPageForType(PageType type)
+        private object GetPageForType(PageType type)
             => type switch
             {
                 PageType.Discover => DiscoverPage,
@@ -246,16 +247,16 @@ namespace UniGetUI.Interface
         private void SelectNavButtonForPage(PageType page)
         {
             _lastNavItemSelectionWasAuto = true;
-            NavView.SelectedItem = page switch
-            {
-                PageType.Discover => DiscoverNavBtn,
-                PageType.Updates => UpdatesNavBtn,
-                PageType.Installed => InstalledNavBtn,
-                PageType.Bundles => BundlesNavBtn,
-                PageType.Settings => SettingsNavBtn,
-                PageType.Managers => ManagersNavBtn,
-                _ => MoreNavBtn,
-            };
+            // NavView.SelectedItem = page switch
+            // {
+            //     PageType.Discover => DiscoverNavBtn,
+            //     PageType.Updates => UpdatesNavBtn,
+            //     PageType.Installed => InstalledNavBtn,
+            //     PageType.Bundles => BundlesNavBtn,
+            //     PageType.Settings => SettingsNavBtn,
+            //     PageType.Managers => ManagersNavBtn,
+            //     _ => MoreNavBtn,
+            // };
             _lastNavItemSelectionWasAuto = false;
         }
 
@@ -273,8 +274,8 @@ namespace UniGetUI.Interface
             if (CurrentPage_t == NewPage_t)
                 return;
 
-            Page NewPage = GetPageForType(NewPage_t);
-            Page? oldPage = ContentFrame.Content as Page;
+            object NewPage = GetPageForType(NewPage_t);
+            object? oldPage = ContentFrame.Content;
             ContentFrame.Content = NewPage;
 
             OldPage_t = CurrentPage_t;
@@ -284,7 +285,7 @@ namespace UniGetUI.Interface
             if(oldPage is ISearchBoxPage oldSPage)
             {
                 MainTextBlock.TextChanged -= oldSPage.SearchBox_TextChanged;
-                MainTextBlock.QuerySubmitted -= oldSPage.SearchBox_QuerySubmitted;
+                // MainTextBlock.QuerySubmitted -= oldSPage.SearchBox_QuerySubmitted; // QuerySubmitted doesn't exist in Avalonia AutoCompleteBox
                 oldSPage.QueryBackup = MainTextBlock.Text;
             }
 
@@ -301,15 +302,15 @@ namespace UniGetUI.Interface
             if (NewPage is ISearchBoxPage newSPage)
             {
                 MainTextBlock.TextChanged += newSPage.SearchBox_TextChanged;
-                MainTextBlock.QuerySubmitted += newSPage.SearchBox_QuerySubmitted;
+                // MainTextBlock.QuerySubmitted += newSPage.SearchBox_QuerySubmitted; // QuerySubmitted doesn't exist in Avalonia AutoCompleteBox
                 MainTextBlock.Text = newSPage.QueryBackup;
-                MainTextBlock.PlaceholderText = newSPage.SearchBoxPlaceholder;
+                MainTextBlock.Watermark = newSPage.SearchBoxPlaceholder;
                 MainTextBlock.IsEnabled = true;
             }
             else
             {
                 MainTextBlock.Text = "";
-                MainTextBlock.PlaceholderText = "";
+                MainTextBlock.Watermark = "";
                 MainTextBlock.IsEnabled = false;
             }
         }
@@ -391,16 +392,16 @@ namespace UniGetUI.Interface
                 {
                     ContentGrid.RowDefinitions[2].Height = new GridLength(0);
                     ContentGrid.RowDefinitions[1].Height = new GridLength(16);
-                    OperationSplitter.Visibility = Visibility.Visible;
-                    OperationSplitterMenuButton.Visibility = Visibility.Visible;
+                    OperationSplitter.IsVisible = true;
+                    OperationSplitterMenuButton.IsVisible = true;
                     OperationSplitter.IsEnabled = false;
                 }
                 else
                 {
                     ContentGrid.RowDefinitions[2].Height = new GridLength(Math.Min(maxHeight, 200));
                     ContentGrid.RowDefinitions[1].Height = new GridLength(16);
-                    OperationSplitter.Visibility = Visibility.Visible;
-                    OperationSplitterMenuButton.Visibility = Visibility.Visible;
+                    OperationSplitter.IsVisible = true;
+                    OperationSplitterMenuButton.IsVisible = true;
                     OperationSplitter.IsEnabled = true;
                 }
             }
@@ -408,8 +409,8 @@ namespace UniGetUI.Interface
             {
                 ContentGrid.RowDefinitions[1].Height = new GridLength(0);
                 ContentGrid.RowDefinitions[2].Height = new GridLength(0);
-                OperationSplitter.Visibility = Visibility.Collapsed;
-                OperationSplitterMenuButton.Visibility = Visibility.Collapsed;
+                OperationSplitter.IsVisible = false;
+                OperationSplitterMenuButton.IsVisible = false;
             }
             ResizingOPLayout = false;
         }
@@ -427,7 +428,7 @@ namespace UniGetUI.Interface
 
         private void OperationSplitterMenuButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            OperationListMenu.ShowAt(OperationSplitterMenuButton, new FlyoutShowOptions { ShowMode = FlyoutShowMode.Standard });
+            // OperationListMenu.ShowAt(OperationSplitterMenuButton, new FlyoutShowOptions { ShowMode = FlyoutShowMode.Standard });
         }
 
         private void ExpandCollapseOpList_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -435,13 +436,17 @@ namespace UniGetUI.Interface
             if (isCollapsed)
             {
                 isCollapsed = false;
-                ExpandCollapseOpList.Content = new TextBlock { Glyph = "\uE96E", FontSize = 14 };
+                var icon = new Avalonia.Controls.TextBlock { FontSize = 14 };
+                icon.SetGlyph("\uE96E");
+                ExpandCollapseOpList.Content = icon;
                 UpdateOperationsLayout();
             }
             else
             {
                 isCollapsed = true;
-                ExpandCollapseOpList.Content = new TextBlock { Glyph = "\uE96D", FontSize = 14 };
+                var icon = new Avalonia.Controls.TextBlock { FontSize = 14 };
+                icon.SetGlyph("\uE96D");
+                ExpandCollapseOpList.Content = icon;
                 UpdateOperationsLayout();
             }
         }
@@ -476,21 +481,21 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void NavigationView_SelectionChanged(SplitView sender, SelectionChangedEventArgs args)
+        private void NavigationView_SelectionChanged(object? sender, SelectionChangedEventArgs args)
         {
             if (_lastNavItemSelectionWasAuto)
                 return;
 
-            if(args.SelectedItem is CustomNavViewItem item && item.Tag is not PageType.Null)
+            if(args.AddedItems.Count > 0 && args.AddedItems[0] is CustomNavViewItem item && item.Tag is PageType)
             {
-                NavigateTo(item.Tag);
+                NavigateTo((PageType)item.Tag);
             }
         }
 
         private void MoreNavBtn_Tapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
-            (VersionMenuItem as MenuItem).Text = CoreTools.Translate("WingetUI Version {0}", CoreData.VersionName);
-            MoreNavButtonMenu.ShowAt(sender as Avalonia.Controls.Control);
+            // (VersionMenuItem as MenuItem).Header = CoreTools.Translate("WingetUI Version {0}", CoreData.VersionName);
+            // MoreNavButtonMenu.ShowAt(sender as Avalonia.Controls.Control);
         }
 
         internal void LoadBundleFromFile(string param)
