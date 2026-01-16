@@ -1,4 +1,6 @@
+#if WINDOWS
 using ABI.Windows.UI.Text.Core;
+#endif
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.SettingsEngine.SecureSettings;

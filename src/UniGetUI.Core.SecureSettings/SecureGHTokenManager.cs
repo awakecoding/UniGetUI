@@ -1,4 +1,6 @@
+#if WINDOWS
 using Windows.Security.Credentials;
+#endif
 using UniGetUI.Core.Logging;
 
 namespace UniGetUI.Core.SecureSettings
@@ -16,6 +18,7 @@ namespace UniGetUI.Core.SecureSettings
                 return;
             }
 
+#if WINDOWS
             try
             {
                 var vault = new PasswordVault();
@@ -31,10 +34,14 @@ namespace UniGetUI.Core.SecureSettings
                 Logger.Error("An error occurred while attempting to delete the currently stored GitHub Token");
                 Logger.Error(ex);
             }
+#else
+            Logger.Warn("Secure token storage not yet implemented for non-Windows platforms");
+#endif
         }
 
         public static string? GetToken()
         {
+#if WINDOWS
             try
             {
                 var vault = new PasswordVault();
@@ -48,10 +55,15 @@ namespace UniGetUI.Core.SecureSettings
                 Logger.Warn($"Could not retrieve token (it may not exist): {ex.Message}");
                 return null;
             }
+#else
+            Logger.Warn("Secure token storage not yet implemented for non-Windows platforms");
+            return null;
+#endif
         }
 
         public static void DeleteToken()
         {
+#if WINDOWS
             try
             {
                 var vault = new PasswordVault();
@@ -67,6 +79,9 @@ namespace UniGetUI.Core.SecureSettings
                 Logger.Error("An error occurred while attempting to delete the currently stored GitHub Token");
                 Logger.Error(ex);
             }
+#else
+            Logger.Warn("Secure token storage not yet implemented for non-Windows platforms");
+#endif
         }
     }
 }
