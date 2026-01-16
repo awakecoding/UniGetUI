@@ -13,27 +13,24 @@ namespace UniGetUI.Interface.Widgets
 {
     public partial class Announcer : UserControl
     {
-        public Uri Url
+        public static readonly StyledProperty<Uri?> UrlProperty =
+            AvaloniaProperty.Register<Announcer, Uri?>(nameof(Url));
+
+        public Uri? Url
         {
-            get => (Uri)GetValue(UrlProperty);
+            get => GetValue(UrlProperty);
             set => SetValue(UrlProperty, value);
         }
 
-        private readonly Avalonia.AvaloniaProperty UrlProperty;
-
         private static readonly HttpClient NetClient = new(CoreTools.GenericHttpClientParameters);
+        
         public Announcer()
         {
             NetClient.DefaultRequestHeaders.UserAgent.ParseAdd(CoreData.UserAgentString);
-            UrlProperty = Avalonia.AvaloniaProperty.Register(
-            nameof(UrlProperty),
-            typeof(Uri),
-            typeof(CheckboxCard),
-            new PropertyMetadata(default(Uri), new PropertyChangedCallback((_, _) => _ = LoadAnnouncements())));
-
+            
             InitializeComponent();
-            DefaultStyleKey = typeof(Announcer);
-            BringIntoViewRequested += (_, _) => _ = LoadAnnouncements();
+            
+            UrlProperty.Changed.AddClassHandler<Announcer>((x, e) => x.LoadAnnouncements());
 
             int i = 0;
             PointerPressed += (_, _) => { if (i++ % 3 != 0) { _ = LoadAnnouncements(); } };

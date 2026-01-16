@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Pages.AboutPages.SupportMe"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:UniGetUI.Interface.Pages.AboutPages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    mc:Ignorable="d">
+
+    <ScrollViewer
+        Margin="0,10,0,0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        <StackPanel
+            Padding="0"
+            Orientation="Vertical"
+            Spacing="4">
+            <widgets:TranslatedTextBlock
+                FontFamily="Segoe UI Variable Display"
+                FontSize="24"
+                FontWeight="Bold"
+                Text="Support the developer" />
+            <widgets:TranslatedTextBlock Text="Do you find WingetUI useful? If you can, you may want to support my work, so I can continue making WingetUI the ultimate package managing interface." />
+            <widgets:TranslatedTextBlock Text="WingetUI is free, and it will be free forever. No ads, no credit card, no premium version. 100% free, forever." />
+            <widgets:TranslatedTextBlock Text="Thank you ❤" />
+            <TextBlock />
+            <Button HorizontalAlignment="Stretch" Click="KoFiButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="48" Source="https://storage.ko-fi.com/cdn/kofi3.png?v=3" />
+                </StackPanel>
+            </Button>
+            <TextBlock />
+            <widgets:TranslatedTextBlock
+                FontFamily="Segoe UI Variable Display"
+                FontSize="24"
+                FontWeight="Bold"
+                Text="Share WingetUI" />
+            <widgets:TranslatedTextBlock Text="Don't feel like donating? Don't worry, you can always share WingetUI with your friends. Spread the word about WingetUI." />
+            <widgets:TranslatedTextBlock Text="Thank you 😉" />
+            <Button HorizontalAlignment="Stretch" Click="HomepageButton_Click">
+                <widgets:TranslatedTextBlock Text="WingetUI Homepage - Share this link!" />
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
