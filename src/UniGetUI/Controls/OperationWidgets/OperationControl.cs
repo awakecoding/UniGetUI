@@ -1,10 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
+using Avalonia;
+using Avalonia.Media;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;

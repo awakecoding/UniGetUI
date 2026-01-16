@@ -1,5 +1,4 @@
-using CommunityToolkit.WinUI.Controls;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia.Controls;
 using UniGetUI.Core.Tools;
 
 // To learn more about WinUI, the WinUI project structure,

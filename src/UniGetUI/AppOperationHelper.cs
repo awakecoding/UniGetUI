@@ -1,8 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia.Controls;
 using UniGetUI.Controls.OperationWidgets;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;

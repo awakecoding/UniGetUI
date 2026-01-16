@@ -1,10 +1,8 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
+using Avalonia;
+using Avalonia.Controls;
 using UniGetUI.Core.Data;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;

@@ -1,6 +1,6 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Media;
 using UniGetUI.Interface.Enums;
 
 namespace UniGetUI.Interface.Widgets

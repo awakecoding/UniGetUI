@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
-using CommunityToolkit.WinUI.Controls;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Data;
+using Avalonia.Controls;
+using Avalonia.Data;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;

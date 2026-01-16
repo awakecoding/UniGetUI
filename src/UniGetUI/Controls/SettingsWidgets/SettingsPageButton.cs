@@ -1,5 +1,5 @@
-using CommunityToolkit.WinUI.Controls;
-using Microsoft.UI.Xaml;
+using Avalonia;
+using Avalonia.Controls;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Enums;
 

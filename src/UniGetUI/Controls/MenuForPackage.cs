@@ -1,7 +1,7 @@
 
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Media;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Enums;
 

@@ -1,5 +1,8 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Enums;
@@ -8,12 +11,8 @@ using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Enums;
 using UniGetUI.PackageEngine.Interfaces;
 using UniGetUI.PackageEngine.PackageLoader;
-using Windows.System;
-using Windows.UI.Text;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using UniGetUI.Interface.Telemetry;
 using UniGetUI.Pages.DialogPages;
-using Microsoft.UI.Xaml.Input;
 
 namespace UniGetUI.Interface.SoftwarePages
 {

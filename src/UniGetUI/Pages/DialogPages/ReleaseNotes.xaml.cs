@@ -1,5 +1,5 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Avalonia;
+using Avalonia.Controls;
 using UniGetUI.Core.Data;
 
 // To learn more about WinUI, the WinUI project structure,

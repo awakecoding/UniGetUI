@@ -1,12 +1,8 @@
 using System.Web;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Text;
-using ABI.Microsoft.UI.Text;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Media;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Media;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Dialogs;
