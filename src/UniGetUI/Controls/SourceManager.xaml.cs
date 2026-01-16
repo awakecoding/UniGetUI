@@ -71,7 +71,7 @@ namespace UniGetUI.Interface.Widgets
                         NameSourceRef.Add(source.Name, source);
                     }
 
-                    d.Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style;
+                    d.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style;
                     StackPanel p = new()
                     {
                         Spacing = 8
@@ -141,9 +141,9 @@ namespace UniGetUI.Interface.Widgets
                 {
                     Window d = new()
                     {
-                        XamlRoot = XamlRoot,
+                        //XamlRoot = XamlRoot,
                         Title = CoreTools.Translate("An error occurred"),
-                        Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style,
+                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style,
                         Content = CoreTools.Translate("An error occurred when adding the source: ") + ex.Message
                     };
                     _ = DialogHelper.ShowDialogAsync(d, HighPriority: true);
@@ -167,7 +167,7 @@ namespace UniGetUI.Interface.Widgets
 
             LoadingBar.Visibility = Visibility.Visible;
             Sources.Clear();
-            foreach (IManagerSource source in await Task.Avalonia.Controls.Documents.Run(Manager.SourcesHelper.GetSources))
+            foreach (IManagerSource source in await Task.Run(Manager.SourcesHelper.GetSources))
             {
                 Sources.Add(new SourceItem(this, source));
             }

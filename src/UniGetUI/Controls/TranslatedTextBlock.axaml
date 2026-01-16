@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="UniGetUI.Interface.Widgets.TranslatedTextBlock"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="_parent"
+    mc:Ignorable="d">
+
+    <TextBlock
+        x:Name="_textBlock"
+        HorizontalAlignment="{Binding #_parent.HorizontalAlignment}"
+        VerticalAlignment="{Binding #_parent.VerticalAlignment}"
+        FontFamily="{Binding #_parent.FontFamily}"
+        FontSize="{Binding #_parent.FontSize}"
+        FontWeight="{Binding #_parent.FontWeight}"
+        TextAlignment="Left"
+        TextWrapping="Wrap" />
+</UserControl>

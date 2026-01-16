@@ -29,7 +29,7 @@ namespace UniGetUI.Interface.Widgets
 
         public Avalonia.Media.TextWrapping WrappingMode
         {
-            set => _textBlock.Avalonia.Media.TextWrapping = value;
+            set => _textBlock.TextWrapping = value;
         }
 
         public TranslatedTextBlock()

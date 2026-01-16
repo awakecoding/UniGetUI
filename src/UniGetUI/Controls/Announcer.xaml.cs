@@ -39,7 +39,7 @@ namespace UniGetUI.Interface.Widgets
             PointerPressed += (_, _) => { if (i++ % 3 != 0) { _ = LoadAnnouncements(); } };
 
             SetText(CoreTools.Translate("Fetching latest announcements, please wait..."));
-            _textblock.Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
+            _textblock.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
         }
 
         public async Task LoadAnnouncements(bool retry = false)
@@ -85,7 +85,7 @@ namespace UniGetUI.Interface.Widgets
 
         public void SetText_Safe(string title, string body, string linkId, string linkName)
         {
-            ((MainApp)Application.Current).MainWindow.Avalonia.Threading.Dispatcher.TryEnqueue(() =>
+            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
                 SetText(title, body, linkId, linkName);
             });
@@ -104,9 +104,11 @@ namespace UniGetUI.Interface.Widgets
                 paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line + " " });
                 paragraph.Inlines.Add(new LineBreak());
             }
-            Button link = new();
+            var link = new Avalonia.Controls.Documents.Hyperlink
+            {
+                NavigateUri = new Uri("https://marticliment.com/redirect?" + linkId)
+            };
             link.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = linkName });
-            link.NavigateUri = new Uri("https://marticliment.com/redirect?" + linkId);
             paragraph.Inlines[^1] = link;
             paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text= "" });
 
