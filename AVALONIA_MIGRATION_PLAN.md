@@ -153,23 +153,28 @@ cp file.xaml file.axaml
 
 **4. Control Replacements**
 
-| WinUI Control | Avalonia Equivalent | Notes |
-|--------------|---------------------|-------|
-| `NavigationView` | Custom or `SplitView` | Requires custom implementation |
-| `InfoBar` | Custom notification | Create custom control |
-| `SettingsCard` | Custom or `Border` | Use stub implementation |
-| `ContentDialog` | `Window` | Create modal window |
-| `MenuFlyout` | `ContextMenu` | Direct replacement |
-| `FontIcon` | `PathIcon` | Use path data |
-| `AutoSuggestBox` | `AutoCompleteBox` | Avalonia.Controls.DataGrid package |
-| `TeachingTip` | `ToolTip` or custom | Simplified |
-| `PersonPicture` | `Ellipse` with `ImageBrush` | Custom implementation |
-| `ItemsView` | `ItemsControl` or `ListBox` | Check usage context |
-| `Expander` | `Expander` | Same in Avalonia |
-| `Grid` | `Grid` | Same in Avalonia |
-| `StackPanel` | `StackPanel` | Same in Avalonia |
-| `TextBlock` | `TextBlock` | Same in Avalonia |
-| `Button` | `Button` | Same in Avalonia |
+| WinUI Control | Avalonia Equivalent | Notes | Status |
+|--------------|---------------------|-------|--------|
+| `NavigationView` | Custom or `SplitView` | Requires custom implementation | ⏳ Defer |
+| `InfoBar` | Custom notification | Create custom control | ⏳ Defer |
+| `SettingsCard` | Custom or `Border` | Use stub implementation | ⏳ Defer |
+| `ContentDialog` | `Window` | Create modal window | ⏳ Defer |
+| `Frame` | ContentControl + custom | Navigation container | ⏳ Defer |
+| `AnimatedIcon` | PathIcon or custom | Simple icon fallback | ⏳ Defer |
+| `MenuFlyout` | `ContextMenu` | Direct replacement | ✅ |
+| `FontIcon` | `TextBlock` + FontFamily | Use Segoe MDL2 Assets | ✅ Done |
+| `HyperlinkButton` | `Button` + Click handler | Use Process.Start for URLs | ✅ Done |
+| `ScrollView` | `ScrollViewer` | Direct replacement | ✅ Done |
+| `RichTextBlock` | `TextBlock` | Inline support limited | ✅ Done |
+| `AutoSuggestBox` | `AutoCompleteBox` | Avalonia.Controls.DataGrid package | ⏳ |
+| `TeachingTip` | `ToolTip` or custom | Simplified | ⏳ |
+| `PersonPicture` | `Ellipse` with `ImageBrush` | Custom implementation | ✅ Done |
+| `ItemsView` | `ItemsControl` or `ListBox` | Check usage context | ⏳ |
+| `Expander` | `Expander` | Same in Avalonia | ✅ |
+| `Grid` | `Grid` | Same in Avalonia | ✅ |
+| `StackPanel` | `StackPanel` | Same in Avalonia | ✅ |
+| `TextBlock` | `TextBlock` | Same in Avalonia | ✅ |
+| `Button` | `Button` | Same in Avalonia | ✅ |
 
 **5. Update Attached Properties**
 - `Grid.Row` → Same
@@ -179,15 +184,53 @@ cp file.xaml file.axaml
 **6. Update Binding Syntax**
 - `x:Bind` → `Binding` (Avalonia doesn't support compiled bindings)
 - `{x:Bind Property}` → `{Binding Property}`
+- Element name references: `{Binding ElementName=foo}` → `{Binding #foo.Property}`
+- Property paths work the same: `{Binding Path.To.Property}`
 
-**7. Update Event Handlers**
+**7. Update Property Names**
+- `Visibility` → `IsVisible` (bool instead of enum)
+- `Visibility.Collapsed` → `IsVisible="False"`
+- `Visibility.Visible` → `IsVisible="True"`
+- `NavigateUri` → Handle with Click event + Process.Start
+- `CornerRadius="4,4,4,4"` → `CornerRadius="4"` (single value OK)
+
+**8. Update Event Handlers**
 - Event handler signatures may need adjustment in code-behind
 - Check parameters match Avalonia event args
+- Remove WinUI-specific event handlers (BringIntoViewRequested, etc.)
 
-**8. Update Resources**
-- Convert `ResourceDictionary` entries
-- Update `Style` declarations
-- Convert `Brush` resources
+**9. Code-Behind Property Registration**
+```csharp
+// WinUI Pattern
+private DependencyProperty MyProperty = 
+    DependencyProperty.Register(nameof(MyProperty), typeof(string), 
+        typeof(MyControl), new PropertyMetadata(default(string)));
+
+// Avalonia Pattern
+public static readonly StyledProperty<string> MyProperty =
+    AvaloniaProperty.Register<MyControl, string>(nameof(MyProperty));
+
+// Property changed handler
+MyProperty.Changed.AddClassHandler<MyControl>((x, e) => x.OnMyPropertyChanged());
+```
+
+**8. Update Resources & Styles**
+```xml
+<!-- WinUI -->
+<Style TargetType="MyControl">
+    <Setter Property="Foreground" Value="Red" />
+</Style>
+
+<!-- Avalonia -->
+<Style Selector="MyControl">
+    <Setter Property="Foreground" Value="Red" />
+</Style>
+
+<!-- Or with namespace prefix -->
+<Style Selector="local|MyControl">
+    <Setter Property="Foreground" Value="Red" />
+</Style>
+```
 
 ---
 
