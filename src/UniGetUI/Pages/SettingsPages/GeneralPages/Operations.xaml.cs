@@ -13,7 +13,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Operations : Page, ISettingsPage
+    public sealed partial class Operations : UserControl, ISettingsPage
     {
         public Operations()
         {
@@ -35,7 +35,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         public void ShowRestartBanner(object sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
-        private void ManageDesktopShortcutsButton_Click(object sender, RoutedEventArgs e)
+        private void ManageDesktopShortcutsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = DialogHelper.ManageDesktopShortcuts();
 
         public bool CanGoBack => true;
@@ -52,12 +52,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void UpdatesSettingsButton_Click(object sender, RoutedEventArgs e)
+        private void UpdatesSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, typeof(Updates));
         }
 
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        private void AdminButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, typeof(Administrator));
         }

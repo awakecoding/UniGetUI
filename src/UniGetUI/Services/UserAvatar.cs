@@ -1,9 +1,15 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Avalonia.Interactivity;
 using Octokit;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
@@ -51,7 +57,7 @@ namespace UniGetUI.Services
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e) => _ = _loginButton_Click();
+        private void LoginButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _loginButton_Click();
         private async Task _loginButton_Click()
         {
             SetLoading();
@@ -75,7 +81,7 @@ namespace UniGetUI.Services
             }
         }
 
-        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        private void LogoutButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SetLoading();
             try
@@ -97,7 +103,7 @@ namespace UniGetUI.Services
 
         private void SetLoading()
         {
-            this.Content = new ProgressRing() { IsIndeterminate = true, Width = 24, Height = 24 };
+            this.Content = new ProgressBar() { IsIndeterminate = true, Width = 24, Height = 24 };
         }
 
         private PointButton GenerateLoginControl()
@@ -111,7 +117,7 @@ namespace UniGetUI.Services
             var translatedTextBlock = new TextBlock
             {
                 Margin = new Thickness(4),
-                TextWrapping = TextWrapping.Wrap,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Text = CoreTools.Translate("Log in with GitHub to enable cloud package backup.")
             };
 
@@ -122,7 +128,7 @@ namespace UniGetUI.Services
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("More details"),
-                    TextWrapping = TextWrapping.Wrap,
+                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };
@@ -167,7 +173,7 @@ namespace UniGetUI.Services
 
         private async Task<PointButton> GenerateLogoutControl()
         {
-            await Task.Run(CoreTools.WaitForInternetConnection);
+            await Task.Avalonia.Controls.Documents.Run(CoreTools.WaitForInternetConnection);
             User user;
             try
             {
@@ -198,14 +204,14 @@ namespace UniGetUI.Services
             var text1 = new TextBlock
             {
                 Margin = new Thickness(4),
-                TextWrapping = TextWrapping.Wrap,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Text = CoreTools.Translate("You are logged in as {0} (@{1})", user.Name, user.Login)
             };
 
             var text2 = new TextBlock
             {
                 Margin = new Thickness(4),
-                TextWrapping = TextWrapping.Wrap,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 FontSize = 12,
                 FontWeight = new(500),
                 Text = CoreTools.Translate("If you have cloud backup enabled, it will be saved as a GitHub Gist on this account")
@@ -218,7 +224,7 @@ namespace UniGetUI.Services
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("More details"),
-                    TextWrapping = TextWrapping.Wrap,
+                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };
@@ -231,7 +237,7 @@ namespace UniGetUI.Services
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("Package backup settings"),
-                    TextWrapping = TextWrapping.Wrap,
+                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };

@@ -47,7 +47,7 @@ public static partial class DialogHelper
         {
             Text = CoreTools.Translate(
                 "UniGetUI requires {0} to operate, but it was not found on your system.", dep_name),
-            TextWrapping = TextWrapping.Wrap,
+            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 5)
         });
 
@@ -55,7 +55,7 @@ public static partial class DialogHelper
         {
             Text = CoreTools.Translate(
                 "Click on Install to begin the installation process. If you skip the installation, UniGetUI may not work as expected."),
-            TextWrapping = TextWrapping.Wrap,
+            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 10),
             Opacity = .7F,
             FontStyle = Windows.UI.Text.FontStyle.Italic,
@@ -67,7 +67,7 @@ public static partial class DialogHelper
             Text = CoreTools.Translate(
                 "Alternatively, you can also install {0} by running the following command in a Windows PowerShell prompt:",
                 dep_name),
-            TextWrapping = TextWrapping.Wrap,
+            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 4),
             Opacity = .7F,
         };
@@ -76,7 +76,7 @@ public static partial class DialogHelper
         TextBlock manualInstallCommand = new()
         {
             Text = fancy_command,
-            TextWrapping = TextWrapping.Wrap,
+            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 4),
             Opacity = .7F,
             IsTextSelectionEnabled = true,
@@ -184,7 +184,7 @@ public static partial class DialogHelper
 
     public static async Task ManageIgnoredUpdates()
     {
-        ContentDialog dialog = DialogFactory.Create_AsWindow(true);
+        Window dialog = DialogFactory.Create_AsWindow(true);
 
         dialog.Title = CoreTools.Translate("Manage ignored updates");
 
@@ -196,7 +196,7 @@ public static partial class DialogHelper
 
     public static async Task ManageDesktopShortcuts(IReadOnlyList<string>? NewShortucts  = null)
     {
-        ContentDialog dialog = DialogFactory.Create_AsWindow(true);
+        Window dialog = DialogFactory.Create_AsWindow(true);
 
         DesktopShortcutsManager DesktopShortcutsPage = new();
         DesktopShortcutsPage.LoadShortcuts(NewShortucts ?? DesktopShortcutsDatabase.GetAllShortcuts());
@@ -265,9 +265,9 @@ public static partial class DialogHelper
 
     public static async Task WarnAboutAdminRights()
     {
-        ContentDialog AdminDialog = new()
+        Window AdminDialog = new()
         {
-            Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style
+            Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
         };
 
         while (Window.XamlRoot is null)
@@ -287,7 +287,7 @@ public static partial class DialogHelper
 
     public static async Task ShowAboutUniGetUI()
     {
-        ContentDialog AboutDialog = DialogFactory.Create_AsWindow(false, false);
+        Window AboutDialog = DialogFactory.Create_AsWindow(false, false);
         AboutUniGetUI AboutPage = new();
         AboutDialog.Content = AboutPage;
         AboutPage.Close += (_, _) => AboutDialog.Hide();
@@ -297,7 +297,7 @@ public static partial class DialogHelper
 
     public static async Task ShowReleaseNotes()
     {
-        ContentDialog NotesDialog = DialogFactory.Create_AsWindow(true);
+        Window NotesDialog = DialogFactory.Create_AsWindow(true);
 
         NotesDialog.Title = CoreTools.Translate("Release notes");
         ReleaseNotes notes = new();
@@ -395,22 +395,22 @@ public static partial class DialogHelper
         var MessageBlock = new RichTextBlock();
         dialog.Content = MessageBlock;
 
-        var p = new Paragraph();
+        var p = new Avalonia.Controls.Documents.Paragraph();
         MessageBlock.Blocks.Add(p);
 
-        p.Inlines.Add(new Run
+        p.Inlines.Add(new Avalonia.Controls.Documents.Run
         {
             Text = CoreTools.Translate("UniGetUI collects anonymous usage data with the sole purpose of understanding and improving the user experience.")
         });
         p.Inlines.Add(new LineBreak());
-        p.Inlines.Add(new Run
+        p.Inlines.Add(new Avalonia.Controls.Documents.Run
         {
             Text = CoreTools.Translate("No personal information is collected nor sent, and the collected data is anonimized, so it can't be back-tracked to you.")
         });
         p.Inlines.Add(new LineBreak());
         p.Inlines.Add(new LineBreak());
-        var link = new Hyperlink { NavigateUri = new Uri("https://www.marticliment.com/unigetui/privacy/"), };
-        link.Inlines.Add(new Run
+        var link = new Button { NavigateUri = new Uri("https://www.marticliment.com/unigetui/privacy/"), };
+        link.Inlines.Add(new Avalonia.Controls.Documents.Run
         {
             Text = CoreTools.Translate("More details about the shared data and how it will be processed"),
         });
@@ -418,7 +418,7 @@ public static partial class DialogHelper
         p.Inlines.Add(link);
         p.Inlines.Add(new LineBreak());
         p.Inlines.Add(new LineBreak());
-        p.Inlines.Add(new Run
+        p.Inlines.Add(new Avalonia.Controls.Documents.Run
         {
             Text = CoreTools.Translate("Do you accept that UniGetUI collects and sends anonymous usage statistics, with the sole purpose of understanding and improving the user experience?"),
             FontWeight = FontWeights.SemiBold
@@ -456,7 +456,7 @@ public static partial class DialogHelper
         var AcceptBtn = new Button()
         {
             Content = CoreTools.Translate("Accept"),
-            Style = Application.Current.Resources["AccentButtonStyle"] as Style
+            Avalonia.Styling.Style = Application.Current.Resources["AccentButtonStyle"] as Avalonia.Styling.Style
         };
         AcceptBtn.Click += (_, _) =>
         {
@@ -542,7 +542,7 @@ public static partial class DialogHelper
     public static void ShowDismissableBalloon(string title, string message)
     {
         Window.DismissableNotification.Title = title;
-        Window.DismissableNotification.Content = new TextBlock() { Text = message, TextWrapping = TextWrapping.Wrap };
+        Window.DismissableNotification.Content = new TextBlock() { Text = message, Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap };
         Window.DismissableNotification.IsOpen = true;
     }
 
@@ -568,7 +568,7 @@ public static partial class DialogHelper
                 new TextBlock() {
                     Text = CoreTools.Translate(
                         "Select the backup you want to open. Later, you will be able to review which packages you want to install."),
-                    TextWrapping = TextWrapping.Wrap
+                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
                 },
                 new ScrollViewer()
                 {

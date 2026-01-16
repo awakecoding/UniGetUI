@@ -8,7 +8,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class TextboxCard : SettingsCard
+    public sealed partial class TextboxCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         private readonly TextBox _textbox;
         private readonly HyperlinkButton _helpbutton;

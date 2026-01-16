@@ -1,5 +1,7 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,7 +12,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Updates : Page, ISettingsPage
+    public sealed partial class Updates : UserControl, ISettingsPage
     {
         public Updates()
         {
@@ -48,12 +50,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public void ShowRestartBanner(object sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
 
-        private void OperationsSettingsButton_Click(object sender, RoutedEventArgs e)
+        private void OperationsSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, typeof(Operations));
         }
 
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        private void AdminButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, typeof(Administrator));
         }

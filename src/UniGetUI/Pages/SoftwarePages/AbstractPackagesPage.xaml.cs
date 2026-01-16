@@ -130,7 +130,7 @@ namespace UniGetUI.Interface
         protected DateTime LastPackageLoadTime { get; private set; }
         protected readonly OperationType PAGE_ROLE;
 
-        protected AutoSuggestBox QueryBlock { get => MainApp.Instance.MainWindow.GlobalSearchBox; }
+        protected AutoCompleteBox QueryBlock { get => MainApp.Instance.MainWindow.GlobalSearchBox; }
 
         protected IPackage? SelectedItem
         {
@@ -150,7 +150,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        protected ItemsView CurrentPackageList
+        protected ItemsControl CurrentPackageList
         {
             get => (ViewModeSelector.SelectedIndex switch
             {
@@ -169,9 +169,9 @@ namespace UniGetUI.Interface
 
         protected List<IPackageManager> UsedManagers = [];
         protected ConcurrentDictionary<IPackageManager, List<IManagerSource>> UsedSourcesForManager = [];
-        protected ConcurrentDictionary<IPackageManager, TreeViewNode> RootNodeForManager = [];
-        protected ConcurrentDictionary<IManagerSource, TreeViewNode> NodesForSources = [];
-        private readonly TreeViewNode LocalPackagesNode = new();
+        protected ConcurrentDictionary<IPackageManager, TreeViewItem> RootNodeForManager = [];
+        protected ConcurrentDictionary<IManagerSource, TreeViewItem> NodesForSources = [];
+        private readonly TreeViewItem LocalPackagesNode = new();
 
         public readonly int NewVersionLabelWidth;
         public readonly int NewVersionIconWidth;
@@ -298,7 +298,7 @@ namespace UniGetUI.Interface
             // Handle when a source is clicked
             SourcesTreeView.Tapped += (_, e) =>
             {
-                TreeViewNode? node = (e.OriginalSource as FrameworkElement)?.DataContext as TreeViewNode;
+                TreeViewItem? node = (e.OriginalSource as Avalonia.Controls.Control)?.DataContext as TreeViewItem;
                 if (node is null)
                 {
                     return;
@@ -319,7 +319,7 @@ namespace UniGetUI.Interface
             // Handle when a source is double-clicked
             SourcesTreeView.RightTapped += (_, e) =>
             {
-                TreeViewNode? node = (e.OriginalSource as FrameworkElement)?.DataContext as TreeViewNode;
+                TreeViewItem? node = (e.OriginalSource as Avalonia.Controls.Control)?.DataContext as TreeViewItem;
                 if (node is null)
                 {
                     return;
@@ -392,9 +392,9 @@ namespace UniGetUI.Interface
         private void Loader_PackagesChanged(object? sender, PackagesChangedEvent packagesChangedEvent)
         {
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread() is null)
+            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                DispatcherQueue.TryEnqueue(() => Loader_PackagesChanged(sender, packagesChangedEvent));
+                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_PackagesChanged(sender, packagesChangedEvent));
                 return;
             }
 
@@ -444,9 +444,9 @@ namespace UniGetUI.Interface
         private void Loader_FinishedLoading(object? sender, EventArgs e)
         {
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread() is null)
+            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                DispatcherQueue.TryEnqueue(() => Loader_FinishedLoading(sender, e));
+                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_FinishedLoading(sender, e));
                 return;
             }
 
@@ -460,9 +460,9 @@ namespace UniGetUI.Interface
         private void Loader_StartedLoading(object? sender, EventArgs e)
         {
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread() is null)
+            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                DispatcherQueue.TryEnqueue(() => Loader_StartedLoading(sender, e));
+                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_StartedLoading(sender, e));
                 return;
             }
             LoadingProgressBar.Visibility = Visibility.Visible;
@@ -503,7 +503,7 @@ namespace UniGetUI.Interface
             if (!UsedManagers.Contains(source.Manager))
             {
                 UsedManagers.Add(source.Manager);
-                var node = new TreeViewNode { Content = source.Manager.DisplayName + "                                                                                    .", IsExpanded = false };
+                var node = new TreeViewItem { Content = source.Manager.DisplayName + "                                                                                    .", IsExpanded = false };
                 SourcesTreeView.RootNodes.Add(node);
 
                 // Smart way to decide whether to check a source or not.
@@ -527,7 +527,7 @@ namespace UniGetUI.Interface
             if ((!UsedSourcesForManager.ContainsKey(source.Manager) || !UsedSourcesForManager[source.Manager].Contains(source)) && source.Manager.Capabilities.SupportsCustomSources)
             {
                 UsedSourcesForManager[source.Manager].Add(source);
-                TreeViewNode item = new() { Content = source.Name + "                                                                                    ." };
+                TreeViewItem item = new() { Content = source.Name + "                                                                                    ." };
                 NodesForSources.TryAdd(source, item);
 
                 if (source.IsVirtualManager)
@@ -546,7 +546,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void FilterOptionsChanged(object sender, RoutedEventArgs e)
+        private void FilterOptionsChanged(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (QueryBothRadio is null)
             {
@@ -556,10 +556,10 @@ namespace UniGetUI.Interface
             FilterPackages(true);
         }
 
-        private void InstantSearchValueChanged(object sender, RoutedEventArgs e)
+        private void InstantSearchValueChanged(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => Settings.SetDictionaryItem(Settings.K.DisableInstantSearch, PAGE_NAME, !InstantSearchCheckbox.IsChecked);
 
-        private void SourcesTreeView_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
+        private void SourcesTreeView_SelectionChanged(TreeView sender, Avalonia.Controls.SelectionChangedEventArgs args)
             => FilterPackages();
 
         public virtual async Task LoadPackages()
@@ -630,7 +630,7 @@ namespace UniGetUI.Interface
             if (retryCount > 20)
                 return;
 
-            DispatcherQueue.TryEnqueue(
+            Avalonia.Threading.Dispatcher.TryEnqueue(
                 DispatcherQueuePriority.Low,
                 () =>
                 {
@@ -656,7 +656,7 @@ namespace UniGetUI.Interface
                 });
         }
 
-        public void PackageList_CharacterReceived(object sender, CharacterReceivedRoutedEventArgs e)
+        public void PackageList_CharacterReceived(object sender, Avalonia.Input.TextInputEventArgs e)
         {
             char ch = Char.ToLower(e.Character);
 
@@ -750,10 +750,10 @@ namespace UniGetUI.Interface
         /// <param name="Icons"></param>
         /// <exception cref="InvalidCastException"></exception>
         protected void ApplyTextAndIconsToToolbar(
-            IDictionary<DependencyObject, string> Labels,
-            IDictionary<DependencyObject, IconType> Icons)
+            IDictionary<Avalonia.AvaloniaObject, string> Labels,
+            IDictionary<Avalonia.AvaloniaObject, IconType> Icons)
         {
-            foreach (DependencyObject item in Labels.Keys)
+            foreach (Avalonia.AvaloniaObject item in Labels.Keys)
             {
                 string text = Labels[item].Trim();
                 ToolTipService.SetToolTip(item, text);
@@ -773,7 +773,7 @@ namespace UniGetUI.Interface
                 else throw new InvalidCastException("item must be of type AppBarButton or MenuFlyoutButton");
             }
 
-            foreach (DependencyObject item in Icons.Keys)
+            foreach (Avalonia.AvaloniaObject item in Icons.Keys)
             {
                 var icon = Icons[item];
                 if (item is AppBarButton barButton)
@@ -791,7 +791,7 @@ namespace UniGetUI.Interface
 
         /// <summary>
         /// Will filter the packages with the query on QueryBlock.Text and put the
-        /// resulting packages on the ItemsView
+        /// resulting packages on the ItemsControl
         /// </summary>
         public void FilterPackages(bool forceQueryUpdate = false)
         {
@@ -802,7 +802,7 @@ namespace UniGetUI.Interface
 
             if (SourcesTreeView.SelectedNodes.Count > 0)
             {
-                foreach (TreeViewNode node in SourcesTreeView.SelectedNodes)
+                foreach (TreeViewItem node in SourcesTreeView.SelectedNodes)
                 {
                     if (NodesForSources.Values.Contains(node))
                     {
@@ -993,12 +993,12 @@ namespace UniGetUI.Interface
             };
         }
 
-        protected void SelectAllSourcesButton_Click(object sender, RoutedEventArgs e)
+        protected void SelectAllSourcesButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SourcesTreeView.SelectAll();
         }
 
-        protected void ClearSourceSelectionButton_Click(object sender, RoutedEventArgs e)
+        protected void ClearSourceSelectionButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SourcesTreeView.SelectedItems.Clear();
             FilterPackages();
@@ -1111,7 +1111,7 @@ namespace UniGetUI.Interface
             WhenShowingContextMenu(wrapper.Package);
         }
 
-        public void PackageItemContainer_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        public void PackageItemContainer_RightTapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
             if (sender is PackageItemContainer container && container.Package is not null)
             {
@@ -1121,7 +1121,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        public void PackageItemContainer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        public void PackageItemContainer_DoubleTapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
             if (sender is PackageItemContainer container && container.Package is not null)
             {
@@ -1135,7 +1135,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void SelectAllCheckBox_ValueChanged(object sender, RoutedEventArgs e)
+        private void SelectAllCheckBox_ValueChanged(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (SelectAllCheckBox.IsChecked == true)
             {
@@ -1157,7 +1157,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void ToggleFiltersButton_Click(object sender, RoutedEventArgs e)
+        private void ToggleFiltersButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if(FilteringPanel.DisplayMode is SplitViewDisplayMode.Inline)
             {
@@ -1244,7 +1244,7 @@ namespace UniGetUI.Interface
             // Load their icons, one at a time.
             foreach (var wrapper in PackagesWithoutIcon)
             {
-                var icon = await Task.Run(wrapper.Package.GetIconUrlIfAny);
+                var icon = await Task.Avalonia.Controls.Documents.Run(wrapper.Package.GetIconUrlIfAny);
                 if (icon is not null) wrapper.PackageIcon = icon;
             }
         }
@@ -1261,7 +1261,7 @@ namespace UniGetUI.Interface
             IsEnabled = false;
         }
 
-        public void PackageItemContainer_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        public void PackageItemContainer_PreviewKeyDown(object sender, Avalonia.Input.KeyEventArgs e)
         {
             if (e.Key is not (VirtualKey.Up or VirtualKey.Down or VirtualKey.Home or VirtualKey.End or VirtualKey.Enter or VirtualKey.Space) ||
                 sender is not PackageItemContainer packageItemContainer)
@@ -1392,7 +1392,7 @@ namespace UniGetUI.Interface
             ChangeFilteringPaneLayout();
         }
 
-        private void FilteringPanel_PaneClosing(SplitView sender, SplitViewPaneClosingEventArgs args)
+        private void FilteringPanel_PaneClosing(SplitView sender, object args)
         {
             ToggleFiltersButton.IsChecked = false;
             HideFilteringPane();
@@ -1404,10 +1404,10 @@ namespace UniGetUI.Interface
             GenerateHeaderBarTitles();
         }
 
-        FrameworkElement _lastContextMenuButtonTapped = null!;
-        private void ContextMenuButton_Tapped(object sender, TappedRoutedEventArgs e)
+        Avalonia.Controls.Control _lastContextMenuButtonTapped = null!;
+        private void ContextMenuButton_Tapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
-            if (sender is FrameworkElement el)
+            if (sender is Avalonia.Controls.Control el)
                 _lastContextMenuButtonTapped = el;
         }
 
@@ -1451,7 +1451,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        public void SearchBox_TextChanged(object? sender, AutoSuggestBoxTextChangedEventArgs args)
+        public void SearchBox_TextChanged(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (InstantSearchCheckbox.IsChecked is true && !DISABLE_FILTER_ON_QUERY_CHANGE)
                 FilterPackages(true);
@@ -1469,7 +1469,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        public virtual void SearchBox_QuerySubmitted(object? sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        public virtual void SearchBox_QuerySubmitted(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             // Handle Enter pressed or search button pressed
             MegaQueryBlockGrid.Visibility = Visibility.Collapsed;

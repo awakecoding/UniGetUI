@@ -6,7 +6,7 @@ using UniGetUI.Interface.Enums;
 using UniGetUI.Interface.Widgets;
 
 namespace UniGetUI.Controls;
-internal partial class CustomNavViewItem : NavigationViewItem
+internal partial class CustomNavViewItem : ListBoxItem
 {
     int _iconSize = 28;
     public IconType LocalIcon
@@ -16,7 +16,7 @@ internal partial class CustomNavViewItem : NavigationViewItem
     }
     public string GlyphIcon
     {
-        set => base.Icon = new FontIcon() { Glyph = value };
+        set => base.Icon = new TextBlock() { Glyph = value };
     }
     public new IconElement Icon
     {
@@ -50,7 +50,7 @@ internal partial class CustomNavViewItem : NavigationViewItem
     }
 
     private readonly TextBlock _textBlock;
-    private readonly ProgressRing _progressRing;
+    private readonly ProgressBar _progressRing;
 
     private PageType _pageType;
     public new PageType Tag
@@ -67,7 +67,7 @@ internal partial class CustomNavViewItem : NavigationViewItem
 
         var grid = new Grid { Height = 50 };
 
-        _progressRing = new ProgressRing
+        _progressRing = new ProgressBar
         {
             Margin = new Thickness(-46, 0, 0, 0),
             HorizontalAlignment = HorizontalAlignment.Left,

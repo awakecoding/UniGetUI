@@ -26,7 +26,7 @@ namespace UniGetUI.Interface.Widgets
             this.Source = Source;
         }
 
-        public void Remove(object sender, RoutedEventArgs e)
+        public void Remove(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             var op = new OperationControl(new RemoveSourceOperation(Source));
             MainApp.Operations._operationList.Add(op);
@@ -40,7 +40,7 @@ namespace UniGetUI.Interface.Widgets
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private ObservableCollection<SourceItem> Sources = [];
 
-        private ListView _datagrid { get; set; }
+        private ListBox _datagrid { get; set; }
 
         public SourceManager(IPackageManager Manager)
         {
@@ -58,7 +58,7 @@ namespace UniGetUI.Interface.Widgets
             {
                 try
                 {
-                    ContentDialog d = new()
+                    Window d = new()
                     {
                         Title = CoreTools.Translate("Add source")
                     };
@@ -71,7 +71,7 @@ namespace UniGetUI.Interface.Widgets
                         NameSourceRef.Add(source.Name, source);
                     }
 
-                    d.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    d.Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style;
                     StackPanel p = new()
                     {
                         Spacing = 8
@@ -139,11 +139,11 @@ namespace UniGetUI.Interface.Widgets
                 }
                 catch (Exception ex)
                 {
-                    ContentDialog d = new()
+                    Window d = new()
                     {
                         XamlRoot = XamlRoot,
                         Title = CoreTools.Translate("An error occurred"),
-                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                        Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style,
                         Content = CoreTools.Translate("An error occurred when adding the source: ") + ex.Message
                     };
                     _ = DialogHelper.ShowDialogAsync(d, HighPriority: true);
@@ -167,7 +167,7 @@ namespace UniGetUI.Interface.Widgets
 
             LoadingBar.Visibility = Visibility.Visible;
             Sources.Clear();
-            foreach (IManagerSource source in await Task.Run(Manager.SourcesHelper.GetSources))
+            foreach (IManagerSource source in await Task.Avalonia.Controls.Documents.Run(Manager.SourcesHelper.GetSources))
             {
                 Sources.Add(new SourceItem(this, source));
             }
@@ -185,7 +185,7 @@ namespace UniGetUI.Interface.Widgets
             Sources.Remove(Item);
         }
 
-        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        private void ReloadButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = LoadSources();
     }
 }

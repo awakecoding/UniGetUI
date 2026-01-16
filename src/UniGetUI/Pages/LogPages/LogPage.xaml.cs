@@ -62,14 +62,14 @@ namespace UniGetUI.Interface.Pages
         protected Color LIGHT_GREEN = Color.FromArgb(255, 0, 205, 0);
         protected Color LIGHT_BLUE = Color.FromArgb(255, 0, 0, 205);
 
-        public void CopyButton_Click(object sender, RoutedEventArgs e)
+        public void CopyButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             LogTextBox.SelectAll();
             WindowsClipboard.SetText(LogTextBox.SelectedText);
             LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
         }
 
-        public void ExportButton_Click(object sender, RoutedEventArgs e) => _ = _exportButton_Click();
+        public void ExportButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportButton_Click();
         public async Task _exportButton_Click()
         {
             FileSavePicker savePicker = new()
@@ -90,7 +90,7 @@ namespace UniGetUI.Interface.Pages
             }
         }
 
-        public void ReloadButton_Click(object sender, RoutedEventArgs e)
+        public void ReloadButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => LoadLog();
 
         private void LogLevelCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

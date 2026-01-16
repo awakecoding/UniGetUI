@@ -11,7 +11,7 @@ namespace UniGetUI.Interface.Pages.LogPage
 
         public override void LoadLog(bool isReload = false)
         {
-            Paragraph paragraph = new();
+            Avalonia.Controls.Documents.Paragraph paragraph = new();
             foreach (string line in Settings.GetValue(Settings.K.OperationHistory).Split("\n"))
             {
                 if (line.Replace("\r", "").Replace("\n", "").Trim() == "")
@@ -19,7 +19,7 @@ namespace UniGetUI.Interface.Pages.LogPage
                     continue;
                 }
 
-                paragraph.Inlines.Add(new Run { Text = line.Replace("\r", "").Replace("\n", "") });
+                paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Replace("\r", "").Replace("\n", "") });
                 paragraph.Inlines.Add(new LineBreak());
             }
             LogTextBox.Blocks.Clear();

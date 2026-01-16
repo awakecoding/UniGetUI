@@ -23,7 +23,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Backup : Page, ISettingsPage
+    public sealed partial class Backup : UserControl, ISettingsPage
     {
         private readonly GitHubAuthService _authService;
         private readonly GitHubBackupService _backupService;
@@ -91,14 +91,14 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void ResetBackupPath_Click(object sender, RoutedEventArgs e)
+        private void ResetBackupPath_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             BackupDirectoryLabel.Text = CoreData.UniGetUI_DefaultBackupDirectory;
             Settings.Set(Settings.K.ChangeBackupOutputDirectory, false);
             ResetBackupDirectory.IsEnabled = false;
         }
 
-        private void OpenBackupPath_Click(object sender, RoutedEventArgs e)
+        private void OpenBackupPath_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             string directory = Settings.GetValue(Settings.K.ChangeBackupOutputDirectory);
             if (directory == "") directory = CoreData.UniGetUI_DefaultBackupDirectory;
@@ -188,10 +188,10 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void LoginWithGitHubButton_Click(object sender, RoutedEventArgs e)
+        private void LoginWithGitHubButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = _loginWithGitHubButton_Click(sender, e);
 
-        private async Task _loginWithGitHubButton_Click(object sender, RoutedEventArgs e)
+        private async Task _loginWithGitHubButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             _isLoading = true;
             UpdateCloudControlsEnabled();
@@ -208,7 +208,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             UpdateCloudControlsEnabled();
         }
 
-        private void LogoutGitHubButton_Click(object sender, RoutedEventArgs e)
+        private void LogoutGitHubButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             _isLoading = true;
             UpdateCloudControlsEnabled();
@@ -306,7 +306,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             UpdateCloudControlsEnabled();
         }
 
-        private void MoreInfoBtn_OnClick(object sender, RoutedEventArgs e)
+        private void MoreInfoBtn_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
         }

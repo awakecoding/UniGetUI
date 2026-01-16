@@ -24,7 +24,7 @@ public sealed partial class InstallOptions_Manager : UserControl
     {
         Manager = manager;
         InitializeComponent();
-        AdminCheckBox.Content = CoreTools.Translate("Run as admin");
+        AdminCheckBox.Content = CoreTools.Translate("Avalonia.Controls.Documents.Run as admin");
         InteractiveCheckBox.Content = CoreTools.Translate("Interactive installation");
         HashCheckBox.Content = CoreTools.Translate("Skip hash check");
         UninstallPreviousVerOnUpdate.Content = CoreTools.Translate("Uninstall previous versions when updated");
@@ -156,7 +156,7 @@ public sealed partial class InstallOptions_Manager : UserControl
 
         ResetButton.IsEnabled = true;
         ApplyButton.IsEnabled = true;
-        ApplyButton.Style = (Style)Application.Current.Resources["DefaultButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["DefaultButtonStyle"];
 
         LoadingIndicator.Visibility = Visibility.Collapsed;
     }
@@ -235,17 +235,17 @@ public sealed partial class InstallOptions_Manager : UserControl
 
     private void CustomParameters_TextChanged(object sender, TextChangedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void ResetDir_Click(object sender, RoutedEventArgs e)
+    private void ResetDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         CustomInstallLocation.Text = DefaultLocationLabel;
         ResetDir.IsEnabled = false;
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void SelectDir_Click(object sender, RoutedEventArgs e)
+    private void SelectDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
         string folder = openPicker.Show();
@@ -253,57 +253,57 @@ public sealed partial class InstallOptions_Manager : UserControl
         {
             CustomInstallLocation.Text = folder.TrimEnd('\\') + "\\%PACKAGE%";
             ResetDir.IsEnabled = true;
-            ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+            ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
         }
     }
 
     private void ScopeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void HashCheckbox_Click(object sender, RoutedEventArgs e)
+    private void HashCheckbox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void InteractiveCheckBox_Click(object sender, RoutedEventArgs e)
+    private void InteractiveCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void AdminCheckBox_Click(object sender, RoutedEventArgs e)
+    private void AdminCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void ArchitectureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void PreReleaseCheckBox_Click(object sender, RoutedEventArgs e)
+    private void PreReleaseCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
-    private void ResetButton_Click(object sender, RoutedEventArgs e)
+    private void ResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         _ = ResetOptions();
     }
 
-    private void ApplyButton_Click(object sender, RoutedEventArgs e)
+    private void ApplyButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         _ = SaveOptions();
     }
 
-    private void GoToSecureSettings_Click(object sender, RoutedEventArgs e)
+    private void GoToSecureSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
     }
 
-    private void ClearPreviousOnUpdate_OnClick(object sender, RoutedEventArgs e)
+    private void ClearPreviousOnUpdate_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Style = (Style)Application.Current.Resources["AccentButtonStyle"];
+        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 }

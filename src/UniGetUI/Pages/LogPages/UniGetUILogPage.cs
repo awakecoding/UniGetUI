@@ -32,7 +32,7 @@ namespace UniGetUI.Interface.Pages.LogPage
             LogTextBox.Blocks.Clear();
             foreach (LogEntry log_entry in logs)
             {
-                Paragraph p = new();
+                Avalonia.Controls.Documents.Paragraph p = new();
                 if (log_entry.Content == "")
                 {
                     continue;
@@ -73,14 +73,14 @@ namespace UniGetUI.Interface.Pages.LogPage
                 {
                     if (date_length == -1)
                     {
-                        p.Inlines.Add(new Run { Text = $"[{log_entry.Time}] {line}\n", Foreground = color });
+                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"[{log_entry.Time}] {line}\n", Foreground = color });
                         date_length = $"[{log_entry.Time}] ".Length;
                     }
                     else
                     {
-                        p.Inlines.Add(new Run { Text = new string(' ', date_length) + line + "\n", Foreground = color });
+                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = new string(' ', date_length) + line + "\n", Foreground = color });
                     }
-                } ((Run)p.Inlines[^1]).Text = ((Run)p.Inlines[^1]).Text.TrimEnd();
+                } ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
                 LogTextBox.Blocks.Add(p);
             }
             if (isReload) MainScroller.ScrollToVerticalOffset(MainScroller.ScrollableHeight);

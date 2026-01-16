@@ -18,7 +18,7 @@ namespace UniGetUI.Interface
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DesktopShortcutsManager : Page
+    public sealed partial class DesktopShortcutsManager : UserControl
     {
         public event EventHandler? Close;
         private readonly ObservableCollection<ShortcutEntry> Shortcuts = [];
@@ -51,7 +51,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        /*private async void ManualScanButton_Click(object sender, RoutedEventArgs e)
+        /*private async void ManualScanButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SaveChanges();
             var shortcutsOnDesktop = DesktopShortcutsDatabase.GetShortcutsOnDisk();
@@ -78,12 +78,12 @@ namespace UniGetUI.Interface
             }
         }*/
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }
 
-        private void YesResetButton_Click(object sender, RoutedEventArgs e)
+        private void YesResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             foreach (ShortcutEntry shortcut in Shortcuts.ToArray())
             {
@@ -92,19 +92,19 @@ namespace UniGetUI.Interface
             ConfirmResetFlyout.Hide();
         }
 
-        private void NoResetButton_Click(object sender, RoutedEventArgs e)
+        private void NoResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             ConfirmResetFlyout.Hide();
         }
 
-        private void HandleAllDesktop_Checked(object sender, RoutedEventArgs e)
+        private void HandleAllDesktop_Checked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SaveChanges();
             Close?.Invoke(this, new());
             _ = DialogHelper.ConfirmSetDeleteAllShortcutsSetting();
         }
 
-        private void HandleAllDesktop_Unchecked(object sender, RoutedEventArgs e)
+        private void HandleAllDesktop_Unchecked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Settings.Set(Settings.K.RemoveAllDesktopShortcuts, false);
         }
@@ -123,7 +123,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void CloseSaveButton_Click(object sender, RoutedEventArgs e)
+        private void CloseSaveButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             SaveChanges();
             Close?.Invoke(this, EventArgs.Empty);

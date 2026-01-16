@@ -8,7 +8,7 @@ using UniGetUI.Interface.Enums;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public partial class SettingsPageButton : SettingsCard
+    public partial class SettingsPageButton : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         public string Text
         {

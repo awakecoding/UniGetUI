@@ -1,7 +1,11 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Interactivity;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;
 
@@ -10,11 +14,11 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class CheckboxButtonCard : SettingsCard
+    public sealed partial class CheckboxButtonCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         public ToggleSwitch _checkbox;
         public TextBlock _textblock;
-        public ButtonBase Button;
+        public Button Button;
         private bool IS_INVERTED;
 
         private Settings.K setting_name = Settings.K.Unset;
@@ -36,7 +40,7 @@ namespace UniGetUI.Interface.Widgets
             get => _checkbox.IsOn;
         }
         public event EventHandler<EventArgs>? StateChanged;
-        public new event EventHandler<RoutedEventArgs>? Click;
+        public new event EventHandler<Avalonia.Interactivity.RoutedEventArgs>? Click;
 
         public string CheckboxText
         {
@@ -73,8 +77,8 @@ namespace UniGetUI.Interface.Widgets
             {
                 Margin = new Thickness(2,0,0,0),
                 VerticalAlignment = VerticalAlignment.Center,
-                TextWrapping = TextWrapping.Wrap,
-                Style = (Style)Application.Current.Resources["BaseTextBlockStyle"],
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["BaseTextBlockStyle"],
                 FontWeight = new FontWeight(450),
                 Foreground = (SolidColorBrush)Application.Current.Resources["ButtonForeground"]
             };

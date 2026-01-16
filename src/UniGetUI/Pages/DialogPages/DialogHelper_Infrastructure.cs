@@ -20,24 +20,24 @@ public static partial class DialogHelper
 {
     internal static class DialogFactory
     {
-        public static ContentDialog Create()
+        public static Window Create()
         {
-            var dialog = new ContentDialog()
+            var dialog = new Window()
             {
                 XamlRoot = Window.MainContentGrid.XamlRoot,
-                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style
+                Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
             };
             return dialog;
         }
 
-        public static ContentDialog Create_AsWindow(bool hasTitle, bool hasButtons = false)
+        public static Window Create_AsWindow(bool hasTitle, bool hasButtons = false)
         {
             var dialog = Create();
             dialog.Resources["ContentDialogMaxWidth"] = 8192;
             dialog.Resources["ContentDialogMaxHeight"] = 4096;
             dialog.SizeChanged += (_, _) =>
             {
-                if (dialog.Content is FrameworkElement page)
+                if (dialog.Content is Avalonia.Controls.Control page)
                 {
                     double maxW, maxH;
                     int tresholdW = 1300, tresholdH = 1300;
@@ -88,9 +88,9 @@ public static partial class DialogHelper
     }
 
     private static readonly List<LoadingDialog> _loadingDialogQueue = new();
-    private static readonly List<ContentDialog> _dialogQueue = [];
+    private static readonly List<Window> _dialogQueue = [];
     private static int _currentLoadingDialogId;
-    private static ContentDialog? _currentLoadingDialog;
+    private static Window? _currentLoadingDialog;
 
     public static int ShowLoadingDialog(string text) => ShowLoadingDialog(text, "");
     public static int ShowLoadingDialog(string title, string description)
@@ -144,10 +144,10 @@ public static partial class DialogHelper
                     new TextBlock()
                     {
                         HorizontalAlignment = HorizontalAlignment.Stretch,
-                        TextWrapping = TextWrapping.Wrap,
+                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Text = data.Text
                     },
-                    new ProgressRing()
+                    new ProgressBar()
                     {
                         IsIndeterminate = true,
                         HorizontalAlignment = HorizontalAlignment.Center,
@@ -159,7 +159,7 @@ public static partial class DialogHelper
         }
     }
 
-    public static async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog, bool HighPriority = false)
+    public static async Task<bool?> ShowDialogAsync(Window dialog, bool HighPriority = false)
     {
         try
         {
@@ -179,7 +179,7 @@ public static partial class DialogHelper
 
             dialog.RequestedTheme = Window.MainContentGrid.RequestedTheme;
             Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
-            ContentDialogResult result = await dialog.ShowAsync();
+            bool? result = await dialog.ShowAsync();
             Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             _dialogQueue.Remove(dialog);
             if (!_dialogQueue.Any()) DialogHelper._showNextLoadingDialogIfPossible();
@@ -187,7 +187,7 @@ public static partial class DialogHelper
         }
         catch (Exception e)
         {
-            Logger.Error("An error occurred while showing a ContentDialog via ShowDialogAsync()");
+            Logger.Error("An error occurred while showing a Window via ShowDialogAsync()");
             Logger.Error(e);
             _dialogQueue.Remove(dialog);
             return ContentDialogResult.None;
@@ -212,18 +212,18 @@ public static partial class DialogHelper
                         Text = CoreTools.Translate("UniGetUI or some of its components are missing or corrupt.")
                 + " " + CoreTools.Translate("It is strongly recommended to reinstall UniGetUI to adress the situation."),
                         FontWeight = new FontWeight(600),
-                        TextWrapping = TextWrapping.Wrap,
+                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Foreground = Application.Current.Resources["SystemControlErrorTextForegroundBrush"] as Brush,
                     },
                     new TextBlock()
                     {
                         Text = " ● " + CoreTools.Translate("Refer to the UniGetUI Logs to get more details regarding the affected file(s)"),
-                        TextWrapping = TextWrapping.Wrap,
+                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                     },
                     new TextBlock()
                     {
                         Text = " ● " + CoreTools.Translate("Integrity checks can be disabled from the Experimental Settings"),
-                        TextWrapping = TextWrapping.Wrap,
+                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                     }
                 }
             },

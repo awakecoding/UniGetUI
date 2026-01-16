@@ -1,5 +1,7 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Data;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,7 +12,7 @@ namespace UniGetUI.Interface.Dialogs
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ReleaseNotes : Page, IDisposable
+    public sealed partial class ReleaseNotes : UserControl, IDisposable
     {
 
         public event EventHandler<EventArgs>? Close;
@@ -34,7 +36,7 @@ namespace UniGetUI.Interface.Dialogs
             WebView.Close();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }

@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 using UniGetUI.PackageEngine.Interfaces;
 using UniGetUI.PackageEngine.Managers.WingetManager;
@@ -31,7 +33,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PackageManagerPage : Page, ISettingsPage
+    public sealed partial class PackageManagerPage : UserControl, ISettingsPage
     {
         IPackageManager? Manager;
         public event EventHandler? RestartRequired;
@@ -46,7 +48,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(object e)
         {
             Manager = null;
             if (e.Parameter is not Type Manager_T) throw new InvalidDataException("The passed parameter was not a type");
@@ -222,8 +224,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
                 ButtonCard Scoop_ResetAppCache = new()
                 {
-                    Text = CoreTools.AutoTranslated("Run cleanup and clear cache"),
-                    ButtonText = CoreTools.AutoTranslated("Run"),
+                    Text = CoreTools.AutoTranslated("Avalonia.Controls.Documents.Run cleanup and clear cache"),
+                    ButtonText = CoreTools.AutoTranslated("Avalonia.Controls.Documents.Run"),
                     CornerRadius = new CornerRadius(0),
                 };
                 Scoop_ResetAppCache.Click += (_, _) =>
@@ -360,7 +362,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             base.OnNavigatedTo(e);
         }
 
-        private void ShowVersionHyperlink_Click(object sender, RoutedEventArgs e) => ApplyManagerState(true);
+        private void ShowVersionHyperlink_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => ApplyManagerState(true);
 
         void ApplyManagerState(bool ShowVersion = false)
         {
@@ -394,19 +396,19 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             // Load version block text and style
             if (_isLoading)
             {
-                ManagerStatusBar.Severity = InfoBarSeverity.Informational;
+                ManagerStatusBar.Severity = int.Informational;
                 ManagerStatusBar.Title = CoreTools.Translate("Please wait...");
                 ManagerStatusBar.Message = "";
             }
             else if (!Manager.IsEnabled())
             {
-                ManagerStatusBar.Severity = InfoBarSeverity.Warning;
+                ManagerStatusBar.Severity = int.Warning;
                 ManagerStatusBar.Title = CoreTools.Translate("{pm} is disabled").Replace("{pm}", Manager.DisplayName);
                 ManagerStatusBar.Message = CoreTools.Translate("Enable it to install packages from {pm}.").Replace("{pm}", Manager.DisplayName);
             }
             else if (Manager.Status.Found)
             {
-                ManagerStatusBar.Severity = InfoBarSeverity.Success;
+                ManagerStatusBar.Severity = int.Success;
                 ManagerStatusBar.Title = CoreTools.Translate("{pm} is enabled and ready to go").Replace("{pm}", Manager.DisplayName);
                 if (!Manager.Status.Version.Contains('\n'))
                 {
@@ -426,14 +428,14 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
             else // manager was not found
             {
-                ManagerStatusBar.Severity = InfoBarSeverity.Error;
+                ManagerStatusBar.Severity = int.Error;
                 ManagerStatusBar.Title = CoreTools.Translate("{pm} was not found!").Replace("{pm}", Manager.DisplayName);
                 ManagerStatusBar.Message = CoreTools.Translate("You may need to install {pm} in order to use it with WingetUI.")
                     .Replace("{pm}", Manager.DisplayName);
             }
         }
 
-        private void ManagerPath_Click(object sender, RoutedEventArgs e) => _ = _managerPath_Click();
+        private void ManagerPath_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _managerPath_Click();
         private async Task _managerPath_Click()
         {
             WindowsClipboard.SetText(LocationLabel.Text);
@@ -442,7 +444,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             CopyButtonIcon.Symbol = Symbol.Copy;
         }
 
-        private void ManagerLogs_Click(object sender, RoutedEventArgs e)
+        private void ManagerLogs_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             MainApp.Instance.MainWindow.NavigationPage.OpenManagerLogs(Manager);
         }
@@ -456,7 +458,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             _ = ReloadPackageManager();
         }
 
-        private void GoToSecureSettingsBtn_Click(object sender, RoutedEventArgs e)
+        private void GoToSecureSettingsBtn_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
         }
@@ -470,7 +472,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
             _isLoading = true;
             ApplyManagerState();
-            await Task.Run(Manager.Initialize);
+            await Task.Avalonia.Controls.Documents.Run(Manager.Initialize);
             _isLoading = false;
             ApplyManagerState();
             DialogHelper.HideLoadingDialog(loadingId);

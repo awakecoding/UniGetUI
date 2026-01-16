@@ -15,7 +15,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class General : Page, ISettingsPage
+    public sealed partial class General : UserControl, ISettingsPage
     {
         public General()
         {
@@ -51,7 +51,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public void ShowRestartBanner(object sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
 
-        private void ForceUpdateUniGetUI_OnClick(object sender, RoutedEventArgs e)
+        private void ForceUpdateUniGetUI_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             var mainWindow = MainApp.Instance.MainWindow;
             _ = AutoUpdater.CheckAndInstallUpdates(mainWindow, mainWindow.UpdatesBanner, true, false, true);
@@ -69,7 +69,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             if (file != string.Empty)
             {
                 int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
-                await Task.Run(() => Settings.ImportFromFile_JSON(file));
+                await Task.Avalonia.Controls.Documents.Run(() => Settings.ImportFromFile_JSON(file));
                 DialogHelper.HideLoadingDialog(loadingId);
                 ShowRestartBanner(this, new());
             }
@@ -86,7 +86,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 if (file != string.Empty)
                 {
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
-                    await Task.Run(() => Settings.ExportToFile_JSON(file));
+                    await Task.Avalonia.Controls.Documents.Run(() => Settings.ExportToFile_JSON(file));
                     DialogHelper.HideLoadingDialog(loadingId);
                     _ = CoreTools.ShowFileOnExplorer(file);
                 }
@@ -113,7 +113,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             ShowRestartBanner(this, new());
         }
 
-        private void InterfaceSettingsButton_Click(object sender, RoutedEventArgs e)
+        private void InterfaceSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, typeof(Interface_P));
         }

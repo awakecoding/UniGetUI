@@ -19,13 +19,13 @@ namespace UniGetUI.Interface.Widgets
             set => SetValue(UrlProperty, value);
         }
 
-        private readonly DependencyProperty UrlProperty;
+        private readonly Avalonia.AvaloniaProperty UrlProperty;
 
         private static readonly HttpClient NetClient = new(CoreTools.GenericHttpClientParameters);
         public Announcer()
         {
             NetClient.DefaultRequestHeaders.UserAgent.ParseAdd(CoreData.UserAgentString);
-            UrlProperty = DependencyProperty.Register(
+            UrlProperty = Avalonia.AvaloniaProperty.Register(
             nameof(UrlProperty),
             typeof(Uri),
             typeof(CheckboxCard),
@@ -39,7 +39,7 @@ namespace UniGetUI.Interface.Widgets
             PointerPressed += (_, _) => { if (i++ % 3 != 0) { _ = LoadAnnouncements(); } };
 
             SetText(CoreTools.Translate("Fetching latest announcements, please wait..."));
-            _textblock.TextWrapping = TextWrapping.Wrap;
+            _textblock.Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
         }
 
         public async Task LoadAnnouncements(bool retry = false)
@@ -85,7 +85,7 @@ namespace UniGetUI.Interface.Widgets
 
         public void SetText_Safe(string title, string body, string linkId, string linkName)
         {
-            ((MainApp)Application.Current).MainWindow.DispatcherQueue.TryEnqueue(() =>
+            ((MainApp)Application.Current).MainWindow.Avalonia.Threading.Dispatcher.TryEnqueue(() =>
             {
                 SetText(title, body, linkId, linkName);
             });
@@ -93,32 +93,32 @@ namespace UniGetUI.Interface.Widgets
 
         public void SetText(string title, string body, string linkId, string linkName)
         {
-            Paragraph paragraph = new();
-            paragraph.Inlines.Add(new Run { Text = title, FontSize = 24, FontWeight = new FontWeight(700), FontFamily = new FontFamily("Segoe UI Variable Display") });
+            Avalonia.Controls.Documents.Paragraph paragraph = new();
+            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title, FontSize = 24, FontWeight = new FontWeight(700), FontFamily = new FontFamily("Segoe UI Variable Display") });
             _textblock.Blocks.Clear();
             _textblock.Blocks.Add(paragraph);
 
             paragraph = new();
             foreach (string line in body.Split("\n"))
             {
-                paragraph.Inlines.Add(new Run { Text = line + " " });
+                paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line + " " });
                 paragraph.Inlines.Add(new LineBreak());
             }
-            Hyperlink link = new();
-            link.Inlines.Add(new Run { Text = linkName });
+            Button link = new();
+            link.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = linkName });
             link.NavigateUri = new Uri("https://marticliment.com/redirect?" + linkId);
             paragraph.Inlines[^1] = link;
-            paragraph.Inlines.Add(new Run() { Text= "" });
+            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text= "" });
 
             _textblock.Blocks.Add(paragraph);
         }
 
         public void SetText(string body)
         {
-            Paragraph paragraph = new();
+            Avalonia.Controls.Documents.Paragraph paragraph = new();
             foreach (string line in body.Split("\n"))
             {
-                paragraph.Inlines.Add(new Run { Text = line });
+                paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line });
                 paragraph.Inlines.Add(new LineBreak());
             }
 

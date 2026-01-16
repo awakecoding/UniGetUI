@@ -217,7 +217,7 @@ namespace UniGetUI.Interface.SoftwarePages
             ToolBar.PrimaryCommands.Add(new AppBarSeparator());
             ToolBar.PrimaryCommands.Add(HelpButton);
 
-            Dictionary<DependencyObject, string> Labels = new()
+            Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             { // Entries with a trailing space are collapsed
               // Their texts will be used as the tooltip
                 { NewBundle,           CoreTools.Translate("New") },
@@ -235,7 +235,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 { HelpButton,          CoreTools.Translate("Help") }
             };
 
-            Dictionary<DependencyObject, IconType> Icons = new()
+            Dictionary<Avalonia.AvaloniaObject, IconType> Icons = new()
             {
                 { NewBundle,           IconType.AddTo },
                 { InstallAsAdmin,      IconType.UAC },
@@ -373,42 +373,42 @@ namespace UniGetUI.Interface.SoftwarePages
             MenuDownloadInstaller.IsEnabled = IS_VALID && package.Manager.Capabilities.CanDownloadInstaller;
         }
 
-        private void MenuInstall_Invoked(object sender, RoutedEventArgs args)
+        private void MenuInstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null) return;
             _ = ImportAndInstallPackage([SelectedItem]);
         }
 
-        private void MenuAsAdmin_Invoked(object sender, RoutedEventArgs args)
+        private void MenuAsAdmin_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null) return;
             _ = ImportAndInstallPackage([SelectedItem], elevated: true);
         }
 
-        private void MenuInteractive_Invoked(object sender, RoutedEventArgs args)
+        private void MenuInteractive_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null) return;
             _ = ImportAndInstallPackage([SelectedItem], interactive: true);
         }
 
-        private void MenuSkipHash_Invoked(object sender, RoutedEventArgs args)
+        private void MenuSkipHash_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null) return;
             _ = ImportAndInstallPackage([SelectedItem], skiphash: true);
         }
 
-        private void MenuShare_Invoked(object sender, RoutedEventArgs args)
+        private void MenuShare_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null) return;
             DialogHelper.SharePackage(SelectedItem);
         }
 
-        private void MenuDetails_Invoked(object sender, RoutedEventArgs args)
+        private void MenuDetails_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.FROM_BUNDLE);
         }
 
-        private void MenuInstallSettings_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInstallSettings_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             IPackage? package = SelectedItem;
             if (package is ImportedPackage imported)
@@ -418,7 +418,7 @@ namespace UniGetUI.Interface.SoftwarePages
             }
         }
 
-        private void MenuRemoveFromList_Invoked(object sender, RoutedEventArgs args)
+        private void MenuRemoveFromList_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             IPackage? package = SelectedItem;
             if (package is null) return;
@@ -478,7 +478,7 @@ namespace UniGetUI.Interface.SoftwarePages
 
                 Logger.Error("An error occurred while attempting to open a bundle");
                 Logger.Error(ex);
-                var warningDialog = new ContentDialog
+                var warningDialog = new Window
                 {
                     Title = CoreTools.Translate("The package bundle is not valid"),
                     Content = CoreTools.Translate("The bundle you are trying to load appears to be invalid. Please check the file and try again.") + "\n\n" + ex.Message,
@@ -547,7 +547,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 Logger.Error("An error occurred when saving packages to a file");
                 Logger.Error(ex);
 
-                var warningDialog = new ContentDialog
+                var warningDialog = new Window
                 {
                     Title = CoreTools.Translate("Could not create bundle"),
                     Content = CoreTools.Translate("The package bundle could not be created due to an error.") + "\n\n" + ex.Message,
@@ -608,7 +608,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 Logger.ImportantInfo("XML payload was converted to JSON dynamically before deserialization");
             }
 
-            DeserializedData = await Task.Run(() =>
+            DeserializedData = await Task.Avalonia.Controls.Documents.Run(() =>
             {
                 return new SerializableBundle(JsonNode.Parse(content) ?? throw new JsonException("Could not parse JSON object"));
             });
@@ -752,7 +752,7 @@ namespace UniGetUI.Interface.SoftwarePages
             try
             {
                 string defaultName = CoreTools.Translate("Install script") + ".ps1";
-                string file = await Task.Run(() => (new FileSavePicker(MainApp.Instance.MainWindow.GetWindowHandle())).Show(["*.ps1"], defaultName));
+                string file = await Task.Avalonia.Controls.Documents.Run(() => (new FileSavePicker(MainApp.Instance.MainWindow.GetWindowHandle())).Show(["*.ps1"], defaultName));
                 if (file != String.Empty)
                 {
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Saving packages, please wait..."));

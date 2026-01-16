@@ -16,7 +16,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Internet : Page, ISettingsPage
+    public sealed partial class Internet : UserControl, ISettingsPage
     {
 
 
@@ -98,7 +98,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public void ShowRestartBanner(object sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
 
-        private void UsernameBox_TextChanged(object sender, RoutedEventArgs e) => _ = _usernameBox_TextChanged();
+        private void UsernameBox_TextChanged(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _usernameBox_TextChanged();
         private async Task _usernameBox_TextChanged()
         {
             SavingUserName.Opacity = 1;
@@ -113,7 +113,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         }
 
         private void UsernameBox_TextChanged(object sender, TextChangedEventArgs e)
-            => UsernameBox_TextChanged(sender, new RoutedEventArgs());
+            => UsernameBox_TextChanged(sender, new Avalonia.Interactivity.RoutedEventArgs());
 
         private void EnableProxy_OnStateChanged(object? sender, EventArgs e)
         {

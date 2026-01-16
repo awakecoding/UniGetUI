@@ -15,7 +15,7 @@ namespace UniGetUI.Pages.SettingsPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsBasePage : Page, IEnterLeaveListener, IInnerNavigationPage
+    public sealed partial class SettingsBasePage : UserControl, IEnterLeaveListener, IInnerNavigationPage
     {
         bool IsManagers;
         public SettingsBasePage(bool isManagers)
@@ -43,7 +43,7 @@ namespace UniGetUI.Pages.SettingsPages
 
         }
 
-        private void MainNavigationFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        private void MainNavigationFrame_Navigating(object sender, object e)
         {
             if (MainNavigationFrame.Content is null) return;
             var page = MainNavigationFrame.Content as ISettingsPage;
@@ -54,7 +54,7 @@ namespace UniGetUI.Pages.SettingsPages
             if (page is PackageManagerPage pmpage) pmpage.ReapplyProperties -= SettingsBasePage_ReapplyProperties;
         }
 
-        private void MainNavigationFrame_Navigated(object sender, NavigationEventArgs e)
+        private void MainNavigationFrame_Navigated(object sender, object e)
         {
             var page = e.Content as ISettingsPage;
             if (page is null) throw new InvalidCastException("Settings page does not inherit from ISettingsPage");

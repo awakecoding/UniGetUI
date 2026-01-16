@@ -4,7 +4,7 @@ using UniGetUI.PackageEngine.PackageClasses;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public partial class PackageItemContainer : ItemContainer
+    public partial class PackageItemContainer : ContentControl
     {
         public IPackage? Package { get; set; }
         public PackageWrapper Wrapper { get; set; } = null!;

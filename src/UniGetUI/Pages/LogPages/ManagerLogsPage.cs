@@ -24,15 +24,15 @@ namespace UniGetUI.Interface.Pages.LogPage
 
             IManagerLogger TaskLogger = manager.TaskLogger;
             LogTextBox.Blocks.Clear();
-            Paragraph versionParagraph = new();
-            versionParagraph.Inlines.Add(new Run { Text = $"Manager {manager.DisplayName} with version:\n" });
-            versionParagraph.Inlines.Add(new Run { Text = manager.Status.Version });
-            versionParagraph.Inlines.Add(new Run { Text = "\n\n——————————————————————————————————————————\n\n" });
+            Avalonia.Controls.Documents.Paragraph versionParagraph = new();
+            versionParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"Manager {manager.DisplayName} with version:\n" });
+            versionParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = manager.Status.Version });
+            versionParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = "\n\n——————————————————————————————————————————\n\n" });
             LogTextBox.Blocks.Add(versionParagraph);
 
             foreach (ITaskLogger operation in TaskLogger.Operations)
             {
-                Paragraph p = new();
+                Avalonia.Controls.Documents.Paragraph p = new();
                 foreach (string line in operation.AsColoredString(verbose))
                 {
                     Brush color = line[0] switch
@@ -45,9 +45,9 @@ namespace UniGetUI.Interface.Pages.LogPage
                         '5' => new SolidColorBrush { Color = IS_DARK ? DARK_YELLOW : LIGHT_YELLOW },
                         _ => new SolidColorBrush { Color = IS_DARK ? DARK_YELLOW : LIGHT_YELLOW },
                     };
-                    p.Inlines.Add(new Run { Text = line[1..] + "\n", Foreground = color });
+                    p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line[1..] + "\n", Foreground = color });
                 }
-                ((Run)p.Inlines[^1]).Text = ((Run)p.Inlines[^1]).Text.TrimEnd();
+                ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
                 LogTextBox.Blocks.Add(p);
             }
         }

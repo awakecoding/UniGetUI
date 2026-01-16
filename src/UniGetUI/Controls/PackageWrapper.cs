@@ -2,8 +2,11 @@ using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Classes;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface;
@@ -42,7 +45,7 @@ namespace UniGetUI.PackageEngine.PackageClasses
         public string VersionComboString;
         public IconType MainIconId = IconType.Id;
         public IconType AlternateIconId = IconType.Id;
-        public ImageSource? MainIconSource;
+        public Avalonia.Media.IImage? MainIconSource;
 
         public Uri? PackageIcon
         {
@@ -84,13 +87,13 @@ namespace UniGetUI.PackageEngine.PackageClasses
                 ExtendedTooltip = $"{package.Name} (from {package.Source.AsString_DisplayName})";
         }
 
-        public void PackageItemContainer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        public void PackageItemContainer_DoubleTapped(object sender, Avalonia.Input.TappedEventArgs e)
             => _page.PackageItemContainer_DoubleTapped(sender, e);
 
-        public void PackageItemContainer_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        public void PackageItemContainer_PreviewKeyDown(object sender, Avalonia.Input.KeyEventArgs e)
             => _page.PackageItemContainer_PreviewKeyDown(sender, e);
 
-        public void PackageItemContainer_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        public void PackageItemContainer_RightTapped(object sender, Avalonia.Input.TappedEventArgs e)
             => _page.PackageItemContainer_RightTapped(sender, e);
 
 

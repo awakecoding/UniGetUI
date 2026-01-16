@@ -10,7 +10,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public sealed partial class ComboboxCard : SettingsCard
+    public sealed partial class ComboboxCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         private readonly ComboBox _combobox = new();
         private readonly ObservableCollection<string> _elements = [];

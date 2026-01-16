@@ -1,6 +1,9 @@
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Interactivity;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;
 
@@ -9,7 +12,7 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public partial class CheckboxCard : SettingsCard
+    public partial class CheckboxCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         public ToggleSwitch _checkbox;
         public TextBlock _textblock;
@@ -70,13 +73,13 @@ namespace UniGetUI.Interface.Widgets
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                TextWrapping = TextWrapping.Wrap
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
             };
             _warningBlock = new TextBlock()
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                TextWrapping = TextWrapping.Wrap,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 FontSize = 12,
                 Opacity = 0.7,
                 Visibility = Visibility.Collapsed,
@@ -93,7 +96,7 @@ namespace UniGetUI.Interface.Widgets
             _checkbox.HorizontalAlignment = HorizontalAlignment.Stretch;
             _checkbox.Toggled += _checkbox_Toggled;
         }
-        protected virtual void _checkbox_Toggled(object sender, RoutedEventArgs e)
+        protected virtual void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Settings.Set(setting_name, _checkbox.IsOn ^ IS_INVERTED ^ ForceInversion);
             StateChanged?.Invoke(this, EventArgs.Empty);
@@ -139,7 +142,7 @@ namespace UniGetUI.Interface.Widgets
         {
         }
 
-        protected override void _checkbox_Toggled(object sender, RoutedEventArgs e)
+        protected override void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_disableStateChangedEvent) return;
             Settings.SetDictionaryItem(_dictName, _keyName, _checkbox.IsOn ^ IS_INVERTED ^ ForceInversion);

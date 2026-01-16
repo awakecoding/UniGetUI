@@ -23,7 +23,7 @@ namespace UniGetUI.Interface.Dialogs
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class InstallOptionsPage : Page
+    public sealed partial class InstallOptionsPage : UserControl
     {
         public InstallOptions Options;
         public IPackage Package;
@@ -83,7 +83,7 @@ namespace UniGetUI.Interface.Dialogs
             PackageIcon.Source = iconSource;
             async Task LoadImage()
             {
-                iconSource.UriSource = await Task.Run(package.GetIconUrl);
+                iconSource.UriSource = await Task.Avalonia.Controls.Documents.Run(package.GetIconUrl);
             }
             _ = LoadImage();
             DialogTitle.Text = CoreTools.Translate("{0} installation options", package.Name);
@@ -194,7 +194,7 @@ namespace UniGetUI.Interface.Dialogs
 
         private async Task _loadProcesses()
         {
-            var processNames = await Task.Run(() =>
+            var processNames = await Task.Avalonia.Controls.Documents.Run(() =>
                 Process.GetProcesses().Select(p => p.ProcessName).Distinct().ToList());
 
             _runningProcesses.Clear();
@@ -285,7 +285,7 @@ namespace UniGetUI.Interface.Dialogs
             IgnoreUpdatesCheckbox.IsChecked = await Package.HasUpdatesIgnoredAsync();
             VersionComboBox.IsEnabled = false;
 
-            IReadOnlyList<string> versions = await Task.Run(() => Package.Manager.DetailsHelper.GetVersions(Package));
+            IReadOnlyList<string> versions = await Task.Avalonia.Controls.Documents.Run(() => Package.Manager.DetailsHelper.GetVersions(Package));
             foreach (string ver in versions)
             {
                 VersionComboBox.Items.Add(ver);
@@ -373,7 +373,7 @@ namespace UniGetUI.Interface.Dialogs
             return options;
         }
 
-        private void SelectDir_Click(object sender, RoutedEventArgs e)
+        private void SelectDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
             string folder = openPicker.Show();
@@ -384,13 +384,13 @@ namespace UniGetUI.Interface.Dialogs
             _ = GenerateCommand();
         }
 
-        private void ResetDir_Click(object sender, RoutedEventArgs e)
+        private void ResetDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             CustomInstallLocation.Text = packageInstallLocation;
             _ = GenerateCommand();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }
@@ -398,9 +398,9 @@ namespace UniGetUI.Interface.Dialogs
         private void CustomParameters_TextChanged(object sender, TextChangedEventArgs e) => _ = GenerateCommand();
         private void ScopeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) => _ = GenerateCommand();
         private void VersionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => _ = GenerateCommand();
-        private void AdminCheckBox_Click(object sender, RoutedEventArgs e) => _ = GenerateCommand();
-        private void InteractiveCheckBox_Click(object sender, RoutedEventArgs e) => _ = GenerateCommand();
-        private void HashCheckbox_Click(object sender, RoutedEventArgs e) => _ = GenerateCommand();
+        private void AdminCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = GenerateCommand();
+        private void InteractiveCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = GenerateCommand();
+        private void HashCheckbox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = GenerateCommand();
         private void ArchitectureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => _ = GenerateCommand();
 
         private async Task GenerateCommand()
@@ -415,7 +415,7 @@ namespace UniGetUI.Interface.Dialogs
                 2 => OperationType.Uninstall,
                 _ => OperationType.Install,
             };
-            var commandline = await Task.Run(() => Package.Manager.OperationHelper.GetParameters(Package, options, op));
+            var commandline = await Task.Avalonia.Controls.Documents.Run(() => Package.Manager.OperationHelper.GetParameters(Package, options, op));
             CommandBox.Text = Package.Manager.Properties.ExecutableFriendlyName + " " + string.Join(" ", commandline);
         }
 
@@ -424,24 +424,24 @@ namespace UniGetUI.Interface.Dialogs
             if(LayoutGrid.ActualSize.Y > 1 && LayoutGrid.ActualSize.Y < double.PositiveInfinity) MaxHeight = LayoutGrid.ActualSize.Y;
         }
 
-        private void UnlockSettingsButton_Click(object sender, RoutedEventArgs e)
+        private void UnlockSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             FollowGlobalOptionsSwitch.IsOn = false;
         }
 
-        private void GoToDefaultOptionsSettings_Click(object sender, RoutedEventArgs e)
+        private void GoToDefaultOptionsSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
             MainApp.Instance.MainWindow.NavigationPage.OpenManagerSettings(Package.Manager);
         }
 
-        private void GoToSecureSettings_Click(object sender, RoutedEventArgs e)
+        private void GoToSecureSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
             MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
         }
 
-        private void KillProcessesBox_TokenItemAdding(TokenizingTextBox sender, TokenItemAddingEventArgs args)
+        private void KillProcessesBox_TokenItemAdding(TextBox sender, object args)
         {
             args.Item = _runningProcesses.FirstOrDefault((item) => item.Name.Contains(args.TokenText));
             if(args.Item is null)
@@ -452,7 +452,7 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        private void KillProcessesBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) => _ = _killProcessesBox_TextChanged();
+        private void KillProcessesBox_TextChanged(AutoCompleteBox sender, Avalonia.Interactivity.RoutedEventArgs args) => _ = _killProcessesBox_TextChanged();
         private async Task _killProcessesBox_TextChanged()
         {
             var text = KillProcessesBox.Text;

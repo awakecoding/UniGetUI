@@ -7,6 +7,6 @@ internal interface ISearchBoxPage
 {
     public string QueryBackup { get; set; }
     public string SearchBoxPlaceholder { get; }
-    public void SearchBox_TextChanged(object? sender, AutoSuggestBoxTextChangedEventArgs args);
-    public void SearchBox_QuerySubmitted(object? sender, AutoSuggestBoxQuerySubmittedEventArgs args);
+    public void SearchBox_TextChanged(object? sender, Avalonia.Interactivity.RoutedEventArgs args);
+    public void SearchBox_QuerySubmitted(object? sender, Avalonia.Interactivity.RoutedEventArgs args);
 }

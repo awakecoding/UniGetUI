@@ -19,7 +19,7 @@ namespace UniGetUI.Interface
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
 
-    public sealed partial class IgnoredUpdatesManager : Page
+    public sealed partial class IgnoredUpdatesManager : UserControl
     {
         public event EventHandler? Close;
         private readonly ObservableCollection<IgnoredPackageEntry> ignoredPackages = [];
@@ -56,7 +56,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        /*private async void IgnoredUpdatesList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        /*private async void IgnoredUpdatesList_DoubleTapped(object sender, Avalonia.Input.TappedEventArgs e)
         {
             if (IgnoredUpdatesList.SelectedItem is IgnoredPackageEntry package)
             {
@@ -64,12 +64,12 @@ namespace UniGetUI.Interface
             }
         }*/
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }
 
-        private void YesResetButton_Click(object sender, RoutedEventArgs e) => _ = _yesResetButton_Click();
+        private void YesResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _yesResetButton_Click();
         private async Task _yesResetButton_Click()
         {
             foreach (IgnoredPackageEntry package in ignoredPackages.ToArray())
@@ -79,7 +79,7 @@ namespace UniGetUI.Interface
             ConfirmResetFlyout.Hide();
         }
 
-        private void NoResetButton_Click(object sender, RoutedEventArgs e)
+        private void NoResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             ConfirmResetFlyout.Hide();
         }
@@ -132,7 +132,7 @@ namespace UniGetUI.Interface
         public async Task RemoveFromIgnoredUpdates()
         {
             string ignoredId = $"{Manager.Properties.Name.ToLower()}\\{Id}";
-            await Task.Run(() => IgnoredUpdatesDatabase.Remove(ignoredId));
+            await Task.Avalonia.Controls.Documents.Run(() => IgnoredUpdatesDatabase.Remove(ignoredId));
 
             // If possible, add the package to the software updates tab again
             if (UpgradablePackagesLoader.Instance.IgnoredPackages.TryRemove(Id, out IPackage? nativePackage)

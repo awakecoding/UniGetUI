@@ -154,7 +154,7 @@ namespace UniGetUI.Interface.SoftwarePages
             MenuFlyoutSubItem menuPause = new()
             {
                 Text = CoreTools.Translate("Pause updates for"),
-                Icon = new FontIcon { Glyph = "\uE769" },
+                Icon = new TextBlock { Glyph = "\uE769" },
             };
             foreach (IgnoredUpdatesDatabase.PauseTime menuTime in new List<IgnoredUpdatesDatabase.PauseTime>{
                 new() { Days = 1 }, new() { Days = 3 },
@@ -265,7 +265,7 @@ namespace UniGetUI.Interface.SoftwarePages
             ToolBar.PrimaryCommands.Add(new AppBarSeparator());
             ToolBar.PrimaryCommands.Add(HelpButton);
 
-            Dictionary<DependencyObject, string> Labels = new()
+            Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             { // Entries with a leading space are collapsed
               // Their texts will be used as the tooltip
                 { UpdateAsAdmin,        CoreTools.Translate("Update as administrator") },
@@ -282,7 +282,7 @@ namespace UniGetUI.Interface.SoftwarePages
             };
 
 
-            Dictionary<DependencyObject, IconType> Icons = new()
+            Dictionary<Avalonia.AvaloniaObject, IconType> Icons = new()
             {
                 { UpdateAsAdmin,        IconType.UAC },
                 { UpdateSkipHash,       IconType.Checksum },
@@ -488,25 +488,25 @@ namespace UniGetUI.Interface.SoftwarePages
             }
         }
 
-        private void MenuInstall_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Update(SelectedItem);
 
-        private  void MenuSkipHash_Invoked(object sender, RoutedEventArgs e)
+        private  void MenuSkipHash_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Update(SelectedItem, no_integrity: true);
 
-        private void MenuInteractive_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInteractive_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Update(SelectedItem, interactive: true);
 
-        private void MenuAsAdmin_Invoked(object sender, RoutedEventArgs e)
+        private void MenuAsAdmin_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Update(SelectedItem, elevated: true);
 
-        private void MenuUpdateAfterUninstall_Invoked(object sender, RoutedEventArgs e)
+        private void MenuUpdateAfterUninstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.UninstallThenUpdate(SelectedItem);
 
-        private void MenuUninstall_Invoked(object sender, RoutedEventArgs e)
+        private void MenuUninstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Uninstall(SelectedItem);
 
-        private void MenuIgnorePackage_Invoked(object sender, RoutedEventArgs e)
+        private void MenuIgnorePackage_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             IPackage? package = SelectedItem;
             if (package is null)
@@ -519,7 +519,7 @@ namespace UniGetUI.Interface.SoftwarePages
             UpgradablePackagesLoader.Instance.IgnoredPackages[package.Id] = package;
         }
 
-        private void MenuSkipVersion_Invoked(object sender, RoutedEventArgs e)
+        private void MenuSkipVersion_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             IPackage? package = SelectedItem;
             if (package is null)

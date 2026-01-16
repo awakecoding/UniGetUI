@@ -18,7 +18,7 @@ namespace UniGetUI.Pages.SettingsPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ManagersHomepage : Page, ISettingsPage
+    public sealed partial class ManagersHomepage : UserControl, ISettingsPage
     {
         public bool CanGoBack => false;
         public string ShortTitle => CoreTools.Translate("Package manager preferences");
@@ -48,7 +48,7 @@ namespace UniGetUI.Pages.SettingsPages
                 button.BorderThickness = first ? new Thickness(1) : new Thickness(1,0,1,1);
                 button.Click += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
 
-                var statusIcon = new FontIcon() { FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
+                var statusIcon = new TextBlock() { FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
                 var statusText = new TextBlock() { FontSize = 12, FontWeight = new FontWeight(600), VerticalAlignment = VerticalAlignment.Center };
                 var statusBorder = new Border()
                 {
@@ -97,7 +97,7 @@ namespace UniGetUI.Pages.SettingsPages
                     bool disabled = !toggle.IsOn;
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
                     Settings.SetDictionaryItem(Settings.K.DisabledManagers, manager.Name, disabled);
-                    await Task.Run(manager.Initialize);
+                    await Task.Avalonia.Controls.Documents.Run(manager.Initialize);
                     loadStatusBadge();
                     DialogHelper.HideLoadingDialog(loadingId);
                 };
@@ -124,7 +124,7 @@ namespace UniGetUI.Pages.SettingsPages
             last.CornerRadius = new CornerRadius(0, 0, 8, 8);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(object e)
         {
             _isLoadingToggles = true;
             for(int i = 0; i < managerControls.Count; i++)
@@ -136,14 +136,14 @@ namespace UniGetUI.Pages.SettingsPages
             base.OnNavigatedTo(e);
         }
 
-        public void Administrator(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Administrator));
-        public void Backup(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Backup));
-        public void Experimental(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Experimental));
-        public void General(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(General));
-        public void Interface(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Interface_P));
-        public void Notifications(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Notifications));
-        public void Operations(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Operations));
-        public void Startup(object s, RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Updates));
+        public void Administrator(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Administrator));
+        public void Backup(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Backup));
+        public void Experimental(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Experimental));
+        public void General(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(General));
+        public void Interface(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Interface_P));
+        public void Notifications(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Notifications));
+        public void Operations(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Operations));
+        public void Startup(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Updates));
 
     }
 }

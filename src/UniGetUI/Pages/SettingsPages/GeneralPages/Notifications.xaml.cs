@@ -12,14 +12,14 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Notifications : Page, ISettingsPage
+    public sealed partial class Notifications : UserControl, ISettingsPage
     {
         public Notifications()
         {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(object e)
         {
             if (Settings.Get(Settings.K.DisableSystemTray))
             {

@@ -1,5 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media.Animation;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Pages.AboutPages;
 
@@ -12,7 +14,7 @@ namespace UniGetUI.Interface
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
 
-    public sealed partial class AboutUniGetUI : Page
+    public sealed partial class AboutUniGetUI : UserControl
     {
 
         public event EventHandler? Close;
@@ -27,7 +29,7 @@ namespace UniGetUI.Interface
             SelectorBarItemPage5.Text = CoreTools.Translate("Support me");
         }
 
-        private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        private void SelectorBar_SelectionChanged(TabControl sender, SelectionChangedEventArgs args)
         {
             SelectorBarItem selectedItem = sender.SelectedItem;
             int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
@@ -47,7 +49,7 @@ namespace UniGetUI.Interface
 
         }
 
-        private void CloseButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void CloseButton_Click(object sender, Microsoft.UI.Xaml.Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }

@@ -14,10 +14,10 @@ namespace UniGetUI.Pages.DialogPages;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class OperationFailedDialog : Page
+public sealed partial class OperationFailedDialog : UserControl
 {
     public event EventHandler<EventArgs>? Close;
-    Paragraph par;
+    Avalonia.Controls.Documents.Paragraph par;
 
     private static SolidColorBrush errorColor = null!;
     private static SolidColorBrush debugColor = null!;
@@ -32,20 +32,20 @@ public sealed partial class OperationFailedDialog : Page
         headerContent.Text = $"{operation.Metadata.FailureMessage}.\n"
            + CoreTools.Translate("Please see the Command-line Output or refer to the Operation History for further information about the issue.");
 
-        par = new Paragraph();
+        par = new Avalonia.Controls.Documents.Paragraph();
         foreach (var line in operation.GetOutput())
         {
             if (line.Item2 is AbstractOperation.LineType.Information)
             {
-                par.Inlines.Add(new Run { Text = line.Item1 + "\x0a" });
+                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a" });
             }
             else if (line.Item2 is AbstractOperation.LineType.VerboseDetails)
             {
-                par.Inlines.Add(new Run { Text = line.Item1 + "\x0a", Foreground = debugColor });
+                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a", Foreground = debugColor });
             }
             else
             {
-                par.Inlines.Add(new Run { Text = line.Item1 + "\x0a", Foreground = errorColor });
+                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a", Foreground = errorColor });
             }
         }
 
@@ -105,7 +105,7 @@ public sealed partial class OperationFailedDialog : Page
         Grid.SetColumn(CloseButton, 1);
     }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close?.Invoke(this, EventArgs.Empty);
     }

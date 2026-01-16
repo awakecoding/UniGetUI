@@ -23,7 +23,7 @@ namespace UniGetUI.Interface.Dialogs
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PackageDetailsPage : Page
+    public sealed partial class PackageDetailsPage : UserControl
     {
         public IPackage Package;
         public IPackage? AvailablePackage;
@@ -95,7 +95,7 @@ namespace UniGetUI.Interface.Dialogs
             SetTextToItem(UpdateDate_Content, LoadingString);
             SetTextToItem(Dependencies_Label, CoreTools.Translate("Dependencies:") + " ");
             DependenciesParagraph.Inlines.Clear();
-            DependenciesParagraph.Inlines.Add(new Run() { Text = LoadingString, Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)), });
+            DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text = LoadingString, Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)), });
             SetTextToItem(ReleaseNotes_Label, CoreTools.Translate("Release notes") + ": ");
             SetTextToItem(ReleaseNotes_Content, LoadingString);
             SetTextToItem(ReleaseNotesUrl_Label, CoreTools.Translate("Release notes URL") + ": ");
@@ -118,7 +118,7 @@ namespace UniGetUI.Interface.Dialogs
             MainActionButton.Padding = new Thickness(0);
             var textBlock = new TextBlock()
             {
-                TextWrapping = TextWrapping.WrapWholeWords,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.WrapWholeWords,
                 Padding = new Thickness(0),
                 TextAlignment = TextAlignment.Center
             };
@@ -377,7 +377,7 @@ namespace UniGetUI.Interface.Dialogs
             if (!details.Package.Manager.Capabilities.CanListDependencies)
             {
                 DependenciesParagraph.Inlines.Clear();
-                DependenciesParagraph.Inlines.Add(new Run()
+                DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                 {
                     Text = CoreTools.Translate("Not available"),
                     Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
@@ -389,7 +389,7 @@ namespace UniGetUI.Interface.Dialogs
 
                 foreach (var dep in details.Dependencies)
                 {
-                    DependenciesParagraph.Inlines.Add(new Run()
+                    DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                     {
                         Text = $"  • {dep.Name}",
                         FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
@@ -400,7 +400,7 @@ namespace UniGetUI.Interface.Dialogs
                     if (dep.Version.Any()) line += CoreTools.Translate("Version:") + $" {dep.Version}, ";
                     line += $"{(dep.Mandatory ? CoreTools.Translate("mandatory") : CoreTools.Translate("optional"))})";
 
-                    DependenciesParagraph.Inlines.Add(new Run()
+                    DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                     {
                         Text = line,
                         FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
@@ -413,7 +413,7 @@ namespace UniGetUI.Interface.Dialogs
             else
             {
                 DependenciesParagraph.Inlines.Clear();
-                DependenciesParagraph.Inlines.Add(new Run()
+                DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                 {
                     Text = "\t" + CoreTools.Translate("No dependencies specified"),
                     Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
@@ -432,7 +432,7 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        public void SetTextToItem(Run r, string? s)
+        public void SetTextToItem(Avalonia.Controls.Documents.Run r, string? s)
         {
             if (s is null)
             {
@@ -446,12 +446,12 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        public void SetTextToItem(Hyperlink h, Uri? u, string prefix = "", string suffix = "")
+        public void SetTextToItem(Button h, Uri? u, string prefix = "", string suffix = "")
         {
             if (u is null)
             {
                 h.Inlines.Clear();
-                h.Inlines.Add(new Run
+                h.Inlines.Add(new Avalonia.Controls.Documents.Run
                 {
                     Text = CoreTools.Translate("Not available"),
                     TextDecorations = TextDecorations.None,
@@ -462,14 +462,14 @@ namespace UniGetUI.Interface.Dialogs
             else
             {
                 h.Inlines.Clear();
-                h.Inlines.Add(new Run { Text = prefix + u.ToString() + suffix });
+                h.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = prefix + u.ToString() + suffix });
                 h.NavigateUri = u;
             }
         }
-        public void SetTextToItem(Hyperlink h, string s)
+        public void SetTextToItem(Button h, string s)
         {
             h.Inlines.Clear();
-            h.Inlines.Add(new Run { Text = s });
+            h.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = s });
             h.NavigateUri = null;
         }
 
@@ -477,13 +477,13 @@ namespace UniGetUI.Interface.Dialogs
         {
             PackageIcon.Source = new BitmapImage
             {
-                UriSource = await Task.Run(Package.GetIconUrl)
+                UriSource = await Task.Avalonia.Controls.Documents.Run(Package.GetIconUrl)
             };
         }
 
         public async Task LoadScreenshots()
         {
-            IReadOnlyList<Uri> screenshots = await Task.Run(Package.GetScreenshots);
+            IReadOnlyList<Uri> screenshots = await Task.Avalonia.Controls.Documents.Run(Package.GetScreenshots);
             PackageHasScreenshots = screenshots.Any();
             if (PackageHasScreenshots)
             {
@@ -501,19 +501,19 @@ namespace UniGetUI.Interface.Dialogs
 
         }
 
-        public void ShareButton_Click(object sender, RoutedEventArgs e)
+        public void ShareButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             DialogHelper.SharePackage(Package);
         }
 
-        public void DownloadInstallerButton_Click(object sender, RoutedEventArgs e)
+        public void DownloadInstallerButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (!Package.Manager.Capabilities.CanDownloadInstaller) return;
             Close?.Invoke(this, EventArgs.Empty);
             _ = MainApp.Operations.AskLocationAndDownload(Package, InstallReferral);
         }
 
-        public void CloseButton_Click(object sender, RoutedEventArgs e)
+        public void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
         }
@@ -618,7 +618,7 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        public void ActionButton_Click(object sender, RoutedEventArgs e)
+        public void ActionButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             _ = DoAction(Package, OperationRole);
         }
@@ -659,17 +659,17 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        private void SaveInstallOptionsButton_Click(object sender, RoutedEventArgs e) => _ = _saveInstallOptionsButton_Click();
+        private void SaveInstallOptionsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _saveInstallOptionsButton_Click();
         private async Task _saveInstallOptionsButton_Click()
         {
             try
             {
                 SaveInstallOptionsButton.IsEnabled = false;
-                SaveInstallOptionsButton.Content = new FontIcon { Glyph = "\uE9F5" };
+                SaveInstallOptionsButton.Content = new TextBlock { Glyph = "\uE9F5" };
                 var options = await InstallOptionsPage.GetUpdatedOptions();
                 await InstallOptionsFactory.SaveForPackageAsync(options, Package);
                 await Task.Delay(400); // Give feedback to the user that things are being done
-                SaveInstallOptionsButton.Content = new FontIcon { Glyph = "\uE73E" };
+                SaveInstallOptionsButton.Content = new TextBlock { Glyph = "\uE73E" };
                 SaveInstallOptionsButton.IsEnabled = true;
                 await Task.Delay(2000);
                 SaveInstallOptionsButton.Content = CoreTools.Translate("Save");

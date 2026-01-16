@@ -10,12 +10,12 @@ using UniGetUI.Core.Tools;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public partial class SecureCheckboxCard : SettingsCard
+    public partial class SecureCheckboxCard : CommunityToolkit.WinUI.Controls.SettingsCard
     {
         public ToggleSwitch _checkbox;
         public TextBlock _textblock;
         public TextBlock _warningBlock;
-        public ProgressRing _loading;
+        public ProgressBar _loading;
         private bool IS_INVERTED;
 
         private SecureSettings.K setting_name = SecureSettings.K.Unset;
@@ -71,18 +71,18 @@ namespace UniGetUI.Interface.Widgets
                 Margin = new Thickness(0, 0, 8, 0)
             };
 
-            _loading = new ProgressRing() { IsIndeterminate = true, Visibility = Visibility.Collapsed};
+            _loading = new ProgressBar() { IsIndeterminate = true, Visibility = Visibility.Collapsed};
             _textblock = new TextBlock()
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                TextWrapping = TextWrapping.Wrap
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
             };
             _warningBlock = new TextBlock()
             {
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                TextWrapping = TextWrapping.Wrap,
+                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlErrorTextForegroundBrush"],
                 FontSize = 12,
                 Visibility = Visibility.Collapsed,

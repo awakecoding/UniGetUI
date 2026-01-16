@@ -14,7 +14,7 @@ namespace UniGetUI;
 public class AutoUpdater
 {
     public static Window Window = null!;
-    public static InfoBar Banner = null!;
+    public static Avalonia.Controls.UserControl Banner = null!;
     //------------------------------------------------------------------------------------------------------------------
     private const string STABLE_ENDPOINT = "https://www.marticliment.com/versions/unigetui/stable.ver";
     private const string BETA_ENDPOINT = "https://www.marticliment.com/versions/unigetui/beta.ver";
@@ -26,7 +26,7 @@ public class AutoUpdater
     public static bool ReleaseLockForAutoupdate_UpdateBanner;
     public static bool UpdateReadyToBeInstalled { get; private set; }
 
-    public static async Task UpdateCheckLoop(Window window, InfoBar banner)
+    public static async Task UpdateCheckLoop(Window window, Avalonia.Controls.UserControl banner)
     {
         if (Settings.Get(Settings.K.DisableAutoUpdateWingetUI))
         {
@@ -56,7 +56,7 @@ public class AutoUpdater
     /// <summary>
     /// Performs the entire update process, and returns true/false whether the process finished successfully;
     /// </summary>
-    public static async Task<bool> CheckAndInstallUpdates(Window window, InfoBar banner, bool Verbose, bool AutoLaunch = false, bool ManualCheck = false)
+    public static async Task<bool> CheckAndInstallUpdates(Window window, Avalonia.Controls.UserControl banner, bool Verbose, bool AutoLaunch = false, bool ManualCheck = false)
     {
         Window = window;
         Banner = banner;
@@ -67,7 +67,7 @@ public class AutoUpdater
             if (Verbose) ShowMessage_ThreadSafe(
                 CoreTools.Translate("We are checking for updates."),
                 CoreTools.Translate("Please wait"),
-                InfoBarSeverity.Informational,
+                int.Informational,
                 false
             );
 
@@ -96,7 +96,7 @@ public class AutoUpdater
                 ShowMessage_ThreadSafe(
                     CoreTools.Translate("UniGetUI version {0} is being downloaded.", LatestVersion.ToString(CultureInfo.InvariantCulture)),
                     CoreTools.Translate("This may take a minute or two"),
-                    InfoBarSeverity.Informational,
+                    int.Informational,
                     false);
 
                 // Download the installer
@@ -111,7 +111,7 @@ public class AutoUpdater
                 ShowMessage_ThreadSafe(
                     CoreTools.Translate("The installer authenticity could not be verified."),
                     CoreTools.Translate("The update process has been aborted."),
-                    InfoBarSeverity.Error,
+                    int.Error,
                     true);
                 return false;
             }
@@ -119,7 +119,7 @@ public class AutoUpdater
             if (Verbose) ShowMessage_ThreadSafe(
                 CoreTools.Translate("Great! You are on the latest version."),
                 CoreTools.Translate("There are no new UniGetUI versions to be installed"),
-                InfoBarSeverity.Success,
+                int.Success,
                 true
             );
             return true;
@@ -133,7 +133,7 @@ public class AutoUpdater
             if (Verbose || !WasCheckingForUpdates) ShowMessage_ThreadSafe(
                 CoreTools.Translate("An error occurred when checking for updates: "),
                 e.Message,
-                InfoBarSeverity.Error,
+                int.Error,
                 true
             );
             return false;
@@ -226,7 +226,7 @@ public class AutoUpdater
             return true;
         }
 
-        Window.DispatcherQueue.TryEnqueue(() =>
+        Window.Avalonia.Threading.Dispatcher.TryEnqueue(() =>
         {
             // Set the banner to Restart UniGetUI to update
             var UpdateNowButton = new Button { Content = CoreTools.Translate("Update now") };
@@ -234,7 +234,7 @@ public class AutoUpdater
             ShowMessage_ThreadSafe(
                 CoreTools.Translate("UniGetUI {0} is ready to be installed.", NewVersion),
                 CoreTools.Translate("The update process will start after closing UniGetUI"),
-                InfoBarSeverity.Success,
+                int.Success,
                 true,
                 UpdateNowButton);
 
@@ -301,25 +301,25 @@ public class AutoUpdater
         ShowMessage_ThreadSafe(
             CoreTools.Translate("UniGetUI is being updated..."),
             CoreTools.Translate("This may take a minute or two"),
-            InfoBarSeverity.Informational,
+            int.Informational,
             false
         );
         await p.WaitForExitAsync();
         ShowMessage_ThreadSafe(
             CoreTools.Translate("Something went wrong while launching the updater."),
             CoreTools.Translate("Please try again later"),
-            InfoBarSeverity.Error,
+            int.Error,
             true
         );
     }
 
-    private static void ShowMessage_ThreadSafe(string Title, string Message, InfoBarSeverity MessageSeverity, bool BannerClosable, Button? ActionButton = null)
+    private static void ShowMessage_ThreadSafe(string Title, string Message, int MessageSeverity, bool BannerClosable, Button? ActionButton = null)
     {
         try
         {
-            if (Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread() is null)
+            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                Window.DispatcherQueue.TryEnqueue(() =>
+                Window.Avalonia.Threading.Dispatcher.TryEnqueue(() =>
                     ShowMessage_ThreadSafe(Title, Message, MessageSeverity, BannerClosable, ActionButton));
                 return;
             }

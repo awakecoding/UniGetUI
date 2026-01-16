@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Avalonia;
+using Avalonia.Interactivity;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Pages;
 
@@ -12,10 +14,10 @@ namespace UniGetUI.Interface.Dialogs
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HelpPage : Page, IDisposable, IEnterLeaveListener
+    public sealed partial class HelpPage : UserControl, IDisposable, IEnterLeaveListener
     {
         private bool Initialized;
-        private WebView2? webView;
+        private UserControl? webView;
         private Uri? lastUri;
 
         public HelpPage()
@@ -65,7 +67,7 @@ namespace UniGetUI.Interface.Dialogs
             webView.Source = new Uri("https://marticliment.com/unigetui/help/" + piece);
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (Initialized && webView is not null && webView.CanGoBack)
             {
@@ -73,7 +75,7 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        private void RightButton_Click(object sender, RoutedEventArgs e)
+        private void RightButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
 
             if (Initialized && webView is not null &&  webView.CanGoForward)
@@ -82,7 +84,7 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        private void HomeButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (!Initialized || webView is null)
                 return;
@@ -90,7 +92,7 @@ namespace UniGetUI.Interface.Dialogs
             webView.Source = new Uri("https://marticliment.com/unigetui/help");
         }
 
-        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        private void ReloadButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (!Initialized || webView is null)
                 return;
@@ -98,7 +100,7 @@ namespace UniGetUI.Interface.Dialogs
             webView.Reload();
         }
 
-        private void BrowserButton_Click(object sender, RoutedEventArgs e)
+        private void BrowserButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (!Initialized || webView is null)
                 return;

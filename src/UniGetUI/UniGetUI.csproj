@@ -41,6 +41,12 @@
     <EmbeddedResource Remove="Intereface\**" />
     <None Remove="Intereface\**" />
     <Page Remove="Intereface\**" />
+    
+    <!-- Exclude old WinUI files in favor of Avalonia versions -->
+    <Compile Remove="App.xaml.cs" />
+    <None Remove="App.xaml" />
+    <Page Remove="App.xaml" />
+    
     <Page Update="Pages\MainView.xaml">
       <SubType>Designer</SubType>
     </Page>

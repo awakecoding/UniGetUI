@@ -5,7 +5,7 @@ using UniGetUI.Interface.Enums;
 
 namespace UniGetUI.Interface.Widgets
 {
-    public partial class LocalIcon : FontIcon
+    public partial class LocalIcon : TextBlock
     {
         public static FontFamily font = (FontFamily)Application.Current.Resources["SymbolFont"];
 
@@ -57,7 +57,7 @@ namespace UniGetUI.Interface.Widgets
         }
     }
 
-    public partial class LocalIconSource : FontIconSource
+    public partial class LocalIconSource : object
     {
         public static FontFamily font = (FontFamily)Application.Current.Resources["SymbolFont"];
 

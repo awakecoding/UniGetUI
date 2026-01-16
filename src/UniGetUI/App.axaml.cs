@@ -137,17 +137,17 @@ namespace UniGetUI
             try
             {
                 // MainWindow depends on this
-                await Task.Run(PEInterface.LoadLoaders);
+                await Task.Avalonia.Controls.Documents.Run(PEInterface.LoadLoaders);
 
                 // Create MainWindow
                 InitializeMainWindow();
 
                 var iniTasks = new[]
                 {
-                    Task.Run(PEInterface.LoadManagers),
-                    Task.Run(async () => await IconDatabase.Instance.LoadFromCacheAsync()),
-                    Task.Run(LoadGSudo),
-                    Task.Run(InitializeBackgroundAPI),
+                    Task.Avalonia.Controls.Documents.Run(PEInterface.LoadManagers),
+                    Task.Avalonia.Controls.Documents.Run(async () => await IconDatabase.Instance.LoadFromCacheAsync()),
+                    Task.Avalonia.Controls.Documents.Run(LoadGSudo),
+                    Task.Avalonia.Controls.Documents.Run(InitializeBackgroundAPI),
                 };
 
                 // Load essential components

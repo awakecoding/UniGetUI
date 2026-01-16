@@ -57,10 +57,10 @@ namespace UniGetUI.Interface
         private PageType CurrentPage_t = PageType.Null;
         private List<PageType> NavigationHistory = new();
 
-        AutoSuggestBox MainTextBlock;
+        AutoCompleteBox MainTextBlock;
         public event EventHandler<bool>? CanGoBackChanged;
 
-        public MainView(AutoSuggestBox mainTextBlock)
+        public MainView(AutoCompleteBox mainTextBlock)
         {
             InitializeComponent();
             MainTextBlock = mainTextBlock;
@@ -259,7 +259,7 @@ namespace UniGetUI.Interface
             _lastNavItemSelectionWasAuto = false;
         }
 
-        private void AboutNavButton_Click(object sender, RoutedEventArgs e) => _ = _aboutNavButton_Click();
+        private void AboutNavButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _aboutNavButton_Click();
         private async Task _aboutNavButton_Click()
         {
             SelectNavButtonForPage(PageType.Null);
@@ -330,13 +330,13 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void ReleaseNotesMenu_Click(object sender, RoutedEventArgs e)
+        private void ReleaseNotesMenu_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = DialogHelper.ShowReleaseNotes();
 
-        private void OperationHistoryMenu_Click(object sender, RoutedEventArgs e)
+        private void OperationHistoryMenu_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => NavigateTo(PageType.OperationHistory);
 
-        private void ManagerLogsMenu_Click(object sender, RoutedEventArgs e)
+        private void ManagerLogsMenu_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => OpenManagerLogs();
 
         public void OpenManagerLogs(IPackageManager? manager = null)
@@ -355,10 +355,10 @@ namespace UniGetUI.Interface
             SettingsPage?.NavigateTo(page);
         }
 
-        public void UniGetUILogs_Click(object sender, RoutedEventArgs e)
+        public void UniGetUILogs_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => NavigateTo(PageType.OwnLog);
 
-        private void HelpMenu_Click(object sender, RoutedEventArgs e)
+        private void HelpMenu_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => ShowHelp();
 
         public void ShowHelp(string uriAttachment = "")
@@ -367,7 +367,7 @@ namespace UniGetUI.Interface
             HelpPage?.NavigateTo(uriAttachment);
         }
 
-        private void QuitUniGetUI_Click(object sender, RoutedEventArgs e)
+        private void QuitUniGetUI_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => MainApp.Instance.DisposeAndQuit();
 
         private bool ResizingOPLayout;
@@ -425,28 +425,28 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void OperationSplitterMenuButton_Click(object sender, RoutedEventArgs e)
+        private void OperationSplitterMenuButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             OperationListMenu.ShowAt(OperationSplitterMenuButton, new FlyoutShowOptions { ShowMode = FlyoutShowMode.Standard });
         }
 
-        private void ExpandCollapseOpList_Click(object sender, RoutedEventArgs e)
+        private void ExpandCollapseOpList_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (isCollapsed)
             {
                 isCollapsed = false;
-                ExpandCollapseOpList.Content = new FontIcon { Glyph = "\uE96E", FontSize = 14 };
+                ExpandCollapseOpList.Content = new TextBlock { Glyph = "\uE96E", FontSize = 14 };
                 UpdateOperationsLayout();
             }
             else
             {
                 isCollapsed = true;
-                ExpandCollapseOpList.Content = new FontIcon { Glyph = "\uE96D", FontSize = 14 };
+                ExpandCollapseOpList.Content = new TextBlock { Glyph = "\uE96D", FontSize = 14 };
                 UpdateOperationsLayout();
             }
         }
 
-        private void CancellAllOps_Click(object sender, RoutedEventArgs e)
+        private void CancellAllOps_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             foreach (var widget in MainApp.Operations._operationList)
             {
@@ -456,7 +456,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void RetryFailedOps_Click(object sender, RoutedEventArgs e)
+        private void RetryFailedOps_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             foreach (var widget in MainApp.Operations._operationList)
             {
@@ -466,7 +466,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void ClearSuccessfulOps_Click(object sender, RoutedEventArgs e)
+        private void ClearSuccessfulOps_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             foreach (var widget in MainApp.Operations._operationList.ToArray())
             {
@@ -476,7 +476,7 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavigationView_SelectionChanged(SplitView sender, SelectionChangedEventArgs args)
         {
             if (_lastNavItemSelectionWasAuto)
                 return;
@@ -487,10 +487,10 @@ namespace UniGetUI.Interface
             }
         }
 
-        private void MoreNavBtn_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void MoreNavBtn_Tapped(object sender, Microsoft.UI.Xaml.Input.Avalonia.Input.TappedEventArgs e)
         {
-            (VersionMenuItem as MenuFlyoutItem).Text = CoreTools.Translate("WingetUI Version {0}", CoreData.VersionName);
-            MoreNavButtonMenu.ShowAt(sender as FrameworkElement);
+            (VersionMenuItem as MenuItem).Text = CoreTools.Translate("WingetUI Version {0}", CoreData.VersionName);
+            MoreNavButtonMenu.ShowAt(sender as Avalonia.Controls.Control);
         }
 
         internal void LoadBundleFromFile(string param)
@@ -505,7 +505,7 @@ namespace UniGetUI.Interface
             BundlesPage?.OpenFromString(payload, format, source, loadingId);
         }
 
-        private void ClearAllFinished_OnClick(object sender, RoutedEventArgs e)
+        private void ClearAllFinished_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             foreach (var widget in MainApp.Operations._operationList.ToArray())
             {

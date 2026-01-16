@@ -271,15 +271,15 @@ public partial class OperationControl: INotifyPropertyChanged
 
         if (Operation.Status is OperationStatus.InQueue)
         {
-            var skipQueue = new BetterMenuItem { Text = CoreTools.Translate("Run now"), Icon = new FontIcon {Glyph = "\uE768"} };
+            var skipQueue = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run now"), Icon = new TextBlock {Glyph = "\uE768"} };
             skipQueue.Click += (_, _) => Operation.SkipQueue();
             OpMenu.Items.Add(skipQueue);
 
-            var putNext = new BetterMenuItem { Text = CoreTools.Translate("Run next"), Icon = new FontIcon {Glyph = "\uEB9D"} };
+            var putNext = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run next"), Icon = new TextBlock {Glyph = "\uEB9D"} };
             putNext.Click += (_, _) => Operation.RunNext();
             OpMenu.Items.Add(putNext);
 
-            var putLast = new BetterMenuItem { Text = CoreTools.Translate("Run last"), Icon = new FontIcon {Glyph = "\uEB9E"} };
+            var putLast = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run last"), Icon = new TextBlock {Glyph = "\uEB9E"} };
             putLast.Click += (_, _) => Operation.BackOfTheQueue();
             OpMenu.Items.Add(putLast);
 
@@ -474,9 +474,9 @@ public partial class OperationControl: INotifyPropertyChanged
         }
     }
 
-    public List<MenuFlyoutItemBase> GetRetryOptions(Action callback)
+    public List<Control> GetRetryOptions(Action callback)
     {
-        var retryOptionsMenu = new List<MenuFlyoutItemBase>();
+        var retryOptionsMenu = new List<Control>();
 
         if (Operation is SourceOperation sourceOp && !sourceOp.ForceAsAdministrator)
         {
@@ -592,9 +592,9 @@ public partial class OperationControl: INotifyPropertyChanged
         return retryOptionsMenu;
     }
 
-    public List<MenuFlyoutItemBase> GetOperationOptions()
+    public List<Control> GetOperationOptions()
     {
-        var optionsMenu = new List<MenuFlyoutItemBase>();
+        var optionsMenu = new List<Control>();
         if (Operation is PackageOperation packageOp)
         {
             var details = new BetterMenuItem {

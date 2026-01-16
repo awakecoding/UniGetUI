@@ -8,14 +8,14 @@ using Avalonia.Interactivity;
 namespace UniGetUI.Interface.Widgets;
 public sealed partial class DialogCloseButton : UserControl
 {
-    public event EventHandler<RoutedEventArgs>? Click;
+    public event EventHandler<Avalonia.Interactivity.RoutedEventArgs>? Click;
 
     public DialogCloseButton()
     {
         this.InitializeComponent();
     }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Click?.Invoke(sender, e);
     }

@@ -222,7 +222,7 @@ namespace UniGetUI.Interface.SoftwarePages
             ToolBar.PrimaryCommands.Add(new AppBarSeparator());
             ToolBar.PrimaryCommands.Add(HelpButton);
 
-            Dictionary<DependencyObject, string> Labels = new()
+            Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             { // Entries with a trailing space are collapsed
               // Their texts will be used as the tooltip
                 { UninstallAsAdmin,     CoreTools.Translate("Uninstall as administrator") },
@@ -237,7 +237,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 { HelpButton,           CoreTools.Translate("Help") }
             };
 
-            Dictionary<DependencyObject, IconType> Icons = new()
+            Dictionary<Avalonia.AvaloniaObject, IconType> Icons = new()
             {
                 { UninstallAsAdmin,       IconType.UAC },
                 { UninstallInteractive,   IconType.Interactive },
@@ -351,18 +351,18 @@ namespace UniGetUI.Interface.SoftwarePages
                 if (await package.HasUpdatesIgnoredAsync())
                 {
                     MenuIgnoreUpdates.Text = CoreTools.Translate("Do not ignore updates for this package anymore");
-                    MenuIgnoreUpdates.Icon = new FontIcon { Glyph = "\uE77A" };
+                    MenuIgnoreUpdates.Icon = new TextBlock { Glyph = "\uE77A" };
                 }
                 else
                 {
                     MenuIgnoreUpdates.Text = CoreTools.Translate("Ignore updates for this package");
-                    MenuIgnoreUpdates.Icon = new FontIcon { Glyph = "\uE718" };
+                    MenuIgnoreUpdates.Icon = new TextBlock { Glyph = "\uE718" };
                 }
                 MenuIgnoreUpdates.IsEnabled = true;
             }
         }
 
-        private void ExportSelection_Click(object sender, RoutedEventArgs e) => _ = _exportSelection_Click();
+        private void ExportSelection_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportSelection_Click();
         private async Task _exportSelection_Click()
         {
             MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
@@ -442,25 +442,25 @@ namespace UniGetUI.Interface.SoftwarePages
             }
         }
 
-        private void MenuUninstall_Invoked(object sender, RoutedEventArgs args)
+        private void MenuUninstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.ConfirmAndUninstall(SelectedItem);
 
-        private void MenuAsAdmin_Invoked(object sender, RoutedEventArgs args)
+        private void MenuAsAdmin_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.ConfirmAndUninstall(SelectedItem, elevated: true);
 
-        private void MenuInteractive_Invoked(object sender, RoutedEventArgs args)
+        private void MenuInteractive_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.ConfirmAndUninstall(SelectedItem, interactive: true);
 
-        private void MenuRemoveData_Invoked(object sender, RoutedEventArgs args)
+        private void MenuRemoveData_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.ConfirmAndUninstall(SelectedItem, remove_data: true);
 
-        private void MenuReinstall_Invoked(object sender, RoutedEventArgs args)
+        private void MenuReinstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.Install(SelectedItem, TEL_InstallReferral.ALREADY_INSTALLED);
 
-        private void MenuUninstallThenReinstall_Invoked(object sender, RoutedEventArgs args)
+        private void MenuUninstallThenReinstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
             => _ = MainApp.Operations.UninstallThenReinstall(SelectedItem, TEL_InstallReferral.ALREADY_INSTALLED);
 
-        private void MenuIgnorePackage_Invoked(object sender, RoutedEventArgs args) => _ = _menuIgnorePackage_Invoked();
+        private void MenuIgnorePackage_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args) => _ = _menuIgnorePackage_Invoked();
         private async Task _menuIgnorePackage_Invoked()
         {
             IPackage? package = SelectedItem;
@@ -477,7 +477,7 @@ namespace UniGetUI.Interface.SoftwarePages
             }
         }
 
-        private void MenuShare_Invoked(object sender, RoutedEventArgs args)
+        private void MenuShare_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             if (SelectedItem is null)
                 return;
@@ -485,12 +485,12 @@ namespace UniGetUI.Interface.SoftwarePages
             DialogHelper.SharePackage(SelectedItem);
         }
 
-        private void MenuDetails_Invoked(object sender, RoutedEventArgs args)
+        private void MenuDetails_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.ALREADY_INSTALLED);
         }
 
-        private void MenuInstallSettings_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInstallSettings_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             _ = ShowInstallationOptionsForPackage(SelectedItem);
         }

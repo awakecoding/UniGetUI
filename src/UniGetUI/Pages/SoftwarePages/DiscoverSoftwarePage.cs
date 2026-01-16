@@ -54,7 +54,7 @@ namespace UniGetUI.Interface.SoftwarePages
             MegaQueryBlock.KeyUp += (s, e) => { if (e.Key == VirtualKey.Enter) { Event_SearchPackages(s, e); } };
         }
 
-        public override void SearchBox_QuerySubmitted(object? sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        public override void SearchBox_QuerySubmitted(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             base.SearchBox_QuerySubmitted(sender, args);
             Event_SearchPackages(sender, new());
@@ -180,7 +180,7 @@ namespace UniGetUI.Interface.SoftwarePages
             ToolBar.PrimaryCommands.Add(new AppBarSeparator());
             ToolBar.PrimaryCommands.Add(HelpButton);
 
-            Dictionary<DependencyObject, string> Labels = new()
+            Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             {   // Entries with a trailing space are collapsed
                 // Their texts will be used as the tooltip
                 { InstallAsAdmin,         CoreTools.Translate("Install as administrator") },
@@ -194,7 +194,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 { HelpButton,             CoreTools.Translate("Help") }
             };
 
-            Dictionary<DependencyObject, IconType> Icons = new()
+            Dictionary<Avalonia.AvaloniaObject, IconType> Icons = new()
             {
                 { InstallAsAdmin,       IconType.UAC },
                 { InstallSkipHash,      IconType.Checksum },
@@ -231,7 +231,7 @@ namespace UniGetUI.Interface.SoftwarePages
             }
         }
 
-        private void Event_SearchPackages(object sender, RoutedEventArgs e)
+        private void Event_SearchPackages(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (QueryBlock.Text.Trim() != "")
             {
@@ -263,7 +263,7 @@ namespace UniGetUI.Interface.SoftwarePages
             MenuDownloadInstaller.IsEnabled = package.Manager.Capabilities.CanDownloadInstaller;
         }
 
-        private void ExportSelection_Click(object sender, RoutedEventArgs e) => _ = _exportSelection_Click();
+        private void ExportSelection_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportSelection_Click();
         private async Task _exportSelection_Click()
         {
             MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
@@ -272,12 +272,12 @@ namespace UniGetUI.Interface.SoftwarePages
             DialogHelper.HideLoadingDialog(loadingId);
         }
 
-        private void MenuDetails_Invoked(object sender, RoutedEventArgs e)
+        private void MenuDetails_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH);
         }
 
-        private void MenuShare_Invoked(object sender, RoutedEventArgs e)
+        private void MenuShare_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (SelectedItem is null)
                 return;
@@ -285,19 +285,19 @@ namespace UniGetUI.Interface.SoftwarePages
             DialogHelper.SharePackage(SelectedItem);
         }
 
-        private void MenuInstall_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInstall_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Install(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH);
 
-        private void MenuSkipHash_Invoked(object sender, RoutedEventArgs e)
+        private void MenuSkipHash_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Install(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH, no_integrity: true);
 
-        private void MenuInteractive_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInteractive_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Install(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH, interactive: true);
 
-        private void MenuAsAdmin_Invoked(object sender, RoutedEventArgs e)
+        private void MenuAsAdmin_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = MainApp.Operations.Install(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH, elevated: true);
 
-        private void MenuInstallSettings_Invoked(object sender, RoutedEventArgs e)
+        private void MenuInstallSettings_Invoked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => _ = ShowInstallationOptionsForPackage(SelectedItem);
 
     }
