@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Page
+<UserControl
     x:Class="UniGetUI.Pages.SettingsPages.SettingsBasePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
-    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:UniGetUI.Pages.SettingsPages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
-    Background="Transparent"
     mc:Ignorable="d">
-
-    <animations:Implicit.ShowAnimations>
-        <animations:TranslationAnimation
-            From="0,100,0"
-            To="0"
-            Duration="0:0:0.25" />
-        <animations:OpacityAnimation
-            From="0"
-            To="1"
-            Duration="0:0:0.25" />
-    </animations:Implicit.ShowAnimations>
 
 
     <Grid RowSpacing="8">
@@ -36,12 +21,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <InfoBar
+        <Border
             Name="RestartRequired"
             Grid.Row="0"
             Grid.Column="1"
-            CornerRadius="8"
-            Severity="Warning" />
+            CornerRadius="8" />
 
         <Grid
             Name="SettingsHeaderGrid"
@@ -60,14 +44,7 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 BorderThickness="0">
-                <AnimatedIcon>
-                    <AnimatedIcon.Source>
-                        <animatedvisuals:AnimatedBackVisualSource />
-                    </AnimatedIcon.Source>
-                    <AnimatedIcon.FallbackIconSource>
-                        <SymbolIconSource Symbol="Back" />
-                    </AnimatedIcon.FallbackIconSource>
-                </AnimatedIcon>
+                <TextBlock Text="←" FontSize="20" />
             </Button>
             <TextBlock
                 Name="SettingsTitle"
@@ -79,11 +56,11 @@
                 Text=""
                 TextWrapping="Wrap" />
         </Grid>
-        <Frame
+        <ContentControl
             Name="MainNavigationFrame"
             Grid.Row="2"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" />
     </Grid>
-</Page>
+</UserControl>
