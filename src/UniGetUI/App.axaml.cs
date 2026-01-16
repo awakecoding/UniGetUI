@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -12,6 +14,7 @@ using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.SettingsEngine.SecureSettings;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface;
+using UniGetUI.Interface.BackgroundApi;
 using UniGetUI.Interface.Telemetry;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Classes.Manager.Classes;
@@ -22,8 +25,11 @@ namespace UniGetUI
     public partial class MainApp : Application
     {
         public static Dispatcher Dispatcher { get; private set; } = null!;
-        public static MainApp? Instance { get; private set; }
-        public MainWindow? MainWindow { get; private set; }
+        public static MainApp Instance { get; private set; } = null!;
+        public MainWindow MainWindow { get; private set; } = null!;
+        public bool RaiseExceptionAsFatal = true;
+
+        private readonly BackgroundApiRunner BackgroundApi = new();
 
         public static class Tooltip
         {
@@ -47,84 +53,207 @@ namespace UniGetUI
                 get => _available_updates;
                 set { _available_updates = value; Instance?.MainWindow?.UpdateSystemTrayStatus(); }
             }
-
-            private static int _operations_in_progress;
-            public static int OperationsInProgress
-            {
-                get => _operations_in_progress;
-                set { _operations_in_progress = value; Instance?.MainWindow?.UpdateSystemTrayStatus(); }
-            }
         }
 
         public override void Initialize()
         {
-            AvaloniaXamlLoader.Load(this);
+            try
+            {
+                Instance = this;
+                AvaloniaXamlLoader.Load(this);
+                ApplyThemeToApp();
+            }
+            catch (Exception e)
+            {
+                CrashHandler.ReportFatalException(e);
+            }
+        }
+
+        private void ApplyThemeToApp()
+        {
+            // Avalonia theme application logic
+            // Will be implemented based on settings
         }
 
         public override void OnFrameworkInitializationCompleted()
         {
-            Instance = this;
-            
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 Dispatcher = Avalonia.Threading.Dispatcher.UIThread;
                 
-                // Initialize application
-                InitializeApp();
+                RegisterErrorHandling();
                 
-                // Create and show main window
-                MainWindow = new MainWindow();
-                desktop.MainWindow = MainWindow;
+                // Start async component loading
+                _ = LoadComponentsAsync();
             }
 
             base.OnFrameworkInitializationCompleted();
         }
 
-        private void InitializeApp()
+        private void RegisterErrorHandling()
         {
             try
             {
-                Logger.Info("═══════════════════════════════════════════════════════════════════════════════════════════════════");
-                Logger.Info($"Starting UniGetUI version {CoreData.VersionName}");
-                Logger.Info("═══════════════════════════════════════════════════════════════════════════════════════════════════");
+                TaskScheduler.UnobservedTaskException += (sender, args) =>
+                {
+                    Logger.Error($"An unhandled exception occurred in a Task (sender: {sender?.GetType().ToString() ?? "null"})");
+                    Exception? e = args.Exception.InnerException;
+                    Logger.Error(args.Exception);
+                    while (e is not null)
+                    {
+                        Logger.Error("------------------------------");
+                        Logger.Error(e);
+                        e = e.InnerException;
+                    }
 
-                // Initialize core components
-                Logger.Info("Initializing core components...");
-                
-                // Initialize settings
-                Settings.Initialize();
-                
-                // Initialize icon engine
-                IconDatabase.LoadFromPath();
-                
-                // Initialize package managers
-                Logger.Info("Initializing package managers...");
-                PEInterface.Initialize();
-                
-                Logger.Info("Application initialized successfully");
+                    if (Debugger.IsAttached) Debugger.Break();
+
+                    Dispatcher.Post(() =>
+                    {
+                        if (MainWindow is null)
+                            return;
+                        try
+                        {
+                            Logger.Warn("Showing error notification to user");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error(ex);
+                        }
+                    });
+
+                    args.SetObserved();
+                };
             }
             catch (Exception ex)
             {
-                Logger.Error("Failed to initialize application", ex);
-                throw;
+                if (Debugger.IsAttached) Debugger.Break();
+                Logger.Error(ex);
             }
         }
 
-        public static void DispatcherBeginInvoke(Action action)
+        private async Task LoadComponentsAsync()
         {
-            Dispatcher.Post(action);
+            try
+            {
+                // MainWindow depends on this
+                await Task.Run(PEInterface.LoadLoaders);
+
+                // Create MainWindow
+                InitializeMainWindow();
+
+                var iniTasks = new[]
+                {
+                    Task.Run(PEInterface.LoadManagers),
+                    Task.Run(async () => await IconDatabase.Instance.LoadFromCacheAsync()),
+                    Task.Run(LoadGSudo),
+                    Task.Run(InitializeBackgroundAPI),
+                };
+
+                // Load essential components
+                await Task.WhenAll(iniTasks);
+
+                // Load non-essential components
+                _ = TelemetryHandler.InitializeAsync();
+                _ = IconDatabase.Instance.LoadIconAndScreenshotsDatabaseAsync();
+
+                // Load interface
+                Logger.Info("LoadComponentsAsync finished executing. All managers loaded. Proceeding to interface.");
+                MainWindow.SwitchToInterface();
+
+                RaiseExceptionAsFatal = false;
+            }
+            catch (Exception e)
+            {
+                CrashHandler.ReportFatalException(e);
+            }
         }
 
-        public static void DispatcherInvoke(Action action)
+        private static async Task LoadGSudo()
         {
-            if (Dispatcher.CheckAccess())
+            try
             {
-                action();
+                if (Settings.Get(Settings.K.ProhibitElevation))
+                {
+                    Logger.Warn("UniGetUI Elevator has been disabled since elevation is prohibited!");
+                }
+
+                if (SecureSettings.Get(SecureSettings.K.ForceUserGSudo))
+                {
+                    var res = await CoreTools.WhichAsync("gsudo.exe");
+                    if (res.Item1)
+                    {
+                        CoreData.ElevatorPath = res.Item2;
+                        Logger.Warn($"Using user GSudo (forced by user) at {CoreData.ElevatorPath}");
+                        return;
+                    }
+                }
+
+#if DEBUG
+                Logger.Warn($"Using bundled GSudo at {CoreData.ElevatorPath} since UniGetUI Elevator is not available!");
+                CoreData.ElevatorPath = (await CoreTools.WhichAsync("gsudo.exe")).Item2;
+#else
+                string elevatorKind = Settings.Get(Settings.K.UseLegacyElevator)
+                    ? "UniGetUI Elevator (Legacy).exe"
+                    : "UniGetUI Elevator.exe";
+                CoreData.ElevatorPath = System.IO.Path.Join(CoreData.UniGetUIExecutableDirectory, "Assets", "Utilities", elevatorKind);
+                Logger.Debug($"Using built-in UniGetUI Elevator at {CoreData.ElevatorPath}");
+#endif
             }
-            else
+            catch (Exception ex)
             {
-                Dispatcher.InvokeAsync(action).Wait();
+                Logger.Error("Elevator/GSudo failed to be loaded!");
+                Logger.Error(ex);
             }
+        }
+
+        private void InitializeMainWindow()
+        {
+            MainWindow = new MainWindow
+            {
+                BlockLoading = true
+            };
+
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = MainWindow;
+            }
+        }
+
+        private async Task InitializeBackgroundAPI()
+        {
+            try
+            {
+                if (Settings.Get(Settings.K.DisableApi))
+                    return;
+
+                BackgroundApi.OnOpenWindow += (_, _) =>
+                    Dispatcher.Post(() => MainWindow.Activate());
+
+                await BackgroundApi.Start();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Could not initialize Background API:");
+                Logger.Error(ex);
+            }
+        }
+
+        public void DisposeAndQuit(int outputCode = 0)
+        {
+            Logger.Warn("Quitting UniGetUI");
+            DWMThreadHelper.ChangeState_DWM(false);
+            DWMThreadHelper.ChangeState_XAML(false);
+            MainWindow?.Close();
+            BackgroundApi?.Stop();
+            Environment.Exit(outputCode);
+        }
+
+        public void KillAndRestart()
+        {
+            Process.Start(CoreData.UniGetUIExecutableFile);
+            Instance.MainWindow?.Close();
+            Environment.Exit(0);
         }
     }
 }

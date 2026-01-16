@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using UniGetUI.Core.Data;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;
@@ -19,6 +20,7 @@ namespace UniGetUI.Interface
         
         private bool HasLoadedLastGeometry;
         private string _currentSubtitle = "";
+        private int _currentSubtitlePxLength;
         public bool BlockLoading;
         public int LoadingDialogCount;
 
@@ -38,6 +40,8 @@ namespace UniGetUI.Interface
 
             // Initialize application
             ApplyTheme();
+            ApplyProxyVariableToProcess();
+            _applySubtitleToWindow();
             
             // Process command line arguments
             foreach (var arg in Environment.GetCommandLineArgs())
@@ -48,6 +52,17 @@ namespace UniGetUI.Interface
             // Setup event handlers
             Opened += MainWindow_Opened;
             Closing += MainWindow_Closing;
+            
+            if (CoreData.IsDaemon)
+            {
+                DWMThreadHelper.ChangeState_DWM(true);
+                DWMThreadHelper.ChangeState_XAML(true);
+                CoreData.IsDaemon = false;
+            }
+            else
+            {
+                Show();
+            }
         }
 
         private void InitializeComponent()
@@ -65,13 +80,99 @@ namespace UniGetUI.Interface
         {
             Logger.Info("MainWindow closing");
             SaveGeometry();
+            
+            if (!Settings.Get(Settings.K.DisableSystemTray))
+            {
+                e.Cancel = true;
+                DWMThreadHelper.ChangeState_DWM(true);
+                DWMThreadHelper.ChangeState_XAML(true);
+                Hide();
+            }
+        }
+
+        private void _applySubtitleToWindow()
+        {
+            if (Settings.Get(Settings.K.ShowVersionNumberOnTitlebar))
+            {
+                AddToSubtitle(CoreTools.Translate("version {0}", CoreData.VersionName));
+            }
+
+            if (CoreTools.IsAdministrator())
+            {
+                AddToSubtitle(CoreTools.Translate("[RAN AS ADMINISTRATOR]"));
+            }
+
+            if (CoreData.IsPortable)
+            {
+                AddToSubtitle(CoreTools.Translate("Portable mode"));
+            }
+
+#if DEBUG
+            AddToSubtitle(CoreTools.Translate("DEBUG BUILD"));
+#endif
+        }
+
+        public static void ApplyProxyVariableToProcess()
+        {
+            try
+            {
+                var proxyUri = Settings.GetProxyUrl();
+                if (proxyUri is null || !Settings.Get(Settings.K.EnableProxy))
+                {
+                    Environment.SetEnvironmentVariable("HTTP_PROXY", "", EnvironmentVariableTarget.Process);
+                    return;
+                }
+
+                string content;
+                if (Settings.Get(Settings.K.EnableProxyAuth) is false)
+                {
+                    content = proxyUri.ToString();
+                }
+                else
+                {
+                    var creds = Settings.GetProxyCredentials();
+                    if (creds is null)
+                    {
+                        content = $"--proxy {proxyUri.ToString()}";
+                    }
+                    else
+                    {
+                        content = $"{proxyUri.Scheme}://{Uri.EscapeDataString(creds.UserName)}" +
+                                  $":{Uri.EscapeDataString(creds.Password)}" +
+                                  $"@{proxyUri.AbsoluteUri.Replace($"{proxyUri.Scheme}://", "")}";
+                    }
+                }
+
+                Environment.SetEnvironmentVariable("HTTP_PROXY", content, EnvironmentVariableTarget.Process);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Failed to apply proxy settings:");
+                Logger.Error(ex);
+            }
+        }
+
+        private void AddToSubtitle(string line)
+        {
+            if (_currentSubtitle.Length > 0)
+                _currentSubtitle += " - ";
+            _currentSubtitle += line;
+            _currentSubtitlePxLength = _currentSubtitle.Length * 4;
+            Title = "UniGetUI - " + _currentSubtitle;
+        }
+
+        private void ClearSubtitle()
+        {
+            _currentSubtitle = "";
+            _currentSubtitlePxLength = 0;
+            Title = "UniGetUI";
         }
 
         public void ApplyTheme()
         {
             Logger.Debug("Applying theme");
-            // Theme application logic will be implemented here
-            // Avalonia uses RequestedThemeVariant instead of WinUI's ElementTheme
+            // Avalonia theme application logic
+            // Will be implemented based on settings
         }
 
         private void LoadGeometry()
@@ -81,9 +182,42 @@ namespace UniGetUI.Interface
 
             try
             {
-                // Load saved window position and size
-                // This will need to be implemented with Avalonia's position/size properties
-                Logger.Debug("Loading window geometry");
+                string geometry = Settings.GetValue(Settings.K.WindowGeometry);
+                string[] items = geometry.Split(",");
+                if (items.Length != 5)
+                {
+                    Logger.Warn($"The restored geometry did not have exactly 5 items (found length was {items.Length})");
+                    return;
+                }
+
+                int X, Y, Width, Height, State;
+                try
+                {
+                    X = int.Parse(items[0]);
+                    Y = int.Parse(items[1]);
+                    Width = int.Parse(items[2]);
+                    Height = int.Parse(items[3]);
+                    State = int.Parse(items[4]);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("Could not parse window geometry integers");
+                    Logger.Error(ex);
+                    return;
+                }
+
+                if (State == 1)
+                {
+                    WindowState = WindowState.Maximized;
+                }
+                else
+                {
+                    Position = new PixelPoint(X, Y);
+                    Width = Width;
+                    Height = Height;
+                }
+
+                Logger.Debug("Window geometry loaded successfully");
                 HasLoadedLastGeometry = true;
             }
             catch (Exception ex)
@@ -96,8 +230,11 @@ namespace UniGetUI.Interface
         {
             try
             {
-                // Save window position and size
-                Logger.Debug("Saving window geometry");
+                int windowState = WindowState == WindowState.Maximized ? 1 : 0;
+                string geometry = $"{Position.X},{Position.Y},{(int)Width},{(int)Height},{windowState}";
+                
+                Logger.Debug($"Saving window geometry {geometry}");
+                Settings.SetValue(Settings.K.WindowGeometry, geometry);
             }
             catch (Exception ex)
             {
@@ -109,6 +246,16 @@ namespace UniGetUI.Interface
         {
             // System tray icon updates will be implemented here
             Logger.Debug("Updating system tray status");
+        }
+
+        public void SwitchToInterface()
+        {
+            Dispatcher.UIThread.Post(() =>
+            {
+                Logger.Info("Switching to main interface");
+                // Load main UI here
+                // For now, just update the content area
+            });
         }
     }
 }

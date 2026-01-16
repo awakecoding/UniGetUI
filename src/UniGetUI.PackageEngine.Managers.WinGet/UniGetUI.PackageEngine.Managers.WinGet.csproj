@@ -1,6 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-
+  <!-- Exclude Windows-specific files on non-Windows platforms -->
+  <ItemGroup Condition="'$([MSBuild]::IsOSPlatform(Windows))' != 'true'">
+    <Compile Remove="ClientHelpers\NativePackageHandler.cs" />
+    <Compile Remove="ClientHelpers\NativeWinGetHelper.cs" />
+    <Compile Remove="ClientHelpers\WinGetIconsHelper.cs" />
+    <Compile Remove="Helpers\WinGetPkgOperationHelper.cs" />
+    <Compile Remove="Helpers\WinGetPkgDetailsHelper.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UniGetUI.Core.Classes\UniGetUI.Core.Classes.csproj" />
