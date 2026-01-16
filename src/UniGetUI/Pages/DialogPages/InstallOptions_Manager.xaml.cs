@@ -48,7 +48,7 @@ public partial class InstallOptions_Manager : UserControl
 
     private async Task LoadOptions()
     {
-        LoadingIndicator.Visibility = Visibility.Visible;
+        LoadingIndicator.IsVisible = true;
         var options = await InstallOptionsFactory.LoadForManagerAsync(Manager);
 
         // This delay allows the spinner to show,
@@ -144,8 +144,8 @@ public partial class InstallOptions_Manager : UserControl
         CustomCommandsLabel1.Opacity = IsCLIEnabled ? 1 : 0.5;
         CustomCommandsLabel2.Opacity = IsCLIEnabled ? 1 : 0.5;
         CustomCommandsLabel3.Opacity = IsCLIEnabled ? 1 : 0.5;
-        GoToCLISettings.Visibility = IsCLIEnabled ? Visibility.Collapsed : Visibility.Visible;
-        CLIDisabled.Visibility = IsCLIEnabled ? Visibility.Collapsed : Visibility.Visible;
+        GoToCLISettings.IsVisible = !IsCLIEnabled;
+        CLIDisabled.IsVisible = !IsCLIEnabled;
 
         CustomParameters1.Text = string.Join(' ', options.CustomParameters_Install);
         CustomParameters2.Text = string.Join(' ', options.CustomParameters_Update);
@@ -158,12 +158,12 @@ public partial class InstallOptions_Manager : UserControl
         ApplyButton.IsEnabled = true;
         ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["DefaultButtonStyle"];
 
-        LoadingIndicator.Visibility = Visibility.Collapsed;
+        LoadingIndicator.IsVisible = false;
     }
 
     private async Task SaveOptions()
     {
-        LoadingIndicator.Visibility = Visibility.Visible;
+        LoadingIndicator.IsVisible = true;
         DisableAllInput();
 
         InstallOptions options = new();
@@ -208,7 +208,7 @@ public partial class InstallOptions_Manager : UserControl
 
     private async Task ResetOptions()
     {
-        LoadingIndicator.Visibility = Visibility.Visible;
+        LoadingIndicator.IsVisible = true;
         DisableAllInput();
 
         await InstallOptionsFactory.SaveForManagerAsync(new(), Manager);

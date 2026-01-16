@@ -23,7 +23,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         {
             if (Settings.Get(Settings.K.DisableSystemTray))
             {
-                ToolbarText.Visibility = Visibility.Visible;
+                ToolbarText.IsVisible = true;
                 DisableNotifications.IsEnabled = false;
                 DisableUpdatesNotifications.IsEnabled = false;
                 DisableErrorNotifications.IsEnabled = false;
@@ -32,7 +32,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
             else
             {
-                ToolbarText.Visibility = Visibility.Collapsed;
+                ToolbarText.IsVisible = false;
                 DisableNotifications.IsEnabled = true;
                 DisableUpdatesNotifications.IsEnabled = true;
                 DisableErrorNotifications.IsEnabled = true;

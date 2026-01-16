@@ -58,7 +58,7 @@ namespace UniGetUI.Pages.SettingsPages
             var page = e.Content as ISettingsPage;
             if (page is null) throw new InvalidCastException("Settings page does not inherit from ISettingsPage");
 
-            BackButton.Visibility = Visibility.Visible;
+            BackButton.IsVisible = true;
             SettingsTitle.Text = page.ShortTitle;
             page.NavigationRequested += Page_NavigationRequested;
             page.RestartRequired += Page_RestartRequired;
@@ -67,7 +67,7 @@ namespace UniGetUI.Pages.SettingsPages
 
         private void SettingsBasePage_ReapplyProperties(object? sender, EventArgs e)
         {
-            BackButton.Visibility = ((MainNavigationFrame.Content as ISettingsPage)?.CanGoBack ?? true) ? Visibility.Visible : Visibility.Collapsed;
+            BackButton.IsVisible = (MainNavigationFrame.Content as ISettingsPage)?.CanGoBack ?? true;
             SettingsTitle.Text = (MainNavigationFrame.Content as ISettingsPage)?.ShortTitle ?? "INVALID CONTENT PAGE!";
         }
 

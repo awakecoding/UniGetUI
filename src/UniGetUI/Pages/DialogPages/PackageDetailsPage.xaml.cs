@@ -60,7 +60,7 @@ namespace UniGetUI.Interface.Dialogs
             SizeChanged += PackageDetailsPage_SizeChanged;
 
             PackageName.Text = package.Name;
-            LoadingIndicator.Visibility = Visibility.Visible;
+            LoadingIndicator.IsVisible = true;
             string LoadingString = CoreTools.Translate("Loading...");
 
             // Basic details section
@@ -306,7 +306,7 @@ namespace UniGetUI.Interface.Dialogs
 
         public async Task LoadInformation()
         {
-            LoadingIndicator.Visibility = Visibility.Visible;
+            LoadingIndicator.IsVisible = true;
 
             _ = LoadIcon();
             _ = LoadScreenshots();
@@ -317,7 +317,7 @@ namespace UniGetUI.Interface.Dialogs
                 await details.Load();
             }
 
-            LoadingIndicator.Visibility = Visibility.Collapsed;
+            LoadingIndicator.IsVisible = false;
 
             // Basic details section
             SetTextToItem(DescriptionContent, details.Description);
@@ -488,7 +488,7 @@ namespace UniGetUI.Interface.Dialogs
             if (PackageHasScreenshots)
             {
                 PackageHasScreenshots = true;
-                IconsExtraBanner.Visibility = Visibility.Visible;
+                IconsExtraBanner.IsVisible = true;
                 ScreenshotsCarroussel.Items.Clear();
                 foreach (Uri image in screenshots)
                 {

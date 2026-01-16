@@ -451,7 +451,7 @@ public static partial class DialogHelper
         Window.TelemetryWarner.IsOpen = true;
 
         Window.TelemetryWarner.IsClosable = true;
-        Window.TelemetryWarner.Visibility = Visibility.Visible;
+        Window.TelemetryWarner.IsVisible = true;
 
         var AcceptBtn = new Button()
         {
@@ -460,7 +460,7 @@ public static partial class DialogHelper
         };
         AcceptBtn.Click += (_, _) =>
         {
-            Window.TelemetryWarner.Visibility = Visibility.Collapsed;
+            Window.TelemetryWarner.IsVisible = false;
             Window.TelemetryWarner.IsOpen = false;
             Settings.Set(Settings.K.ShownTelemetryBanner, true);
         };
@@ -471,7 +471,7 @@ public static partial class DialogHelper
         };
         SettingsBtn.Click += (_, _) =>
         {
-            Window.TelemetryWarner.Visibility = Visibility.Collapsed;
+            Window.TelemetryWarner.IsVisible = false;
             Window.TelemetryWarner.IsOpen = false;
             _ = ShowTelemetryDialog();
             Settings.Set(Settings.K.ShownTelemetryBanner, true);

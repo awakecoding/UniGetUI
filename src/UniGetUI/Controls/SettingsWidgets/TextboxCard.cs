@@ -38,7 +38,7 @@ namespace UniGetUI.Interface.Widgets
             set
             {
                 _helpbutton.NavigateUri = value;
-                _helpbutton.Visibility = Visibility.Visible;
+                _helpbutton.IsVisible = true;
                 _helpbutton.Content = CoreTools.Translate("More info");
             }
         }
@@ -50,7 +50,7 @@ namespace UniGetUI.Interface.Widgets
 
             _helpbutton = new HyperlinkButton
             {
-                Visibility = Visibility.Collapsed
+                IsVisible = false
             };
 
             _textbox = new TextBox

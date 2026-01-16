@@ -60,7 +60,7 @@ namespace UniGetUI.Interface.Widgets
             set
             {
                 _warningBlock.Text = CoreTools.Translate(value);
-                _warningBlock.Visibility = value.Any() ? Visibility.Visible : Visibility.Collapsed;
+                _warningBlock.IsVisible = value.Any();
             }
         }
 
@@ -71,7 +71,7 @@ namespace UniGetUI.Interface.Widgets
                 Margin = new Thickness(0, 0, 8, 0)
             };
 
-            _loading = new ProgressBar() { IsIndeterminate = true, Visibility = Visibility.Collapsed};
+            _loading = new ProgressBar() { IsIndeterminate = true, IsVisible = false};
             _textblock = new TextBlock()
             {
                 VerticalAlignment = VerticalAlignment.Center,
@@ -85,7 +85,7 @@ namespace UniGetUI.Interface.Widgets
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlErrorTextForegroundBrush"],
                 FontSize = 12,
-                Visibility = Visibility.Collapsed,
+                IsVisible = false,
             };
             IS_INVERTED = false;
             Content = new StackPanel()
@@ -112,20 +112,20 @@ namespace UniGetUI.Interface.Widgets
                 if (_checkbox.IsEnabled is false)
                     return;
 
-                _loading.Visibility = Visibility.Visible;
+                _loading.IsVisible = true;
                 _checkbox.IsEnabled = false;
                 await SecureSettings.TrySet(setting_name, _checkbox.IsOn ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);
                 _textblock.Opacity = _checkbox.IsOn ? 1 : 0.7;
                 _checkbox.IsOn = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _loading.Visibility = Visibility.Collapsed;
+                _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Warn(ex);
                 _checkbox.IsOn = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _loading.Visibility = Visibility.Collapsed;
+                _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }
         }

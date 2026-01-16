@@ -48,7 +48,7 @@ namespace UniGetUI.Interface.SoftwarePages
         })
         {
             InstantSearchCheckbox.IsEnabled = false;
-            InstantSearchCheckbox.Visibility = Visibility.Collapsed;
+            InstantSearchCheckbox.IsVisible = false;
 
             MegaFindButton.Click += Event_SearchPackages;
             MegaQueryBlock.KeyUp += (s, e) => { if (e.Key == VirtualKey.Enter) { Event_SearchPackages(s, e); } };

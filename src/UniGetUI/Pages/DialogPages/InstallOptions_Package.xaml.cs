@@ -144,7 +144,7 @@ namespace UniGetUI.Interface.Dialogs
             }
             else
             {
-                VersionProgress.Visibility = Visibility.Collapsed;
+                VersionProgress.IsVisible = false;
             }
 
             ScopeCombo.Items.Add(CoreTools.Translate("Default"));
@@ -211,7 +211,7 @@ namespace UniGetUI.Interface.Dialogs
                 SettingsSwitchPresenter.Opacity = 0.3;
                 SettingsTabBar.Opacity = 0.3;
                 OptionsPanelBase.IsEnabled = false;
-                PlaceholderBanner.Visibility = Visibility.Visible;
+                PlaceholderBanner.IsVisible = true;
             }
             else
             {
@@ -219,7 +219,7 @@ namespace UniGetUI.Interface.Dialogs
                 SettingsSwitchPresenter.Opacity = 1;
                 SettingsTabBar.Opacity = 1;
                 OptionsPanelBase.IsEnabled = true;
-                PlaceholderBanner.Visibility = Visibility.Collapsed;
+                PlaceholderBanner.IsVisible = false;
 
                 AdminCheckBox.IsEnabled = Package.Manager.Capabilities.CanRunAsAdmin;
                 InteractiveCheckBox.IsEnabled = Package.Manager.Capabilities.CanRunInteractively;
@@ -228,7 +228,7 @@ namespace UniGetUI.Interface.Dialogs
                     && Package.Manager.Capabilities.CanSkipIntegrityChecks;
 
                 UninstallPreviousOnUpdate.IsEnabled = Package.Manager.Capabilities.CanUninstallPreviousVersionsAfterUpdate;
-                UninstallPreviousOnUpdate.Visibility = Package.Manager.Capabilities.CanUninstallPreviousVersionsAfterUpdate? Visibility.Visible: Visibility.Collapsed;
+                UninstallPreviousOnUpdate.IsVisible = Package.Manager.Capabilities.CanUninstallPreviousVersionsAfterUpdate;
 
                 ArchitectureComboBox.IsEnabled =
                     operation is not OperationType.Uninstall
@@ -249,8 +249,8 @@ namespace UniGetUI.Interface.Dialogs
             CustomParametersLabel1.Opacity = IsCLIEnabled ? 1 : 0.5;
             CustomParametersLabel2.Opacity = IsCLIEnabled ? 1 : 0.5;
             CustomParametersLabel3.Opacity = IsCLIEnabled ? 1 : 0.5;
-            GoToCLISettings.Visibility = IsCLIEnabled ? Visibility.Collapsed : Visibility.Visible;
-            CLIDisabled.Visibility = IsCLIEnabled ? Visibility.Collapsed : Visibility.Visible;
+            GoToCLISettings.IsVisible = !IsCLIEnabled;
+            CLIDisabled.IsVisible = !IsCLIEnabled;
 
             bool IsPrePostOpEnabled = SecureSettings.Get(SecureSettings.K.AllowPrePostOpCommand);
             PreInstallCommandBox.IsEnabled = IsPrePostOpEnabled;
@@ -269,8 +269,8 @@ namespace UniGetUI.Interface.Dialogs
             PeUniLabel.Opacity = IsPrePostOpEnabled ? 1 : 0.5;
             PoUniLabel.Opacity = IsPrePostOpEnabled ? 1 : 0.5;
             CustomCommandsHeaderExplainer.Opacity = IsPrePostOpEnabled ? 1 : 0.5;
-            GoToPrePostSettings.Visibility = IsPrePostOpEnabled ? Visibility.Collapsed : Visibility.Visible;
-            PrePostDisabled.Visibility = IsPrePostOpEnabled ? Visibility.Collapsed : Visibility.Visible;
+            GoToPrePostSettings.IsVisible = !IsPrePostOpEnabled;
+            PrePostDisabled.IsVisible = !IsPrePostOpEnabled;
 
             _ = GenerateCommand();
         }
@@ -297,7 +297,7 @@ namespace UniGetUI.Interface.Dialogs
 
             VersionComboBox.IsEnabled = Operation is OperationType.Install or OperationType.None
                                         && (Package.Manager.Capabilities.SupportsCustomVersions || Package.Manager.Capabilities.SupportsPreRelease);
-            VersionProgress.Visibility = Visibility.Collapsed;
+            VersionProgress.IsVisible = false;
         }
 
         public async Task<InstallOptions> GetUpdatedOptions(bool updateDetachedOptions = true)
@@ -475,18 +475,18 @@ namespace UniGetUI.Interface.Dialogs
 
         private void SettingsTabBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CommandLineViewBox.Visibility = SettingsTabBar.SelectedIndex < 3 ? Visibility.Visible : Visibility.Collapsed;
+            CommandLineViewBox.IsVisible = SettingsTabBar.SelectedIndex < 3;
         }
 
         public void HideCloseButton()
         {
-            CloseButton.Visibility = Visibility.Collapsed;
+            CloseButton.IsVisible = false;
             CloseButton.IsEnabled = false;
         }
 
         internal void HideHeaderBar()
         {
-            HeaderBar.Visibility = Visibility.Collapsed;
+            HeaderBar.IsVisible = false;
         }
     }
 

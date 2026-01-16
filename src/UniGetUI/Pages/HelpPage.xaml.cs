@@ -32,7 +32,7 @@ namespace UniGetUI.Interface.Dialogs
             WebViewBorder.Child = webView;
             webView.NavigationStarting += (_, e) =>
             {
-                ProgressBar.Visibility = Visibility.Visible;
+                ProgressBar.IsVisible = true;
                 lastUri = new Uri(e.Uri);
                 if (e.Uri.ToString().Contains("marticliment.com") && !e.Uri.ToString().Contains("isWingetUIIframe"))
                 {
@@ -49,7 +49,7 @@ namespace UniGetUI.Interface.Dialogs
             };
             webView.NavigationCompleted += (_, _) =>
             {
-                ProgressBar.Visibility = Visibility.Collapsed;
+                ProgressBar.IsVisible = false;
             };
 
             await webView.EnsureCoreWebView2Async();

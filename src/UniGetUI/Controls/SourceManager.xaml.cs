@@ -165,7 +165,7 @@ namespace UniGetUI.Interface.Widgets
                 return;
             }
 
-            LoadingBar.Visibility = Visibility.Visible;
+            LoadingBar.IsVisible = true;
             Sources.Clear();
             foreach (IManagerSource source in await Task.Run(Manager.SourcesHelper.GetSources))
             {
@@ -177,7 +177,7 @@ namespace UniGetUI.Interface.Widgets
                 _datagrid.SelectedIndex = 0;
             }
 
-            LoadingBar.Visibility = Visibility.Collapsed;
+            LoadingBar.IsVisible = false;
         }
 
         public void RemoveSourceItem(SourceItem Item)

@@ -272,7 +272,7 @@ namespace UniGetUI.Interface
             LocalPackagesNode.IsExpanded = false;
 
             ReloadButton.Click += async (_, _) => await LoadPackages();
-            ReloadButton.Visibility = DISABLE_RELOAD ? Visibility.Collapsed : Visibility.Visible;
+            ReloadButton.IsVisible = !DISABLE_RELOAD;
 
 
             // Handle the Enter Pressed event on the MegaQueryBlock
@@ -281,7 +281,7 @@ namespace UniGetUI.Interface
                 if (e.Key != VirtualKey.Enter)
                     return;
 
-                MegaQueryBlockGrid.Visibility = Visibility.Collapsed;
+                MegaQueryBlockGrid.IsVisible = false;
                 QueryBlock.Text = MegaQueryBlock.Text.Trim();
                 if (!DISABLE_FILTER_ON_QUERY_CHANGE)
                     FilterPackages(true);
@@ -290,7 +290,7 @@ namespace UniGetUI.Interface
             // Hande the MegaQueryBlock search button click
             MegaFindButton.Click += (_, _) =>
             {
-                MegaQueryBlockGrid.Visibility = Visibility.Collapsed;
+                MegaQueryBlockGrid.IsVisible = false;
                 QueryBlock.Text = MegaQueryBlock.Text.Trim();
                 FilterPackages(true);
             };
@@ -332,9 +332,9 @@ namespace UniGetUI.Interface
 
             if (MEGA_QUERY_BOX_ENABLED)
             {
-                MegaQueryBlockGrid.Visibility = Visibility.Visible;
+                MegaQueryBlockGrid.IsVisible = true;
                 MegaQueryBlock.Focus(FocusState.Programmatic);
-                BackgroundText.Visibility = Visibility.Collapsed;
+                BackgroundText.IsVisible = false;
             }
 
             _searchPlaceholder = CoreTools.Translate("Search for packages");
@@ -450,7 +450,7 @@ namespace UniGetUI.Interface
                 return;
             }
 
-            LoadingProgressBar.Visibility = Visibility.Collapsed;
+            LoadingProgressBar.IsVisible = false;
             // Required to update UI labels
             LastPackageLoadTime = DateTime.Now;
             UpdatePackageCount();
@@ -465,7 +465,7 @@ namespace UniGetUI.Interface
                 Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_StartedLoading(sender, e));
                 return;
             }
-            LoadingProgressBar.Visibility = Visibility.Visible;
+            LoadingProgressBar.IsVisible = true;
             UpdatePackageCount();
         }
 
@@ -520,8 +520,8 @@ namespace UniGetUI.Interface
 
                 RootNodeForManager.TryAdd(source.Manager, node);
                 UsedSourcesForManager.TryAdd(source.Manager, []);
-                SourcesPlaceholderText.Visibility = Visibility.Collapsed;
-                SourcesTreeViewGrid.Visibility = Visibility.Visible;
+                SourcesPlaceholderText.IsVisible = false;
+                SourcesTreeViewGrid.IsVisible = true;
             }
 
             if ((!UsedSourcesForManager.ContainsKey(source.Manager) || !UsedSourcesForManager[source.Manager].Contains(source)) && source.Manager.Capabilities.SupportsCustomSources)
@@ -912,42 +912,42 @@ namespace UniGetUI.Interface
             if (FilteredPackages.Any())
             {
                 BackgroundText.Text = NoPackages_BackgroundText;
-                BackgroundText.Visibility = Loader.Any() ? Visibility.Collapsed : Visibility.Visible;
+                BackgroundText.IsVisible = !Loader.Any();
                 MainSubtitle.Text = GetSubtitleText();
             }
             else
             {
-                if (LoadingProgressBar.Visibility is Visibility.Collapsed)
+                if (LoadingProgressBar.IsVisible is false)
                 {
                     if (Loader.Any())
                     {
                         BackgroundText.Text = NoMatches_BackgroundText;
-                        SourcesPlaceholderText.Visibility = Visibility.Collapsed;
+                        SourcesPlaceholderText.IsVisible = false;
                         MainSubtitle.Text = GetSubtitleText();
                     }
                     else
                     {
                         BackgroundText.Text = NoPackages_BackgroundText;
                         SourcesPlaceholderText.Text = NoPackages_SourcesText;
-                        SourcesPlaceholderText.Visibility = Visibility.Visible;
+                        SourcesPlaceholderText.IsVisible = true;
                         MainSubtitle.Text = NoPackages_SubtitleText;
                     }
 
-                    BackgroundText.Visibility = Visibility.Visible;
+                    BackgroundText.IsVisible = true;
                 }
                 else
                 {
-                    BackgroundText.Visibility = Loader.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    BackgroundText.IsVisible = !Loader.Any();
                     BackgroundText.Text = MainSubtitle_StillLoading;
-                    SourcesPlaceholderText.Visibility = Loader.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    SourcesPlaceholderText.IsVisible = !Loader.Any();
                     SourcesPlaceholderText.Text = MainSubtitle_StillLoading;
                     MainSubtitle.Text = MainSubtitle_StillLoading;
                 }
             }
 
-            if (MegaQueryBlockGrid.Visibility == Visibility.Visible)
+            if (MegaQueryBlockGrid.IsVisible)
             {
-                BackgroundText.Visibility = Visibility.Collapsed;
+                BackgroundText.IsVisible = false;
             }
             WhenPackageCountUpdated();
         }
@@ -1251,13 +1251,13 @@ namespace UniGetUI.Interface
 
         public void OnEnter()
         {
-            Visibility = Visibility.Visible;
+            IsVisible = true;
             IsEnabled = true;
         }
 
         public void OnLeave()
         {
-            Visibility = Visibility.Collapsed;
+            IsVisible = false;
             IsEnabled = false;
         }
 
@@ -1420,7 +1420,7 @@ namespace UniGetUI.Interface
                 if (_titleHidden != false)
                 {
                     _titleHidden = false;
-                    MainSubtitle.Visibility = Visibility.Collapsed;
+                    MainSubtitle.IsVisible = false;
                 }
             }
             else
@@ -1428,7 +1428,7 @@ namespace UniGetUI.Interface
                 if (_titleHidden != true)
                 {
                     _titleHidden = true;
-                    MainSubtitle.Visibility = Visibility.Visible;
+                    MainSubtitle.IsVisible = true;
 
                 }
             }
@@ -1458,9 +1458,9 @@ namespace UniGetUI.Interface
 
             if (MEGA_QUERY_BOX_ENABLED && QueryBlock.Text.Trim() == "")
             {
-                MegaQueryBlockGrid.Visibility = Visibility.Visible;
+                MegaQueryBlockGrid.IsVisible = true;
                 Loader.StopLoading();
-                BackgroundText.Visibility = Visibility.Collapsed;
+                BackgroundText.IsVisible = false;
                 ClearSourcesList();
                 WrappedPackages.Clear();
                 FilterPackages(true);
@@ -1472,7 +1472,7 @@ namespace UniGetUI.Interface
         public virtual void SearchBox_QuerySubmitted(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
         {
             // Handle Enter pressed or search button pressed
-            MegaQueryBlockGrid.Visibility = Visibility.Collapsed;
+            MegaQueryBlockGrid.IsVisible = false;
             if (!DISABLE_FILTER_ON_QUERY_CHANGE)
                 FilterPackages(true);
 

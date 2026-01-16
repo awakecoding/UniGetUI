@@ -86,8 +86,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             ManagerLogsLabel.Text = CoreTools.Translate("View {0} logs", Manager.DisplayName);
 
             // ----------------- EXECUTABLE FILE PICKER -----------------
-            ExeFileWarningText.Visibility = SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths) ? Visibility.Collapsed : Visibility.Visible;
-            GoToSecureSettingsBtn.Visibility = SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths) ? Visibility.Collapsed : Visibility.Visible;
+            ExeFileWarningText.IsVisible = !SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths);
+            GoToSecureSettingsBtn.IsVisible = !SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths);
             ExecutableComboBox.IsEnabled = SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths);
 
             InstallOptionsPanel.Description = new InstallOptions_Manager(Manager);
@@ -356,7 +356,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
             else
             {
-                AppExecutionAliasWarning.Visibility = Visibility.Collapsed;
+                AppExecutionAliasWarning.IsVisible = false;
             }
 
             base.OnNavigatedTo(e);
@@ -369,8 +369,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             if (Manager is null) throw new InvalidDataException();
 
             // Load version and manager path
-            ShowVersionHyperlink.Visibility = Visibility.Collapsed;
-            LongVersionTextBlock.Visibility = Visibility.Collapsed;
+            ShowVersionHyperlink.IsVisible = false;
+            LongVersionTextBlock.IsVisible = false;
             LongVersionTextBlock.Text = Manager.Status.Version + "\n";
             LocationLabel.Text = Manager.Status.ExecutablePath + " " + Manager.Status.ExecutableCallArgs.Trim();
             if (Manager.Status.ExecutablePath == "") LocationLabel.Text = CoreTools.Translate("The executable file for {0} was not found", Manager.DisplayName);
@@ -418,12 +418,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 else if (ShowVersion)
                 {
                     ManagerStatusBar.Message = CoreTools.Translate("{pm} version:").Replace("{pm}", Manager.DisplayName);
-                    LongVersionTextBlock.Visibility = Visibility.Visible;
+                    LongVersionTextBlock.IsVisible = true;
                 }
                 else
                 {
                     ManagerStatusBar.Message = "";
-                    ShowVersionHyperlink.Visibility = Visibility.Visible;
+                    ShowVersionHyperlink.IsVisible = true;
                 }
             }
             else // manager was not found

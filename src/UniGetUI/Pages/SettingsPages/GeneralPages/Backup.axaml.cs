@@ -148,8 +148,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         private void GenerateLoginUI()
         {
             _isLoggedIn = false;
-            LogInButton.Visibility = Visibility.Visible;
-            LogOutButton.Visibility = Visibility.Collapsed;
+            LogInButton.IsVisible = true;
+            LogOutButton.IsVisible = false;
             GitHubUserTitle.Text = CoreTools.Translate("Current status: Not logged in");
             GitHubUserSubtitle.Text = CoreTools.Translate("Log in to enable cloud backup");
             GitHubImage.ProfilePicture = null;
@@ -162,8 +162,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             var user = await client.User.Current();
 
             _isLoggedIn = true;
-            LogInButton.Visibility = Visibility.Collapsed;
-            LogOutButton.Visibility = Visibility.Visible;
+            LogInButton.IsVisible = false;
+            LogOutButton.IsVisible = true;
             GitHubUserTitle.Text = CoreTools.Translate("You are logged in as {0} (@{1})", user.Name, user.Login);
             GitHubUserSubtitle.Text = CoreTools.Translate("Nice! Backups will be uploaded to a private gist on your account");
             GitHubImage.Initials = "";
