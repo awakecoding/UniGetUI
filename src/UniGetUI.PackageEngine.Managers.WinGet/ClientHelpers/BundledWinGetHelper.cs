@@ -113,6 +113,7 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
                 }
 
                 var package = new Package(name, id, version, newVersion, source, Manager);
+#if WINDOWS
                 if (!WinGetPkgOperationHelper.UpdateAlreadyInstalled(package))
                 {
                     Packages.Add(package);
@@ -121,6 +122,9 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
                 {
                     Logger.Warn($"WinGet package {package.Id} not being shown as an updated as this version has already been marked as installed");
                 }
+#else
+                Packages.Add(package);
+#endif
             }
             OldLine = line;
         }
@@ -337,7 +341,11 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
         ProcessStartInfo startInfo = new()
         {
             FileName = WinGet.BundledWinGetPath,
+#if WINDOWS
             Arguments = Manager.Status.ExecutableCallArgs + " show " + WinGetPkgOperationHelper.GetIdNamePiece(details.Package) +
+#else
+            Arguments = Manager.Status.ExecutableCallArgs + " show " + details.Package.Id +
+#endif
                         " --disable-interactivity --accept-source-agreements --locale " +
                         System.Globalization.CultureInfo.CurrentCulture + " " + WinGet.GetProxyArgument(),
             RedirectStandardOutput = true,
@@ -385,7 +393,11 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
             startInfo = new()
             {
                 FileName = WinGet.BundledWinGetPath,
+#if WINDOWS
                 Arguments = Manager.Status.ExecutableCallArgs + " show " + WinGetPkgOperationHelper.GetIdNamePiece(details.Package) +
+#else
+                Arguments = Manager.Status.ExecutableCallArgs + " show " + details.Package.Id +
+#endif
                             " --disable-interactivity --accept-source-agreements --locale en-US " + " " + WinGet.GetProxyArgument(),
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -429,7 +441,11 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
             startInfo = new()
             {
                 FileName = WinGet.BundledWinGetPath,
+#if WINDOWS
                 Arguments = Manager.Status.ExecutableCallArgs + " show " + WinGetPkgOperationHelper.GetIdNamePiece(details.Package) +
+#else
+                Arguments = Manager.Status.ExecutableCallArgs + " show " + details.Package.Id +
+#endif
                             " --disable-interactivity --accept-source-agreements " + " " + WinGet.GetProxyArgument(),
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -594,7 +610,11 @@ internal sealed class BundledWinGetHelper : IWinGetManagerHelper
             StartInfo = new ProcessStartInfo
             {
                 FileName = WinGet.BundledWinGetPath,
+#if WINDOWS
                 Arguments = Manager.Status.ExecutableCallArgs + " show " + WinGetPkgOperationHelper.GetIdNamePiece(package) +
+#else
+                Arguments = Manager.Status.ExecutableCallArgs + " show " + package.Id +
+#endif
                             $" --versions --accept-source-agreements " + " " + WinGet.GetProxyArgument(),
                 UseShellExecute = false,
                 RedirectStandardOutput = true,

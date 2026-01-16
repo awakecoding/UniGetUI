@@ -79,8 +79,14 @@ namespace UniGetUI.PackageEngine.Managers.WingetManager
             };
 
             SourcesHelper = new WinGetSourceHelper(this);
+#if WINDOWS
             DetailsHelper = new WinGetPkgDetailsHelper(this);
             OperationHelper = new WinGetPkgOperationHelper(this);
+#else
+            // WinGet is Windows-only, these helpers won't be used on other platforms
+            DetailsHelper = null!;
+            OperationHelper = null!;
+#endif
 
             LocalPcSource = new LocalWinGetSource(this, CoreTools.Translate("Local PC"), IconType.LocalPc, LocalWinGetSource.Type_t.LocalPC);
             AndroidSubsystemSource = new(this, CoreTools.Translate("Android Subsystem"), IconType.Android, LocalWinGetSource.Type_t.Android);
@@ -203,8 +209,13 @@ namespace UniGetUI.PackageEngine.Managers.WingetManager
 
             try
             {
+#if WINDOWS
                 if (FORCE_BUNDLED) WinGetHelper.Instance = new BundledWinGetHelper(this);
                 else WinGetHelper.Instance = new NativeWinGetHelper(this);
+#else
+                // Non-Windows: Always use bundled helper
+                WinGetHelper.Instance = new BundledWinGetHelper(this);
+#endif
             }
             catch (Exception ex)
             {
@@ -259,8 +270,12 @@ namespace UniGetUI.PackageEngine.Managers.WingetManager
 
         private void ReRegisterCOMServer()
         {
+#if WINDOWS
             WinGetHelper.Instance = new NativeWinGetHelper(this);
             NativePackageHandler.Clear();
+#else
+            Logger.Warn("ReRegisterCOMServer not available on non-Windows platforms");
+#endif
         }
 
         public override void AttemptFastRepair()
@@ -268,6 +283,7 @@ namespace UniGetUI.PackageEngine.Managers.WingetManager
             try
             {
                 TryRepairTempFolderPermissions();
+#if WINDOWS
                 if (WinGetHelper.Instance is NativeWinGetHelper)
                 {
                     Logger.ImportantInfo("Attempting to reconnect to WinGet COM Server...");
@@ -278,6 +294,9 @@ namespace UniGetUI.PackageEngine.Managers.WingetManager
                 {
                     Logger.Warn("Attempted to reconnect to COM Server but Bundled WinGet is being used.");
                 }
+#else
+                Logger.Warn("AttemptFastRepair not fully available on non-Windows platforms");
+#endif
             }
             catch (Exception ex)
             {
