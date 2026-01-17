@@ -49,10 +49,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             this.InitializeComponent();
         }
 
-        protected virtual void OnNavigatedTo(object e)
+        // TODO: Avalonia - OnNavigatedTo signature needs update for Avalonia navigation
+        // protected virtual void OnNavigatedTo(object e)
+        public void InitializeManager(Type managerType)
         {
             Manager = null;
-            if (e.Parameter is not Type Manager_T) throw new InvalidDataException("The passed parameter was not a type");
+            if (managerType is not Type Manager_T) throw new InvalidDataException("The passed parameter was not a type");
             // Can't do switch with types
             if (Manager_T == typeof(WinGet)) Manager = PEInterface.WinGet;
             else if (Manager_T == typeof(Chocolatey)) Manager = PEInterface.Chocolatey;
@@ -113,7 +115,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 ExtraControls.Children.Add(new TextBlock()
                 {
                     Margin = new(4, 24, 4, 8),
-                    FontWeight = new Windows.UI.Text.FontWeight(600),
+                    FontWeight = FontWeight.SemiBold,
                     Text=CoreTools.Translate("Advanced options")
                 });
             }
@@ -360,7 +362,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 AppExecutionAliasWarning.IsVisible = false;
             }
 
-            base.OnNavigatedTo(e);
+            // TODO: Avalonia - Restore base.OnNavigatedTo call when navigation system is implemented
+            // base.OnNavigatedTo(e);
         }
 
         private void ShowVersionHyperlink_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => ApplyManagerState(true);
@@ -447,7 +450,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         private void ManagerLogs_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            MainApp.Instance.MainWindow.NavigationPage.OpenManagerLogs(Manager);
+            // TODO: Avalonia - Restore NavigationPage.OpenManagerLogs
+            // MainApp.Instance.MainWindow.NavigationPage.OpenManagerLogs(Manager);
         }
 
         private void ExecutableComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -461,7 +465,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         private void GoToSecureSettingsBtn_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
+            // TODO: Avalonia - Restore NavigationPage.OpenSettingsPage
+            // MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
         }
 
         private void EnableManager_OnStateChanged(object? sender, EventArgs e)

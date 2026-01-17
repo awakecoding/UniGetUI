@@ -201,12 +201,8 @@ namespace UniGetUI.PackageEngine.PackageClasses
         {
             if (CachedPackageIcons.TryGetValue(Package.GetHash(), out Uri? icon))
             {
-                MainIconSource = new BitmapImage
-                {
-                    UriSource = icon,
-                    DecodePixelWidth = 64,
-                    DecodePixelType = DecodePixelType.Logical,
-                };
+                // TODO: Avalonia - Load Bitmap from Uri
+                // MainIconSource = new Avalonia.Media.Imaging.Bitmap(icon.ToString());
                 ShowCustomPackageIcon = true;
                 ShowDefaultPackageIcon = false;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MainIconSource)));

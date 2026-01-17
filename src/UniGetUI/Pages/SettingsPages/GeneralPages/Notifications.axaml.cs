@@ -19,7 +19,9 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             this.InitializeComponent();
         }
 
-        protected virtual void OnNavigatedTo(object e)
+        // TODO: Avalonia - OnNavigatedTo needs update for Avalonia navigation
+        // protected virtual void OnNavigatedTo(object e)
+        public void InitializeNotifications()
         {
             if (Settings.Get(Settings.K.DisableSystemTray))
             {
@@ -39,7 +41,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 DisableSuccessNotifications.IsEnabled = true;
                 DisableProgressNotifications.IsEnabled = true;
             }
-            base.OnNavigatedTo(e);
+            // TODO: Avalonia - Restore base.OnNavigatedTo call
+            // base.OnNavigatedTo(e);
         }
 
         public bool CanGoBack => true;

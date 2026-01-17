@@ -95,7 +95,7 @@ namespace UniGetUI.Interface.Widgets
             };
 
             _checkbox.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
-            _checkbox.Toggled += _checkbox_Toggled;
+            _checkbox.IsCheckedChanged += _checkbox_Toggled;
         }
         protected virtual void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {

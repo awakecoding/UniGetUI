@@ -394,7 +394,7 @@ namespace UniGetUI.Interface.Dialogs
                     {
                         Text = $"  • {dep.Name}",
                         FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
-                        FontWeight = new FontWeight(600)
+                        FontWeight = FontWeight.SemiBold
                     });
 
                     string line = $" (";
@@ -472,7 +472,9 @@ namespace UniGetUI.Interface.Dialogs
 
         public async Task LoadIcon()
         {
-            PackageIcon.Source = new Avalonia.Media.Imaging.Bitmap(await Task.Run(Package.GetIconUrl));
+            var uri = await Task.Run(Package.GetIconUrl);
+            // TODO: Avalonia - Load Bitmap from Uri
+            // PackageIcon.Source = new Avalonia.Media.Imaging.Bitmap(uri.ToString());
         }
 
         public async Task LoadScreenshots()

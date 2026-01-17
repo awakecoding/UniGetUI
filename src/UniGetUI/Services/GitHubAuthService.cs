@@ -69,7 +69,8 @@ namespace UniGetUI.Services
                 loginBackend = new GHAuthApiRunner();
                 loginBackend.OnLogin += BackgroundApiOnOnLogin;
                 await loginBackend.Start();
-                await Launcher.LaunchUriAsync(oauthLoginUrl);
+                // TODO: Avalonia - Launcher.LaunchUriAsync needs platform-specific implementation
+                // await Launcher.LaunchUriAsync(oauthLoginUrl);
 
                 while (codeFromAPI is null) await Task.Delay(100);
 

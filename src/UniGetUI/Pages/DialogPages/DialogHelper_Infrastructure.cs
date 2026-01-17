@@ -214,7 +214,7 @@ public static partial class DialogHelper
                     {
                         Text = CoreTools.Translate("UniGetUI or some of its components are missing or corrupt.")
                 + " " + CoreTools.Translate("It is strongly recommended to reinstall UniGetUI to adress the situation."),
-                        FontWeight = new FontWeight(600),
+                        FontWeight = FontWeight.SemiBold,
                         TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Foreground = Application.Current.Resources["SystemControlErrorTextForegroundBrush"] as Brush,
                     },

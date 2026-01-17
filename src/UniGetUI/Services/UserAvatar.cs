@@ -24,7 +24,8 @@ namespace UniGetUI.Services
     {
         public PointButton()
         {
-            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+            // TODO: Avalonia - ProtectedCursor/InputSystemCursor not available
+            // ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
         }
     }
 
@@ -165,7 +166,8 @@ namespace UniGetUI.Services
 
             var flyout = new BetterFlyout()
             {
-                LightDismissOverlayMode = LightDismissOverlayMode.Off,
+                // TODO: Avalonia - LightDismissOverlayMode not available
+                // LightDismissOverlayMode = LightDismissOverlayMode.Off,
                 Placement = FlyoutPlacementMode.Bottom,
                 Content = stackPanel
             };
@@ -213,7 +215,8 @@ namespace UniGetUI.Services
                 ClipToBounds = true,
                 Child = new Image
                 {
-                    Source = new BitmapImage(new Uri(user.AvatarUrl)),
+                    // TODO: Avalonia - Load Bitmap from URL
+                    // Source = new Avalonia.Media.Imaging.Bitmap(user.AvatarUrl),
                     Stretch = Stretch.UniformToFill
                 }
             };
@@ -245,7 +248,10 @@ namespace UniGetUI.Services
                 },
                 FontSize = 12
             };
-            hyperlinkButton.Click += (_, _) => MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
+            hyperlinkButton.Click += (_, _) => {
+                // TODO: Avalonia - Restore NavigationPage.ShowHelp
+                // MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
+            };
 
             var hyperlinkButton2 = new HyperlinkButton
             {
@@ -258,7 +264,10 @@ namespace UniGetUI.Services
                 },
                 FontSize = 12
             };
-            hyperlinkButton2.Click += (_, _) => MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Backup));
+            hyperlinkButton2.Click += (_, _) => {
+                // TODO: Avalonia - Restore NavigationPage.OpenSettingsPage
+                // MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Backup));
+            };
 
             var loginButton = new PointButton
             {
@@ -285,7 +294,8 @@ namespace UniGetUI.Services
 
             var flyout = new BetterFlyout()
             {
-                LightDismissOverlayMode = LightDismissOverlayMode.Off,
+                // TODO: Avalonia - LightDismissOverlayMode not available
+                // LightDismissOverlayMode = LightDismissOverlayMode.Off,
                 Placement = FlyoutPlacementMode.Bottom,
                 Content = stackPanel
             };

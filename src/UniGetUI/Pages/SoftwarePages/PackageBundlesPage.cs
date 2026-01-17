@@ -271,7 +271,10 @@ namespace UniGetUI.Interface.SoftwarePages
                 _ = DialogHelper.ShowPackageDetails(SelectedItem, OperationType.None, TEL_InstallReferral.FROM_BUNDLE);
             };
 
-            HelpButton.Click += (_, _) => { MainApp.Instance.MainWindow.NavigationPage.ShowHelp(); };
+            HelpButton.Click += (_, _) => {
+                // TODO: Avalonia - Restore NavigationPage.ShowHelp
+                // MainApp.Instance.MainWindow.NavigationPage.ShowHelp();
+            };
             NewBundle.Click += async (s, e) => await AskForNewBundle();
 
             RemoveSelected.Click += (_, _) =>

@@ -50,7 +50,7 @@ namespace UniGetUI.Pages.SettingsPages
                 button.Click += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
 
                 var statusIcon = new TextBlock() { FontSize = 12, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
-                var statusText = new TextBlock() { FontSize = 12, FontWeight = new FontWeight(600), VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+                var statusText = new TextBlock() { FontSize = 12, FontWeight = FontWeight.SemiBold, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
                 var statusBorder = new Border()
                 {
                     CornerRadius = new CornerRadius(4),
@@ -91,7 +91,7 @@ namespace UniGetUI.Pages.SettingsPages
                     Margin = new Thickness(-10, 0, 0, 0),
                 };
                 toggle.Loaded += (_, _) => loadStatusBadge();
-                toggle.Toggled += async (_, _) =>
+                toggle.IsCheckedChanged += async (_, _) =>
                 {
                     if (_isLoadingToggles) return;
 
@@ -125,7 +125,9 @@ namespace UniGetUI.Pages.SettingsPages
             last.CornerRadius = new CornerRadius(0, 0, 8, 8);
         }
 
-        protected virtual void OnNavigatedTo(object e)
+        // TODO: Avalonia - OnNavigatedTo needs update for Avalonia navigation
+        // protected virtual void OnNavigatedTo(object e)
+        public void InitializeManagers()
         {
             _isLoadingToggles = true;
             for(int i = 0; i < managerControls.Count; i++)
@@ -134,7 +136,8 @@ namespace UniGetUI.Pages.SettingsPages
                 toggle.IsChecked = !Settings.GetDictionaryItem<string, bool>(Settings.K.DisabledManagers, PEInterface.Managers[i].Name);
             }
             _isLoadingToggles = false;
-            base.OnNavigatedTo(e);
+            // TODO: Avalonia - Restore base.OnNavigatedTo call
+            // base.OnNavigatedTo(e);
         }
 
         public void Administrator(object s, Avalonia.Interactivity.RoutedEventArgs e) => NavigationRequested?.Invoke(this, typeof(Administrator));

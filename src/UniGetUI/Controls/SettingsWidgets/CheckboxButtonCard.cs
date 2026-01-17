@@ -79,7 +79,7 @@ namespace UniGetUI.Interface.Widgets
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["BaseTextBlockStyle"],
-                FontWeight = new FontWeight(450),
+                FontWeight = FontWeight.Normal,
                 Foreground = (SolidColorBrush)Application.Current.Resources["ButtonForeground"]
             };
             IS_INVERTED = false;
@@ -87,7 +87,7 @@ namespace UniGetUI.Interface.Widgets
             Content = _checkbox;
             Header = _textblock;
             Description = Button;
-            _checkbox.Toggled += (_, _) =>
+            _checkbox.IsCheckedChanged += (_, _) =>
             {
                 Settings.Set(setting_name, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);

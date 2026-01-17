@@ -39,9 +39,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         }
 
-        protected virtual void OnNavigatedTo(object e)
+        // TODO: Avalonia - OnNavigatedTo needs update for Avalonia navigation
+        // protected virtual void OnNavigatedTo(object e)
+        public void InitializeInterface()
         {
-            base.OnNavigatedTo(e);
+            // TODO: Avalonia - Restore base.OnNavigatedTo call
+            // base.OnNavigatedTo(e);
             _ = LoadIconCacheSize();
         }
 

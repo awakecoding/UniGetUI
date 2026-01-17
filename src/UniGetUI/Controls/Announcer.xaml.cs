@@ -91,7 +91,7 @@ namespace UniGetUI.Interface.Widgets
         public void SetText(string title, string body, string linkId, string linkName)
         {
             Avalonia.Controls.Documents.Paragraph paragraph = new();
-            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title, FontSize = 24, FontWeight = new FontWeight(700), FontFamily = new FontFamily("Segoe UI Variable Display") });
+            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title, FontSize = 24, FontWeight = FontWeight.Bold, FontFamily = new FontFamily("Segoe UI Variable Display") });
             _textblock.Blocks.Clear();
             _textblock.Blocks.Add(paragraph);
 
@@ -127,11 +127,9 @@ namespace UniGetUI.Interface.Widgets
 
         public void SetImage(Uri url)
         {
-            BitmapImage bitmapImage = new()
-            {
-                UriSource = url
-            };
-            _image.Source = bitmapImage;
+            // TODO: Avalonia - BitmapImage with UriSource needs investigation
+            // BitmapImage bitmapImage = new() { UriSource = url };
+            // _image.Source = bitmapImage;
 
         }
     }

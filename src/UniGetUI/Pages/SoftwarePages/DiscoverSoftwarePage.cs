@@ -211,7 +211,10 @@ namespace UniGetUI.Interface.SoftwarePages
 
             PackageDetails.Click += (_, _) => ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.DIRECT_SEARCH);
             ExportSelection.Click += ExportSelection_Click;
-            HelpButton.Click += (_, _) => MainApp.Instance.MainWindow.NavigationPage.ShowHelp();
+            HelpButton.Click += (_, _) => {
+                // TODO: Avalonia - Restore NavigationPage.ShowHelp
+                // MainApp.Instance.MainWindow.NavigationPage.ShowHelp();
+            };
             InstallationSettings.Click += (_, _) => _ = ShowInstallationOptionsForPackage(SelectedItem);
 
             MainToolbarButton.Click += (_, _) => MainApp.Operations.Install(FilteredPackages.GetCheckedPackages(), TEL_InstallReferral.DIRECT_SEARCH);
@@ -266,7 +269,8 @@ namespace UniGetUI.Interface.SoftwarePages
         private void ExportSelection_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportSelection_Click();
         private async Task _exportSelection_Click()
         {
-            MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
+            // TODO: Avalonia - Restore NavigationPage.NavigateTo
+            // MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
             await PackageBundlesLoader.Instance.AddPackagesAsync(FilteredPackages.GetCheckedPackages());
             DialogHelper.HideLoadingDialog(loadingId);

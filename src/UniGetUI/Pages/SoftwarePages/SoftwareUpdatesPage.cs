@@ -300,7 +300,10 @@ namespace UniGetUI.Interface.SoftwarePages
             ApplyTextAndIconsToToolbar(Labels, Icons);
 
             PackageDetails.Click += (_, _) => ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.ALREADY_INSTALLED);
-            HelpButton.Click += (_, _) => MainApp.Instance.MainWindow.NavigationPage.ShowHelp();
+            HelpButton.Click += (_, _) => {
+                // TODO: Avalonia - Restore NavigationPage.ShowHelp
+                // MainApp.Instance.MainWindow.NavigationPage.ShowHelp();
+            };
             InstallationSettings.Click += (_, _) => _ = ShowInstallationOptionsForPackage(SelectedItem);
             ManageIgnored.Click += async (_, _) => await DialogHelper.ManageIgnoredUpdates();
             IgnoreSelected.Click += async (_, _) =>

@@ -80,7 +80,8 @@ namespace UniGetUI.Pages.SettingsPages
         {
             if(e == typeof(ManagersHomepage))
             {
-                MainApp.Instance.MainWindow.NavigationPage.NavigateTo(Interface.PageType.Managers);
+                // TODO: Avalonia - Restore NavigationPage.NavigateTo
+                // MainApp.Instance.MainWindow.NavigationPage.NavigateTo(Interface.PageType.Managers);
             }
             if(e.IsSubclassOf(typeof(PackageManager)))
             {

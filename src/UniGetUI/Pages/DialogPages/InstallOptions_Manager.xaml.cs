@@ -299,7 +299,8 @@ public partial class InstallOptions_Manager : UserControl
 
     private void GoToSecureSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
+        // TODO: Avalonia - Restore NavigationPage.OpenSettingsPage
+        // MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
     }
 
     private void ClearPreviousOnUpdate_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)

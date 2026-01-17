@@ -97,10 +97,13 @@ public partial class OperationControl: INotifyPropertyChanged
     private void OnOperationStarting(object? sender, EventArgs e)
     {
         ShowProgressToast();
+        // TODO: Avalonia - Restore NavigationPage.OperationList functionality
+        /*
         if (MainApp.Instance.MainWindow.NavigationPage.OperationList.Items.Contains(this))
         {
             MainApp.Instance.MainWindow.NavigationPage.OperationList.SmoothScrollIntoViewWithItemAsync(this);
         }
+        */
     }
 
     private void OnOperationSucceeded(object? sender, EventArgs e) => _ = _onOperationSucceeded();

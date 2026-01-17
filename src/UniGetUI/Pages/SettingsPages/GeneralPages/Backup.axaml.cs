@@ -167,7 +167,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             GitHubUserTitle.Text = CoreTools.Translate("You are logged in as {0} (@{1})", user.Name, user.Login);
             GitHubUserSubtitle.Text = CoreTools.Translate("Nice! Backups will be uploaded to a private gist on your account");
             GitHubImage.Initials = "";
-            GitHubImage.ProfilePicture = new BitmapImage(new Uri(user.AvatarUrl));
+            // TODO: Avalonia - Load Bitmap from URL
+            // GitHubImage.ProfilePicture = new Avalonia.Media.Imaging.Bitmap(user.AvatarUrl);
         }
 
         private void UpdateCloudControlsEnabled()
@@ -250,8 +251,9 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                     CoreTools.Translate("Done!"),
                     CoreTools.Translate("The cloud backup has been loaded successfully."));
 
-                MainApp.Instance.MainWindow.NavigationPage.LoadBundleFromString(
-                    backupContents, BundleFormatType.UBUNDLE, $"GitHub Gist {selectedBackup}", loadingId);
+                // TODO: Avalonia - Restore NavigationPage.LoadBundleFromString
+                // MainApp.Instance.MainWindow.NavigationPage.LoadBundleFromString(
+                //     backupContents, BundleFormatType.UBUNDLE, $"GitHub Gist {selectedBackup}", loadingId);
             }
             catch (Exception ex)
             {
@@ -308,7 +310,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         private void MoreInfoBtn_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
+            // TODO: Avalonia - Restore NavigationPage.ShowHelp
+            // MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
         }
     }
 }

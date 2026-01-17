@@ -61,7 +61,7 @@ namespace UniGetUI.Interface.Dialogs
             };
 
             FollowGlobalOptionsSwitch.IsChecked = !options.OverridesNextLevelOpts;
-            FollowGlobalOptionsSwitch.Toggled += (_, _) =>
+            FollowGlobalOptionsSwitch.IsCheckedChanged += (_, _) =>
             {
                 EnableDisableControls(ProfileComboBox.SelectedIndex switch
                 {
@@ -71,19 +71,14 @@ namespace UniGetUI.Interface.Dialogs
                 });
             };
 
-            var iconSource = new BitmapImage()
-            {
-                UriSource = package.GetIconUrl(),
-                DecodePixelHeight = 32,
-                DecodePixelWidth = 32,
-                DecodePixelType =
-                DecodePixelType.Logical
-            };
+            // TODO: Avalonia - Bitmap loading needs async implementation
+            // var iconSource = new Avalonia.Media.Imaging.Bitmap(package.GetIconUrl().ToString());
+            // PackageIcon.Source = iconSource;
 
-            PackageIcon.Source = iconSource;
             async Task LoadImage()
             {
-                iconSource.UriSource = await Task.Run(package.GetIconUrl);
+                var uri = await Task.Run(package.GetIconUrl);
+                // TODO: Load bitmap from uri
             }
             _ = LoadImage();
             DialogTitle.Text = CoreTools.Translate("{0} installation options", package.Name);
@@ -432,13 +427,15 @@ namespace UniGetUI.Interface.Dialogs
         private void GoToDefaultOptionsSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
-            MainApp.Instance.MainWindow.NavigationPage.OpenManagerSettings(Package.Manager);
+            // TODO: Avalonia - Restore NavigationPage.OpenManagerSettings
+            // MainApp.Instance.MainWindow.NavigationPage.OpenManagerSettings(Package.Manager);
         }
 
         private void GoToSecureSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             Close?.Invoke(this, EventArgs.Empty);
-            MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
+            // TODO: Avalonia - Restore NavigationPage.OpenSettingsPage
+            // MainApp.Instance.MainWindow.NavigationPage.OpenSettingsPage(typeof(Administrator));
         }
 
         private void KillProcessesBox_TokenItemAdding(TextBox sender, object args)
