@@ -144,7 +144,10 @@ namespace UniGetUI.Services
                 },
                 FontSize = 12
             };
-            hyperlinkButton.Click += (_, _) => MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
+            hyperlinkButton.Click += (_, _) => {
+                // TODO: Avalonia - MainWindow doesn't have NavigationPage property
+                // MainApp.Instance.MainWindow.NavigationPage.ShowHelp("cloud-backup-overview/");
+            };
 
             var loginButton = new PointButton
             {
@@ -168,7 +171,7 @@ namespace UniGetUI.Services
             {
                 // TODO: Avalonia - LightDismissOverlayMode not available
                 // LightDismissOverlayMode = LightDismissOverlayMode.Off,
-                Placement = FlyoutPlacementMode.Bottom,
+                Placement = PlacementMode.Bottom,
                 Content = stackPanel
             };
 
@@ -233,7 +236,7 @@ namespace UniGetUI.Services
                 Margin = new Thickness(4),
                 TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 FontSize = 12,
-                FontWeight = new(500),
+                FontWeight = FontWeight.Bold,
                 Text = CoreTools.Translate("If you have cloud backup enabled, it will be saved as a GitHub Gist on this account")
             };
 
@@ -296,7 +299,7 @@ namespace UniGetUI.Services
             {
                 // TODO: Avalonia - LightDismissOverlayMode not available
                 // LightDismissOverlayMode = LightDismissOverlayMode.Off,
-                Placement = FlyoutPlacementMode.Bottom,
+                Placement = PlacementMode.Bottom,
                 Content = stackPanel
             };
 
