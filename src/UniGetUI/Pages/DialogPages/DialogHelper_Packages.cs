@@ -218,26 +218,53 @@ public static partial class DialogHelper
         var title = CoreTools.Translate("Bundle security report");
         dialog.Title = title;
         Button a;
-        Avalonia.Controls.Documents.Paragraph p = new();
+        // Avalonia doesn't have RichTextBlock with Paragraph/Inlines - use simpler TextBlock approach
+        StackPanel contentPanel = new StackPanel { Spacing = 8 };
+        
+        TextBlock headerText = new TextBlock
+        {
+            Text = CoreTools.Translate("This package bundle had some settings that are potentially dangerous, and may be ignored by default.") + "\n" +
+                   " - " + CoreTools.Translate("Entries that show in YELLOW will be IGNORED.") + "\n" +
+                   " - " + CoreTools.Translate("Entries that show in RED will be IMPORTED.") + "\n" +
+                   CoreTools.Translate("You can change this behavior on UniGetUI security settings."),
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            FontFamily = new Avalonia.Media.FontFamily("Consolas")
+        };
+        contentPanel.Children.Add(headerText);
+
+        a = new Button
+        {
+            Content = CoreTools.Translate("Open UniGetUI security settings")
+        };
+        contentPanel.Children.Add(a);
+
+        TextBlock detailsHeader = new TextBlock
+        {
+            Text = "\n" + CoreTools.Translate("Should you modify the security settings, you will need to open the bundle again for the changes to take effect.") + "\n\n" +
+                   CoreTools.Translate("Details of the report:"),
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap
+        };
+        contentPanel.Children.Add(detailsHeader);
 
         foreach(var pair in packageReport)
         {
-            p.Inlines.Add(new Avalonia.Controls.Documents.Run()
+            TextBlock packageText = new TextBlock
             {
-                Text = $" - {CoreTools.Translate("Package")}: {pair.Key}:\n",
-                FontFamily = new("Consolas")
-            });
+                Text = $" - {CoreTools.Translate("Package")}: {pair.Key}:",
+                FontFamily = new Avalonia.Media.FontFamily("Consolas")
+            };
+            contentPanel.Children.Add(packageText);
 
             foreach (var issue in pair.Value)
             {
-                p.Inlines.Add(new Avalonia.Controls.Documents.Run()
+                TextBlock issueText = new TextBlock
                 {
-                    Text = $"   * {issue.Line}\n",
-                    FontFamily = new("Consolas"),
+                    Text = $"   * {issue.Line}",
+                    FontFamily = new Avalonia.Media.FontFamily("Consolas"),
                     Foreground = issue.Allowed? bad: good
-                });
+                };
+                contentPanel.Children.Add(issueText);
             }
-            p.Inlines.Add(new LineBreak());
         }
 
         dialog.Content = new ScrollViewer()
@@ -246,54 +273,14 @@ public static partial class DialogHelper
             Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"],
             CornerRadius = new CornerRadius(8),
             Padding = new Thickness(16),
-            Content = new RichTextBlock()
-            {
-                Blocks = {
-                    new Avalonia.Controls.Documents.Paragraph()
-                    {
-                        Inlines = {
-                            new Avalonia.Controls.Documents.Run()
-                            {
-                                Text = CoreTools.Translate("This package bundle had some settings that are potentially dangerous, and may be ignored by default.")
-                            },
-                            new Avalonia.Controls.Documents.Run()
-                            {
-                                Text = "\n - " + CoreTools.Translate("Entries that show in YELLOW will be IGNORED."),
-                                Foreground = good,
-                            },
-                            new Avalonia.Controls.Documents.Run()
-                            {
-                                Text = "\n - " + CoreTools.Translate("Entries that show in RED will be IMPORTED."),
-                                Foreground = bad
-                            },
-                            new Avalonia.Controls.Documents.Run()
-                            {
-                                Text = "\n" + CoreTools.Translate("You can change this behavior on UniGetUI security settings.") + " "
-                            },
-                            (a = new Button
-                            {
-                                Inlines = { new Avalonia.Controls.Documents.Run() { Text = CoreTools.Translate("Open UniGetUI security settings") } },
-                            }),
-                            new LineBreak(),
-                            new Avalonia.Controls.Documents.Run()
-                            {
-                                Text = CoreTools.Translate("Should you modify the security settings, you will need to open the bundle again for the changes to take effect.")
-                            },
-                            new LineBreak(),
-                            new LineBreak(),
-                            new Avalonia.Controls.Documents.Run() { Text = CoreTools.Translate("Details of the report:") },
-                            new LineBreak(),
-                        }
-                    },
-                    p
-                }
-            }
+            Content = contentPanel
         };
         a.Click += (_, _) => {
             dialog.Hide();
-            Window.NavigationPage.OpenSettingsPage(typeof(Administrator));
+            // TODO: Implement navigation - Window.NavigationPage not available
+            // Window.NavigationPage.OpenSettingsPage(typeof(Administrator));
         };
-        dialog.SecondaryButtonText = CoreTools.Translate("Close");
+        // dialog.SecondaryButtonText = CoreTools.Translate("Close"); // Window doesn't have this property
         await ShowDialogAsync(dialog);
     }
 

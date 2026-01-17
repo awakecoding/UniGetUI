@@ -1263,7 +1263,7 @@ namespace UniGetUI.Interface
 
         public void PackageItemContainer_PreviewKeyDown(object sender, Avalonia.Input.KeyEventArgs e)
         {
-            if (e.Key is not (VirtualKey.Up or VirtualKey.Down or VirtualKey.Home or VirtualKey.End or VirtualKey.Enter or VirtualKey.Space) ||
+            if (e.Key is not (Avalonia.Input.Key.Up or Avalonia.Input.Key.Down or Avalonia.Input.Key.Home or Avalonia.Input.Key.End or Avalonia.Input.Key.Enter or Avalonia.Input.Key.Space) ||
                 sender is not PackageItemContainer packageItemContainer)
             {
                 return;
@@ -1272,21 +1272,22 @@ namespace UniGetUI.Interface
             int index = FilteredPackages.IndexOf(packageItemContainer.Wrapper);
             switch (e.Key)
             {
-                case VirtualKey.Up when index > 0:
+                case Avalonia.Input.Key.Up when index > 0:
                     SelectAndScrollTo(index - 1, true); e.Handled = true; break;
-                case VirtualKey.Down when index < FilteredPackages.Count - 1:
+                case Avalonia.Input.Key.Down when index < FilteredPackages.Count - 1:
                     SelectAndScrollTo(index + 1, true); e.Handled = true; break;
-                case VirtualKey.Home when index > 0:
+                case Avalonia.Input.Key.Home when index > 0:
                     SelectAndScrollTo(0, true); e.Handled = true; break;
-                case VirtualKey.End when index < FilteredPackages.Count - 1:
+                case Avalonia.Input.Key.End when index < FilteredPackages.Count - 1:
                     SelectAndScrollTo(FilteredPackages.Count - 1, true); e.Handled = true; break;
             }
 
-            if (e.KeyStatus.WasKeyDown)
-            {
-                // ignore repeated KeyDown events when pressing and holding a key
-                return;
-            }
+            // Avalonia doesn't have KeyStatus.WasKeyDown - skip this check
+            // if (e.KeyStatus.WasKeyDown)
+            // {
+            //     // ignore repeated KeyDown events when pressing and holding a key
+            //     return;
+            // }
 
             IPackage? package = packageItemContainer.Package;
 

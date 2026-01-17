@@ -442,48 +442,40 @@ namespace UniGetUI.Interface.Dialogs
             else
             {
                 r.Text = s;
-                r.ClearValue(TextElement.ForegroundProperty);
+                // r.ClearValue(TextElement.ForegroundProperty); // TextElement not available in Avalonia
+                r.Foreground = Brushes.Black; // TODO: Use theme-appropriate color
             }
         }
 
         public void SetTextToItem(Button h, Uri? u, string prefix = "", string suffix = "")
         {
+            // Button.Inlines, NavigateUri don't exist in Avalonia - use Content instead
             if (u is null)
             {
-                h.Inlines.Clear();
-                h.Inlines.Add(new Avalonia.Controls.Documents.Run
-                {
-                    Text = CoreTools.Translate("Not available"),
-                    TextDecorations = TextDecorations.None,
-                    Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127))
-                });
-                h.NavigateUri = u;
+                h.Content = CoreTools.Translate("Not available");
+                // Store URL in Tag for later access if needed
+                h.Tag = null;
             }
             else
             {
-                h.Inlines.Clear();
-                h.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = prefix + u.ToString() + suffix });
-                h.NavigateUri = u;
+                h.Content = prefix + u.ToString() + suffix;
+                h.Tag = u;
             }
         }
         public void SetTextToItem(Button h, string s)
         {
-            h.Inlines.Clear();
-            h.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = s });
-            h.NavigateUri = null;
+            h.Content = s;
+            h.Tag = null;
         }
 
         public async Task LoadIcon()
         {
-            PackageIcon.Source = new BitmapImage
-            {
-                UriSource = await Task.Avalonia.Controls.Documents.Run(Package.GetIconUrl)
-            };
+            PackageIcon.Source = new Avalonia.Media.Imaging.Bitmap(await Task.Run(Package.GetIconUrl));
         }
 
         public async Task LoadScreenshots()
         {
-            IReadOnlyList<Uri> screenshots = await Task.Avalonia.Controls.Documents.Run(Package.GetScreenshots);
+            IReadOnlyList<Uri> screenshots = await Task.Run(Package.GetScreenshots);
             PackageHasScreenshots = screenshots.Any();
             if (PackageHasScreenshots)
             {
@@ -492,7 +484,7 @@ namespace UniGetUI.Interface.Dialogs
                 ScreenshotsCarroussel.Items.Clear();
                 foreach (Uri image in screenshots)
                 {
-                    ScreenshotsCarroussel.Items.Add(new Image { Source = new BitmapImage(image) });
+                    ScreenshotsCarroussel.Items.Add(new Image { Source = new Avalonia.Media.Imaging.Bitmap(image.AbsoluteUri) });
                 }
             }
 
