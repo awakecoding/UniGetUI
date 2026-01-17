@@ -48,8 +48,8 @@ namespace UniGetUI.Pages.SettingsPages
                 button.BorderThickness = first ? new Thickness(1) : new Thickness(1,0,1,1);
                 button.Click += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
 
-                var statusIcon = new TextBlock() { FontSize = 12, VerticalAlignment = VerticalAlignment.Center };
-                var statusText = new TextBlock() { FontSize = 12, FontWeight = new FontWeight(600), VerticalAlignment = VerticalAlignment.Center };
+                var statusIcon = new TextBlock() { FontSize = 12, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+                var statusText = new TextBlock() { FontSize = 12, FontWeight = new FontWeight(600), VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
                 var statusBorder = new Border()
                 {
                     CornerRadius = new CornerRadius(4),
@@ -85,7 +85,7 @@ namespace UniGetUI.Pages.SettingsPages
                 {
                     Height = 22,
                     OnContent = "",
-                    HorizontalAlignment = HorizontalAlignment.Right,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
                     OffContent = "",
                     Margin = new Thickness(-10, 0, 0, 0),
                 };
@@ -105,7 +105,7 @@ namespace UniGetUI.Pages.SettingsPages
                 var status = new StackPanel()
                 {
                     Orientation = Orientation.Horizontal,
-                    Spacing = 4, HorizontalAlignment = HorizontalAlignment.Center,
+                    Spacing = 4, HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
                     Children = { statusIcon, statusText }
                 };
                 statusBorder.Child = status;

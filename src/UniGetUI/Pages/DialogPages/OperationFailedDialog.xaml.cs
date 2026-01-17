@@ -54,7 +54,7 @@ public partial class OperationFailedDialog : UserControl
         var CloseButton = new Button
         {
             Content = CoreTools.Translate("Close"),
-            HorizontalAlignment = HorizontalAlignment.Stretch,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
             Height = 30,
         };
         CloseButton.Click += (_, _) => Close?.Invoke(this, EventArgs.Empty);
@@ -67,7 +67,7 @@ public partial class OperationFailedDialog : UserControl
             SplitButton RetryButton = new SplitButton
             {
                 Content = CoreTools.Translate("Retry"),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Height = 30,
             };
             RetryButton.Click += (_, _) =>
@@ -89,7 +89,7 @@ public partial class OperationFailedDialog : UserControl
             var RetryButton = new Button
             {
                 Content = CoreTools.Translate("Retry"),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Height = 30,
             };
             RetryButton.Click += (_, _) =>

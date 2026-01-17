@@ -294,7 +294,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                     BorderThickness = new Thickness(1, 0, 1, 1)
                 };
                 StackPanel p = new() { Orientation = Orientation.Horizontal, Spacing = 5, };
-                var VcPkgRootLabel = new TextBlock { VerticalAlignment = VerticalAlignment.Center };
+                var VcPkgRootLabel = new TextBlock { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
                 var ResetVcPkgRootLabel = new HyperlinkButton { Content = CoreTools.Translate("Reset") };
                 var OpenVcPkgRootLabel = new HyperlinkButton { Content = CoreTools.Translate("Open") };
 

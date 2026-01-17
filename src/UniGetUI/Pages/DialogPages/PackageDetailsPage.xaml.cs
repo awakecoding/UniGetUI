@@ -426,7 +426,7 @@ namespace UniGetUI.Interface.Dialogs
                 ShowableTags.Add(new TextBlock
                 {
                     Text = tag,
-                    VerticalAlignment = VerticalAlignment.Center,
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                     TextLineBounds = TextLineBounds.Tight
                 });
             }

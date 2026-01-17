@@ -136,22 +136,22 @@ public static partial class DialogHelper
             {
                 // Width = 400,
                 Orientation = Orientation.Vertical,
-                VerticalAlignment = VerticalAlignment.Stretch,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Spacing = 20,
                 Children =
                 {
                     new TextBlock()
                     {
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                         Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Text = data.Text
                     },
                     new ProgressBar()
                     {
                         IsIndeterminate = true,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                     }
                 }
             };
@@ -227,8 +227,8 @@ public static partial class DialogHelper
                     }
                 }
             },
-            HorizontalAlignment = HorizontalAlignment.Stretch,
-            VerticalAlignment = VerticalAlignment.Stretch
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Stretch
         };
 
         string installerPath = Path.Join(CoreData.UniGetUIExecutableDirectory, "UniGetUI.Installer.exe");
