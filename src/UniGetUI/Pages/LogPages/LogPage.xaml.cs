@@ -27,7 +27,8 @@ namespace UniGetUI.Interface.Pages
             LogLevelPane.IsVisible = log_level_enabled;
             if (log_level_enabled) LoadLogLevels();
 
-            ActualThemeChanged += (_, _) => LoadLog();
+            // TODO: Avalonia - ActualThemeChanged event not available
+            // ActualThemeChanged += (_, _) => LoadLog();
         }
 
         protected void SelectLogLevelByName(string name)

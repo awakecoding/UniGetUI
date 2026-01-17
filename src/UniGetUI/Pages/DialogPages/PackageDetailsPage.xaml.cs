@@ -428,7 +428,8 @@ namespace UniGetUI.Interface.Dialogs
                 {
                     Text = tag,
                     VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-                    TextLineBounds = TextLineBounds.Tight
+                    // TODO: Avalonia - TextLineBounds not available
+                    // TextLineBounds = TextLineBounds.Tight
                 });
             }
         }
@@ -513,7 +514,8 @@ namespace UniGetUI.Interface.Dialogs
 
         public void PackageDetailsPage_SizeChanged(object? sender = null, SizeChangedEventArgs? e = null)
         {
-            if (MainApp.Instance.MainWindow.AppWindow.Size.Width < 950)
+            // TODO: Avalonia - MainWindow.AppWindow not available, using Bounds.Width instead
+            if (MainApp.Instance.MainWindow.Bounds.Width < 950)
             {
                 if (__layout_mode != LayoutMode.Normal)
                 {

@@ -17,7 +17,8 @@ namespace UniGetUI.Interface.Pages.LogPage
 
         public void LoadForManager(IPackageManager manager)
         {
-            bool IS_DARK = this.ActualTheme == ElementTheme.Dark;
+            // TODO: Avalonia - ActualTheme not available, assuming dark theme
+            bool IS_DARK = true; // this.ActualTheme == ElementTheme.Dark;
             bool verbose = LogLevelCombo.SelectedValue?.ToString()?.Contains(CoreTools.Translate("Verbose")) ?? false;
 
             if (!verbose) SelectLogLevelByName(manager.DisplayName);

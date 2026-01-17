@@ -263,7 +263,8 @@ namespace UniGetUI.Services
             {
                 HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = CoreTools.Translate("Log out"),
-                Background = new SolidColorBrush(ActualTheme is ElementTheme.Dark? Colors.DarkRed: Colors.PaleVioletRed),
+                // TODO: Avalonia - ActualTheme not available, using dark theme color as default
+                Background = new SolidColorBrush(Colors.DarkRed),
                 BorderThickness = new(0)
             };
             loginButton.Click += LogoutButton_Click;

@@ -333,7 +333,7 @@ namespace UniGetUI.Interface
             if (MEGA_QUERY_BOX_ENABLED)
             {
                 MegaQueryBlockGrid.IsVisible = true;
-                MegaQueryBlock.Focus(FocusState.Programmatic);
+                MegaQueryBlock.Focus(); // TODO: Avalonia - FocusState enum not available
                 BackgroundText.IsVisible = false;
             }
 
@@ -471,7 +471,7 @@ namespace UniGetUI.Interface
 
         public void SearchTriggered()
         {
-            QueryBlock.Focus(FocusState.Pointer);
+            QueryBlock.Focus(); // TODO: Avalonia - FocusState enum not available
         }
 
         public void ReloadTriggered()
@@ -482,7 +482,8 @@ namespace UniGetUI.Interface
 
         public void SelectAllTriggered()
         {
-            if (QueryBlock.FocusState == FocusState.Unfocused)
+            // TODO: Avalonia - FocusState property not available, checking IsFocused instead
+            if (!QueryBlock.IsFocused)
             {
                 if (!SelectAllCheckBox.IsChecked ?? false)
                 {
@@ -652,7 +653,7 @@ namespace UniGetUI.Interface
                             return;
                         }
                     }
-                    containerToFocus.Focus(FocusState.Keyboard);
+                    containerToFocus.Focus(); // TODO: Avalonia - FocusState enum not available
                 });
         }
 
@@ -1099,7 +1100,7 @@ namespace UniGetUI.Interface
         }
 
         public void FocusPackageList()
-            => CurrentPackageList.Focus(FocusState.Programmatic);
+            => CurrentPackageList.Focus(); // TODO: Avalonia - FocusState enum not available
 
 
         public async Task ShowContextMenu(PackageWrapper wrapper)
@@ -1116,7 +1117,7 @@ namespace UniGetUI.Interface
             if (sender is PackageItemContainer container && container.Package is not null)
             {
                 CurrentPackageList.Select(container.Wrapper.Index);
-                container.Focus(FocusState.Keyboard);
+                container.Focus(); // TODO: Avalonia - FocusState enum not available
                 WhenShowingContextMenu(container.Package);
             }
         }
@@ -1126,7 +1127,7 @@ namespace UniGetUI.Interface
             if (sender is PackageItemContainer container && container.Package is not null)
             {
                 CurrentPackageList.Select(container.Wrapper.Index);
-                container.Focus(FocusState.Keyboard);
+                container.Focus(); // TODO: Avalonia - FocusState enum not available
 
                 TEL_InstallReferral referral = TEL_InstallReferral.ALREADY_INSTALLED;
                 if (PAGE_NAME == "Bundles") referral = TEL_InstallReferral.FROM_BUNDLE;

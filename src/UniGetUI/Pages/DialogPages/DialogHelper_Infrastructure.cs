@@ -178,9 +178,11 @@ public static partial class DialogHelper
             }
 
             dialog.RequestedTheme = Window.MainContentGrid.RequestedTheme;
-            Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
+            // TODO: Avalonia - Window.AppWindow.TitleBar not available
+            // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
             bool? result = await dialog.ShowAsync();
-            Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
+            // TODO: Avalonia - Window.AppWindow.TitleBar not available
+            // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             _dialogQueue.Remove(dialog);
             if (!_dialogQueue.Any()) DialogHelper._showNextLoadingDialogIfPossible();
             return result;

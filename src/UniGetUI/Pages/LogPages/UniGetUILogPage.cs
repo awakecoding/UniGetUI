@@ -26,7 +26,8 @@ namespace UniGetUI.Interface.Pages.LogPage
 
         public override void LoadLog(bool isReload = false)
         {
-            bool IS_DARK = ActualTheme == Microsoft.UI.Xaml.ElementTheme.Dark;
+            // TODO: Avalonia - ActualTheme not available, assuming dark theme
+            bool IS_DARK = true; // ActualTheme == Microsoft.UI.Xaml.ElementTheme.Dark;
 
             LogEntry[] logs = Logger.GetLogs();
             LogTextBox.Blocks.Clear();
