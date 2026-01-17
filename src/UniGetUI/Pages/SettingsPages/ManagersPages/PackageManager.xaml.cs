@@ -325,9 +325,14 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
                 Vcpkg_CustomVcpkgRoot.Click += (_, _) =>
                 {
+                    // TODO: Avalonia - GetWindowHandle is Windows-specific
+#if WINDOWS
                     ExternalLibraries.Pickers.FolderPicker openPicker =
                         new(MainApp.Instance.MainWindow.GetWindowHandle());
                     string folder = openPicker.Show();
+#else
+                    string folder = string.Empty;
+#endif
                     if (folder != string.Empty)
                     {
                         Settings.SetValue(Settings.K.CustomVcpkgRoot, folder);

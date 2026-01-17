@@ -130,7 +130,8 @@ namespace UniGetUI.Interface
         protected DateTime LastPackageLoadTime { get; private set; }
         protected readonly OperationType PAGE_ROLE;
 
-        protected AutoCompleteBox QueryBlock { get => MainApp.Instance.MainWindow.GlobalSearchBox; }
+        // TODO: Avalonia - GlobalSearchBox needs to be implemented in MainWindow
+        protected AutoCompleteBox QueryBlock { get => null; /*MainApp.Instance.MainWindow.GlobalSearchBox;*/ }
 
         protected IPackage? SelectedItem
         {
@@ -150,14 +151,15 @@ namespace UniGetUI.Interface
             }
         }
 
+        // TODO: Avalonia - ViewModeSelector should be ComboBox, not StackPanel
         protected ItemsControl CurrentPackageList
         {
-            get => (ViewModeSelector.SelectedIndex switch
+            get => /*(ViewModeSelector.SelectedIndex switch
             {
                 1 => PackageList_Grid,
                 2 => PackageList_Icons,
                 _ => PackageList_List
-            });
+            });*/ PackageList_List;
         }
 
         protected AbstractPackageLoader Loader;
@@ -234,23 +236,26 @@ namespace UniGetUI.Interface
             InitializeComponent();
 
             // Selection of grid view mode
+            // TODO: Avalonia - ViewModeSelector should be ComboBox with Items property
+            // TODO: Avalonia - ToolTipService is internal, use ToolTip.SetTip instead
             int viewMode = Settings.GetDictionaryItem<string, int>(Settings.K.PackageListViewMode, PAGE_NAME);
-            if (viewMode < 0 || viewMode >= ViewModeSelector.Items.Count) viewMode = 0;
-            ViewModeSelector.SelectedIndex = viewMode;
+            //if (viewMode < 0 || viewMode >= ViewModeSelector.Items.Count) viewMode = 0;
+            //ViewModeSelector.SelectedIndex = viewMode;
             GenerateHeaderBarTitles();
 
-            ToolTipService.SetToolTip(Selector_List, CoreTools.Translate("List"));
-            ToolTipService.SetToolTip(Selector_Grid, CoreTools.Translate("Grid"));
-            ToolTipService.SetToolTip(Selector_Icons, CoreTools.Translate("Icons"));
+            ToolTip.SetTip(Selector_List, CoreTools.Translate("List"));
+            ToolTip.SetTip(Selector_Grid, CoreTools.Translate("Grid"));
+            ToolTip.SetTip(Selector_Icons, CoreTools.Translate("Icons"));
 
             MainTitle.Text = data.PageTitle;
             HeaderIcon.Text = data.Glyph; // Avalonia: TextBlock.Text instead of Glyph
 
             SelectAllCheckBox.IsChecked = data.PackagesAreCheckedByDefault;
             QuerySimilarResultsRadio.IsEnabled = !data.DisableSuggestedResultsRadio;
-            QueryOptionsGroup.SelectedIndex = 1;
-            QueryOptionsGroup.SelectedIndex = 2;
-            QueryOptionsGroup.SelectedItem = QueryBothRadio;
+            // TODO: Avalonia - QueryOptionsGroup should be ComboBox or ListBox, not StackPanel
+            //QueryOptionsGroup.SelectedIndex = 1;
+            //QueryOptionsGroup.SelectedIndex = 2;
+            //QueryOptionsGroup.SelectedItem = QueryBothRadio;
 
             Loader.StartedLoading += Loader_StartedLoading;
             Loader.FinishedLoading += Loader_FinishedLoading;
@@ -271,7 +276,8 @@ namespace UniGetUI.Interface
             Loader_PackagesChanged(this, new(false, [], []));
 
             LastPackageLoadTime = DateTime.Now;
-            LocalPackagesNode.Content = CoreTools.Translate("Local");
+            // TODO: Avalonia - TreeViewItem.Content changed to Header
+            LocalPackagesNode.Header = CoreTools.Translate("Local");
             LocalPackagesNode.IsExpanded = false;
 
             ReloadButton.Click += async (_, _) => await LoadPackages();
@@ -281,7 +287,8 @@ namespace UniGetUI.Interface
             // Handle the Enter Pressed event on the MegaQueryBlock
             MegaQueryBlock.KeyUp += (_, e) =>
             {
-                if (e.Key != VirtualKey.Enter)
+                // TODO: Avalonia - VirtualKey changed to Key enum
+                if (e.Key != Key.Enter)
                     return;
 
                 MegaQueryBlockGrid.IsVisible = false;
@@ -301,7 +308,8 @@ namespace UniGetUI.Interface
             // Handle when a source is clicked
             SourcesTreeView.Tapped += (_, e) =>
             {
-                TreeViewItem? node = (e.OriginalSource as Avalonia.Controls.Control)?.DataContext as TreeViewItem;
+                // TODO: Avalonia - TappedEventArgs.OriginalSource changed to Source
+                TreeViewItem? node = (e.Source as Avalonia.Controls.Control)?.DataContext as TreeViewItem;
                 if (node is null)
                 {
                     return;
@@ -320,7 +328,8 @@ namespace UniGetUI.Interface
             };
 
             // Handle when a source is double-clicked
-            SourcesTreeView.RightTapped += (_, e) =>
+            // TODO: Avalonia - TreeView doesn't have RightTapped event
+            /*SourcesTreeView.RightTapped += (_, e) =>
             {
                 TreeViewItem? node = (e.OriginalSource as Avalonia.Controls.Control)?.DataContext as TreeViewItem;
                 if (node is null)
@@ -331,7 +340,7 @@ namespace UniGetUI.Interface
                 SourcesTreeView.GetSelectedNodes().Clear();
                 SourcesTreeView.GetSelectedNodes().Add(node);
                 FilterPackages();
-            };
+            };*/
 
             if (MEGA_QUERY_BOX_ENABLED)
             {
@@ -341,10 +350,13 @@ namespace UniGetUI.Interface
             }
 
             _searchPlaceholder = CoreTools.Translate("Search for packages");
-            MegaQueryBlock.PlaceholderText = _searchPlaceholder;
+            // TODO: Avalonia - TextBox.PlaceholderText changed to Watermark
+            MegaQueryBlock.Watermark = _searchPlaceholder;
             InstantSearchCheckbox.IsChecked = !Settings.GetDictionaryItem<string, bool>(Settings.K.DisableInstantSearch, PAGE_NAME);
 
-            HeaderIcon.FontWeight = new Windows.UI.Text.FontWeight(700);
+            // TODO: Avalonia - Windows.UI.Text namespace not available, use Avalonia.Media.FontWeight
+            //HeaderIcon.FontWeight = new Windows.UI.Text.FontWeight(700);
+            HeaderIcon.FontWeight = FontWeight.Bold;
 
             NameHeader.Click += (_, _) => SortPackagesBy(ObservablePackageCollection.Sorter.Name);
             IdHeader.Click += (_, _) => SortPackagesBy(ObservablePackageCollection.Sorter.Id);
@@ -374,14 +386,15 @@ namespace UniGetUI.Interface
 
         private void GenerateHeaderBarTitles()
         {
-            if (ViewModeSelector.SelectedIndex == 0)
-            {
+            // TODO: Avalonia - ViewModeSelector should be ComboBox, not StackPanel
+            //if (ViewModeSelector.SelectedIndex == 0)
+            //{
                 NameHeader.Content = CoreTools.Translate("Package Name");
                 IdHeader.Content = CoreTools.Translate("Package ID");
                 VersionHeader.Content = CoreTools.Translate("Version");
                 NewVersionHeader.Content = CoreTools.Translate("New version");
                 SourceHeader.Content = CoreTools.Translate("Source");
-            }
+            /*}
             else
             {
                 NameHeader.Content = "";
@@ -389,13 +402,14 @@ namespace UniGetUI.Interface
                 VersionHeader.Content = "";
                 NewVersionHeader.Content = "";
                 SourceHeader.Content = "";
-            }
+            }*/
         }
 
         private void Loader_PackagesChanged(object? sender, PackagesChangedEvent packagesChangedEvent)
         {
+            // TODO: Avalonia - Use Avalonia.Threading.Dispatcher instead of Microsoft.UI.Dispatching
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
+            if (!Avalonia.Threading.Dispatcher.UIThread.CheckAccess())
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_PackagesChanged(sender, packagesChangedEvent));
                 return;
@@ -446,8 +460,9 @@ namespace UniGetUI.Interface
 
         private void Loader_FinishedLoading(object? sender, EventArgs e)
         {
+            // TODO: Avalonia - Use Avalonia.Threading.Dispatcher instead of Microsoft.UI.Dispatching
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
+            if (!Avalonia.Threading.Dispatcher.UIThread.CheckAccess())
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_FinishedLoading(sender, e));
                 return;
@@ -462,8 +477,9 @@ namespace UniGetUI.Interface
 
         private void Loader_StartedLoading(object? sender, EventArgs e)
         {
+            // TODO: Avalonia - Use Avalonia.Threading.Dispatcher instead of Microsoft.UI.Dispatching
             // Ensure we are in the UI thread
-            if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
+            if (!Avalonia.Threading.Dispatcher.UIThread.CheckAccess())
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_StartedLoading(sender, e));
                 return;
@@ -507,20 +523,22 @@ namespace UniGetUI.Interface
             if (!UsedManagers.Contains(source.Manager))
             {
                 UsedManagers.Add(source.Manager);
-                var node = new TreeViewItem { Content = source.Manager.DisplayName + "                                                                                    .", IsExpanded = false };
-                SourcesTreeView.RootNodes.Add(node);
+                // TODO: Avalonia - TreeViewItem.Content changed to Header, TreeView.RootNodes changed to ItemsSource pattern
+                var node = new TreeViewItem { Header = source.Manager.DisplayName + "                                                                                    .", IsExpanded = false };
+                //SourcesTreeView.RootNodes.Add(node);
 
+                // TODO: Avalonia - TreeView.RootNodes doesn't exist, need to implement ItemsSource-based approach
                 // Smart way to decide whether to check a source or not.
                 // - Always check a source by default if no sources are present
                 // - Otherwise, Check a source only if half of the sources have already been checked
-                if (SourcesTreeView.RootNodes.Count == 0)
+                /*if (SourcesTreeView.RootNodes.Count == 0)
                 {
                     SourcesTreeView.GetSelectedNodes().Add(node);
                 }
                 else if (SourcesTreeView.GetSelectedNodes().Count >= SourcesTreeView.RootNodes.Count / 2)
                 {
                     SourcesTreeView.GetSelectedNodes().Add(node);
-                }
+                }*/
 
                 RootNodeForManager.TryAdd(source.Manager, node);
                 UsedSourcesForManager.TryAdd(source.Manager, []);
@@ -528,13 +546,14 @@ namespace UniGetUI.Interface
                 SourcesTreeViewGrid.IsVisible = true;
             }
 
+            // TODO: Avalonia - TreeViewItem.Content changed to Header, TreeViewItem.Children doesn't exist
             if ((!UsedSourcesForManager.ContainsKey(source.Manager) || !UsedSourcesForManager[source.Manager].Contains(source)) && source.Manager.Capabilities.SupportsCustomSources)
             {
                 UsedSourcesForManager[source.Manager].Add(source);
-                TreeViewItem item = new() { Content = source.Name + "                                                                                    ." };
+                TreeViewItem item = new() { Header = source.Name + "                                                                                    ." };
                 NodesForSources.TryAdd(source, item);
 
-                if (source.IsVirtualManager)
+                /*if (source.IsVirtualManager)
                 {
                     LocalPackagesNode.Children.Add(item);
                     if (!SourcesTreeView.RootNodes.Contains(LocalPackagesNode))
@@ -546,7 +565,7 @@ namespace UniGetUI.Interface
                 else
                 {
                     RootNodeForManager[source.Manager].Children.Add(item);
-                }
+                }*/
             }
         }
 

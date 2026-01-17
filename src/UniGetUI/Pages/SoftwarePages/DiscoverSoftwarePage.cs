@@ -159,7 +159,8 @@ namespace UniGetUI.Interface.SoftwarePages
                     new MenuFlyoutSeparator(),
                     DownloadInstallers,
                     },
-                Placement = FlyoutPlacementMode.Bottom
+                // TODO: Avalonia - Cast FlyoutPlacementMode to Avalonia.Controls.PlacementMode
+                Placement = (Avalonia.Controls.PlacementMode)FlyoutPlacementMode.Bottom
             };
             MainToolbarButtonIcon.Icon = IconType.Download;
             MainToolbarButtonText.Text = CoreTools.Translate("Install selection");

@@ -81,11 +81,6 @@ public partial class MainApp
                 IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
                 savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
-#else
-                // TODO: Avalonia - Implement cross-platform file picker
-                Logger.Warn("File picker not implemented for non-Windows platforms");
-                return null;
-#endif
 
                 string name = await package.GetInstallerFileName() ?? "";
                 string extension;
@@ -131,6 +126,12 @@ public partial class MainApp
                 }
 
                 return null;
+#else
+                // TODO: Avalonia - Implement cross-platform file picker
+                Logger.Warn("File picker not implemented for non-Windows platforms");
+                DialogHelper.HideLoadingDialog(loadingId);
+                return null;
+#endif
             }
             catch (Exception ex)
             {
@@ -147,9 +148,14 @@ public partial class MainApp
             {
                 if (!packages.Any()) return;
 
+                // TODO: Avalonia - GetWindowHandle is Windows-specific
+#if WINDOWS
                 var hWnd = MainApp.Instance.MainWindow.GetWindowHandle();
                 var a = new ExternalLibraries.Pickers.FolderPicker(hWnd);
                 var outputPath = await Task.Run(a.Show);
+#else
+                var outputPath = "";
+#endif
                 if (outputPath == "")
                     return;
 

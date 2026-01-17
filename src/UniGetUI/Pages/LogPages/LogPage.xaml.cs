@@ -69,14 +69,18 @@ namespace UniGetUI.Interface.Pages
 
         public void CopyButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            // TODO: Avalonia - SelectAll() and Select() parameters differ in Avalonia
             LogTextBox.SelectAll();
             WindowsClipboard.SetText(LogTextBox.SelectedText);
-            LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
+            //LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
+            LogTextBox.SelectionStart = 0;
+            LogTextBox.SelectionEnd = 0;
         }
 
         public void ExportButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportButton_Click();
         public async Task _exportButton_Click()
         {
+#if WINDOWS
             FileSavePicker savePicker = new()
             {
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary
@@ -90,9 +94,15 @@ namespace UniGetUI.Interface.Pages
             {
                 LogTextBox.SelectAll();
                 await File.WriteAllTextAsync(file.Path, LogTextBox.SelectedText);
-                LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
+                //LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
+                LogTextBox.SelectionStart = 0;
+                LogTextBox.SelectionEnd = 0;
                 await CoreTools.ShowFileOnExplorer(file.Path);
             }
+#else
+            // TODO: Avalonia - Implement cross-platform file save dialog
+            await Task.CompletedTask;
+#endif
         }
 
         public void ReloadButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -108,6 +118,9 @@ namespace UniGetUI.Interface.Pages
             => LoadLog();
 
         public void OnLeave()
-            => LogTextBox.Blocks.Clear();
+        {
+            // TODO: Avalonia - TextBox doesn't have Blocks property, need alternative approach
+            //=> LogTextBox.Blocks.Clear();
+        }
     }
 }

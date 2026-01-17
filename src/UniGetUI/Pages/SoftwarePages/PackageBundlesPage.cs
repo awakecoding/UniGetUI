@@ -192,7 +192,8 @@ namespace UniGetUI.Interface.SoftwarePages
                     new MenuFlyoutSeparator(),
                     DownloadInstallers,
                 },
-                Placement = FlyoutPlacementMode.Bottom
+                // TODO: Avalonia - Cast FlyoutPlacementMode to Avalonia.Controls.PlacementMode
+                Placement = (Avalonia.Controls.PlacementMode)FlyoutPlacementMode.Bottom
             };
             MainToolbarButtonIcon.Icon = IconType.Download;
             MainToolbarButtonText.Text = CoreTools.Translate("Install selection");
@@ -506,8 +507,13 @@ namespace UniGetUI.Interface.SoftwarePages
             if (await AskForNewBundle() is false)
                 return;
 
+            // TODO: Avalonia - GetWindowHandle is Windows-specific
+#if WINDOWS
             FileOpenPicker picker = new(MainApp.Instance.MainWindow.GetWindowHandle());
             string file = picker.Show(["*.ubundle", "*.json", "*.yaml", "*.xml"]);
+#else
+            string file = String.Empty;
+#endif
             if (file == String.Empty)
                 return;
 
@@ -520,7 +526,12 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 // Get file
                 string defaultName = CoreTools.Translate("Package bundle") + ".ubundle";
+                // TODO: Avalonia - GetWindowHandle is Windows-specific
+#if WINDOWS
                 string file = (new FileSavePicker(MainApp.Instance.MainWindow.GetWindowHandle())).Show(["*.ubundle", "*.json"], defaultName);
+#else
+                string file = String.Empty;
+#endif
                 if (file != String.Empty)
                 {
                     // Loading dialog

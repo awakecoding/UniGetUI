@@ -277,15 +277,16 @@ public partial class OperationControl: INotifyPropertyChanged
 
         if (Operation.Status is OperationStatus.InQueue)
         {
-            var skipQueue = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run now"), Icon = new TextBlock {Glyph = "\uE768"} };
+            // TODO: Avalonia - TextBlock.Glyph changed to Text
+            var skipQueue = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run now"), Icon = new TextBlock {Text = "\uE768"} };
             skipQueue.Click += (_, _) => Operation.SkipQueue();
             OpMenu.Items.Add(skipQueue);
 
-            var putNext = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run next"), Icon = new TextBlock {Glyph = "\uEB9D"} };
+            var putNext = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run next"), Icon = new TextBlock {Text = "\uEB9D"} };
             putNext.Click += (_, _) => Operation.RunNext();
             OpMenu.Items.Add(putNext);
 
-            var putLast = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run last"), Icon = new TextBlock {Glyph = "\uEB9E"} };
+            var putLast = new BetterMenuItem { Text = CoreTools.Translate("Avalonia.Controls.Documents.Run last"), Icon = new TextBlock {Text = "\uEB9E"} };
             putLast.Click += (_, _) => Operation.BackOfTheQueue();
             OpMenu.Items.Add(putLast);
 
