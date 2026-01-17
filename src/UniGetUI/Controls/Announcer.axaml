@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
-            <TextBlock
+            <RichTextBlock
                 x:Name="_textblock"
                 Grid.Row="0"
                 Grid.Column="0"

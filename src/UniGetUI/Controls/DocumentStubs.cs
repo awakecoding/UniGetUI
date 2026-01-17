@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Avalonia.Controls.Documents
 {
@@ -17,5 +19,22 @@ namespace Avalonia.Controls.Documents
     public class Run : Control
     {
         public string Text { get; set; } = "";
+    }
+}
+
+namespace Avalonia.Controls
+{
+    // Stub implementation of RichTextBlock for migration
+    // Avalonia doesn't have RichTextBlock, this provides compatibility layer
+    // TODO: Replace with proper Avalonia text rendering
+    public class RichTextBlock : TextBlock
+    {
+        public ObservableCollection<Documents.Paragraph> Blocks { get; }
+
+        public RichTextBlock()
+        {
+            Blocks = new ObservableCollection<Documents.Paragraph>();
+            TextWrapping = Media.TextWrapping.Wrap;
+        }
     }
 }

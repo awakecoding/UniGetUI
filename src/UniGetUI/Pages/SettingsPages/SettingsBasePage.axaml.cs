@@ -5,6 +5,7 @@ using UniGetUI.PackageEngine.ManagerClasses.Manager;
 using UniGetUI.Pages.SettingsPages.GeneralPages;
 using UniGetUI.Interface.Pages;
 using UniGetUI.PackageEngine.Interfaces;
+using UniGetUI.Interface;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,11 +25,11 @@ namespace UniGetUI.Pages.SettingsPages
             BackButton.Click += (_, _) =>
             {
                 if (MainNavigationFrame.Content is ManagersHomepage or SettingsHomepage) MainApp.Instance.MainWindow.GoBack();
-                else if (MainNavigationFrame.CanGoBack) MainNavigationFrame.GoBack();
+                else if (MainNavigationFrame.CanGoBack()) MainNavigationFrame.GoBack();
                 else MainNavigationFrame.Navigate(isManagers? typeof(ManagersHomepage): typeof(SettingsHomepage), null, new DrillInNavigationTransitionInfo());
             };
-            MainNavigationFrame.Navigated += MainNavigationFrame_Navigated;
-            MainNavigationFrame.Navigating += MainNavigationFrame_Navigating;
+            MainNavigationFrame.SubscribeNavigated(MainNavigationFrame_Navigated);
+            MainNavigationFrame.SubscribeNavigating(MainNavigationFrame_Navigating);
             MainNavigationFrame.Navigate(isManagers ? typeof(ManagersHomepage) : typeof(SettingsHomepage), null, new DrillInNavigationTransitionInfo());
 
             RestartRequired.Message = CoreTools.Translate("Restart WingetUI to fully apply changes");
@@ -55,7 +56,8 @@ namespace UniGetUI.Pages.SettingsPages
 
         private void MainNavigationFrame_Navigated(object sender, object e)
         {
-            var page = e.Content as ISettingsPage;
+            var navArgs = e as NavigationEventArgs;
+            var page = navArgs?.Content as ISettingsPage;
             if (page is null) throw new InvalidCastException("Settings page does not inherit from ISettingsPage");
 
             BackButton.IsVisible = true;
@@ -109,7 +111,7 @@ namespace UniGetUI.Pages.SettingsPages
         public void OnLeave() { }
 
         public bool CanGoBack()
-            => MainNavigationFrame.CanGoBack && MainNavigationFrame.Content is not SettingsHomepage && MainNavigationFrame.Content is not ManagersHomepage;
+            => MainNavigationFrame.CanGoBack() && MainNavigationFrame.Content is not SettingsHomepage && MainNavigationFrame.Content is not ManagersHomepage;
 
         public void GoBack()
         {

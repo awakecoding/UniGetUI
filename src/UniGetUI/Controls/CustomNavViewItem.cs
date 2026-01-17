@@ -9,6 +9,9 @@ namespace UniGetUI.Controls;
 internal partial class CustomNavViewItem : ListBoxItem
 {
     int _iconSize = 28;
+    // TODO: Avalonia - ListBoxItem does not have Icon property
+    // Icon support needs to be reimplemented using a custom template or attached property
+    /*
     public IconType LocalIcon
     {
         set => base.Icon = new LocalIcon(value);
@@ -22,13 +25,15 @@ internal partial class CustomNavViewItem : ListBoxItem
     {
         set => base.Icon = value;
     }
+    */
 
     public bool IsLoading
     {
         set
         {
-            if (value) _ = increaseMargins();
-            else _ = decreaseMargins();
+            // TODO: Avalonia - Animation disabled until Icon property is reimplemented
+            // if (value) _ = increaseMargins();
+            // else _ = decreaseMargins();
             _progressRing.IsVisible = value;
         }
     }
@@ -86,6 +91,9 @@ internal partial class CustomNavViewItem : ListBoxItem
         base.Content = grid;
     }
 
+    // TODO: Avalonia - increaseMargins/decreaseMargins depend on Icon property which doesn't exist in ListBoxItem
+    // These methods need to be reimplemented when Icon support is added
+    /*
     public async Task increaseMargins()
     {
         for(int i = (int)base.Icon.Margin.Left; i < 6; i += 2)
@@ -105,4 +113,5 @@ internal partial class CustomNavViewItem : ListBoxItem
         }
         base.Icon.Margin = new Thickness(0);
     }
+    */
 }
