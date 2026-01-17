@@ -241,7 +241,7 @@ namespace UniGetUI.Interface
             ToolTipService.SetToolTip(Selector_Icons, CoreTools.Translate("Icons"));
 
             MainTitle.Text = data.PageTitle;
-            HeaderIcon.Glyph = data.Glyph;
+            HeaderIcon.Text = data.Glyph; // Avalonia: TextBlock.Text instead of Glyph
 
             SelectAllCheckBox.IsChecked = data.PackagesAreCheckedByDefault;
             QuerySimilarResultsRadio.IsEnabled = !data.DisableSuggestedResultsRadio;
@@ -1204,26 +1204,15 @@ namespace UniGetUI.Interface
                 FilteringPanel.OpenPaneLength = 250;
                 ToggleFiltersButtonWidth.MinWidth = 4;
 
-                if (this.ActualTheme is ElementTheme.Dark)
+                // TODO: Avalonia - ActualTheme and AcrylicBrush not available, using SolidColorBrush instead
+                // if (this.ActualTheme is ElementTheme.Dark)
                 {
-                    SidePanel.Background = new AcrylicBrush()
-                    {
-                        TintColor = Color.FromArgb(0, 20, 20, 20),
-                        TintOpacity = 0.4,
-                        FallbackColor = Color.FromArgb(0, 20, 20, 20),
-                        TintLuminosityOpacity = 0.8
-                    };
+                    SidePanel.Background = new SolidColorBrush(Color.FromArgb(102, 20, 20, 20)); // Semi-transparent dark
                 }
-                else
-                {
-                    SidePanel.Background = new AcrylicBrush()
-                    {
-                        TintColor = Color.FromArgb(0, 250, 250, 250),
-                        TintOpacity = 0.4,
-                        FallbackColor = Color.FromArgb(0, 250, 250, 250),
-                        TintLuminosityOpacity = 0.8
-                    };
-                }
+                // else
+                // {
+                //     SidePanel.Background = new SolidColorBrush(Color.FromArgb(102, 250, 250, 250)); // Semi-transparent light
+                // }
 
             }
             FilteringPanel.IsPaneOpen = true;

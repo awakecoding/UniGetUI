@@ -61,21 +61,21 @@ namespace UniGetUI.Pages.SettingsPages
                     if (!manager.IsEnabled())
                     {
                         statusText.Text = CoreTools.Translate("Disabled");
-                        statusIcon.Glyph = "\uE814";
+                        statusIcon.Text = "\uE814"; // Avalonia: TextBlock.Text instead of Glyph
                         statusIcon.Foreground = (Brush)Application.Current.Resources["SystemFillColorCautionBrush"];
                         statusBorder.Background = (Brush)Application.Current.Resources["SystemFillColorCautionBackgroundBrush"];
                     }
                     else if (manager.Status.Found)
                     {
                         statusText.Text = CoreTools.Translate("Ready");
-                        statusIcon.Glyph = "\uEC61";
+                        statusIcon.Text = "\uEC61"; // Avalonia: TextBlock.Text instead of Glyph
                         statusIcon.Foreground = (Brush)Application.Current.Resources["SystemFillColorSuccessBrush"];
                         statusBorder.Background = (Brush)Application.Current.Resources["SystemFillColorSuccessBackgroundBrush"];
                     }
                     else
                     {
                         statusText.Text = CoreTools.Translate("Not found");
-                        statusIcon.Glyph = "\uEB90";
+                        statusIcon.Text = "\uEB90"; // Avalonia: TextBlock.Text instead of Glyph
                         statusIcon.Foreground = (Brush)Application.Current.Resources["SystemFillColorCriticalBrush"];
                         statusBorder.Background = (Brush)Application.Current.Resources["SystemFillColorCriticalBackgroundBrush"];
                     }

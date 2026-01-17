@@ -41,11 +41,13 @@ public partial class OperationFailedDialog : UserControl
             }
             else if (line.Item2 is AbstractOperation.LineType.VerboseDetails)
             {
-                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a", Foreground = debugColor });
+                // TODO: Avalonia - Run.Foreground not supported, color removed
+                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a" });
             }
             else
             {
-                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a", Foreground = errorColor });
+                // TODO: Avalonia - Run.Foreground not supported, color removed
+                par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a" });
             }
         }
 

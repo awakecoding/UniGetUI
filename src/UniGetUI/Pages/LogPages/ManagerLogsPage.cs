@@ -45,7 +45,8 @@ namespace UniGetUI.Interface.Pages.LogPage
                         '5' => new SolidColorBrush { Color = IS_DARK ? DARK_YELLOW : LIGHT_YELLOW },
                         _ => new SolidColorBrush { Color = IS_DARK ? DARK_YELLOW : LIGHT_YELLOW },
                     };
-                    p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line[1..] + "\n", Foreground = color });
+                    // TODO: Avalonia - Run.Foreground not supported, color removed
+                    p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line[1..] + "\n" });
                 }
                 ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
                 LogTextBox.Blocks.Add(p);

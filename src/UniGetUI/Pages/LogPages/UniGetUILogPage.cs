@@ -73,12 +73,14 @@ namespace UniGetUI.Interface.Pages.LogPage
                 {
                     if (date_length == -1)
                     {
-                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"[{log_entry.Time}] {line}\n", Foreground = color });
+                        // TODO: Avalonia - Run.Foreground not supported, color removed
+                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"[{log_entry.Time}] {line}\n" });
                         date_length = $"[{log_entry.Time}] ".Length;
                     }
                     else
                     {
-                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = new string(' ', date_length) + line + "\n", Foreground = color });
+                        // TODO: Avalonia - Run.Foreground not supported, color removed
+                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = new string(' ', date_length) + line + "\n" });
                     }
                 } ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
                 LogTextBox.Blocks.Add(p);

@@ -95,7 +95,8 @@ namespace UniGetUI.Interface.Dialogs
             SetTextToItem(UpdateDate_Content, LoadingString);
             SetTextToItem(Dependencies_Label, CoreTools.Translate("Dependencies:") + " ");
             DependenciesParagraph.Inlines.Clear();
-            DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text = LoadingString, Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)), });
+            // TODO: Avalonia - Run.Foreground not supported, color removed
+            DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text = LoadingString });
             SetTextToItem(ReleaseNotes_Label, CoreTools.Translate("Release notes") + ": ");
             SetTextToItem(ReleaseNotes_Content, LoadingString);
             SetTextToItem(ReleaseNotesUrl_Label, CoreTools.Translate("Release notes URL") + ": ");
