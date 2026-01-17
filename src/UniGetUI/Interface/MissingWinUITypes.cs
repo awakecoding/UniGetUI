@@ -108,6 +108,11 @@ namespace UniGetUI.Interface
     public class AppBarButton : Button
     {
         public AppBarButton() { }
+        
+        public bool IsCompact { get; set; }
+        public string Label { get; set; } = "";
+        public CommandBarLabelPosition LabelPosition { get; set; }
+        public object? Icon { get; set; }
     }
 
     public class AppBarSeparator : Separator
