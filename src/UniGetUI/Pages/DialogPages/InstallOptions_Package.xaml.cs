@@ -36,6 +36,56 @@ namespace UniGetUI.Interface.Dialogs
         private readonly ObservableCollection<IOP_Proc> _runningProcesses = new();
         public ObservableCollection<IOP_Proc> SuggestedProcesses = new();
 
+        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+        private CheckBox KillProcessesThatWontDie = new();
+        private ToggleSwitch FollowGlobalOptionsSwitch = new();
+        private TextBlock PlaceholderText = new();
+        private TextBlock KillProcessesLabel = new();
+        private ListBox KillProcessesBox = new();
+        private CheckBox HashCheckbox = new();
+        private CheckBox UninstallPreviousOnUpdate = new();
+        private CheckBox IgnoreUpdatesCheckbox = new();
+        private CheckBox SkipMinorUpdatesCheckbox = new();
+        private ProgressBar VersionProgress = new();
+        private ComboBox ScopeCombo = new();
+        private TextBox CustomInstallLocation = new();
+        private TextBox CustomParameters1 = new();
+        private TextBox CustomParameters2 = new();
+        private TextBox CustomParameters3 = new();
+        private TextBox PreInstallCommandBox = new();
+        private TextBox PostInstallCommandBox = new();
+        private TextBox PreUpdateCommandBox = new();
+        private TextBox PostUpdateCommandBox = new();
+        private TextBox PreUninstallCommandBox = new();
+        private TextBox PostUninstallCommandBox = new();
+        private CheckBox AbortInsFailedCheck = new();
+        private CheckBox AbortUpdFailedCheck = new();
+        private CheckBox AbortUniFailedCheck = new();
+        private StackPanel OptionsPanel0 = new();
+        private ContentControl SettingsSwitchPresenter = new();
+        private TabControl SettingsTabBar = new();
+        private StackPanel OptionsPanelBase = new();
+        private Panel PlaceholderBanner = new();
+        private Button ResetDir = new();
+        private Button SelectDir = new();
+        private TextBlock CustomParametersLabel1 = new();
+        private TextBlock CustomParametersLabel2 = new();
+        private TextBlock CustomParametersLabel3 = new();
+        private HyperlinkButton GoToCLISettings = new();
+        private Panel CLIDisabled = new();
+        private TextBlock PeInsLabel = new();
+        private TextBlock PoInsLabel = new();
+        private TextBlock PeUpdLabel = new();
+        private TextBlock PoUpdLabel = new();
+        private TextBlock PeUniLabel = new();
+        private TextBlock PoUniLabel = new();
+        private TextBlock CustomCommandsHeaderExplainer = new();
+        private HyperlinkButton GoToPrePostSettings = new();
+        private Panel PrePostDisabled = new();
+        private TextBox CommandBox = new();
+        private StackPanel CommandLineViewBox = new();
+        private Button CloseButton = new();
+
         public InstallOptionsPage(IPackage package, InstallOptions options) : this(package, OperationType.None, options) { }
         public InstallOptionsPage(IPackage package, OperationType operation, InstallOptions options)
         {

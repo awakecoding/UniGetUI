@@ -37,6 +37,44 @@ namespace UniGetUI.Interface.Dialogs
         private bool PackageHasScreenshots;
         public ObservableCollection<TextBlock> ShowableTags = [];
 
+        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+        private TextBlock UpdateDate_Label = new();
+        private TextBlock UpdateDate_Content = new();
+        private TextBlock Dependencies_Label = new();
+        private TextBlock DependenciesParagraph = new();
+        private TextBlock ReleaseNotes_Label = new();
+        private TextBlock ReleaseNotes_Content = new();
+        private TextBlock ReleaseNotesUrl_Label = new();
+        private TextBlock ReleaseNotesUrl_Content = new();
+        private TextBlock Version_Label = new();
+        private TextBlock Version_Content = new();
+        private MenuFlyout ExtendedActionsMenu = new();
+        private TextBlock DescriptionContent = new();
+        private TextBlock HomepageUrl_Label = new();
+        private TextBlock HomepageUrl_Content = new();
+        private TextBlock Author_Label = new();
+        private TextBlock Author_Content = new();
+        private TextBlock Publisher_Label = new();
+        private TextBlock Publisher_Content = new();
+        private TextBlock License_Label = new();
+        private TextBlock License_Content_Text = new();
+        private TextBlock License_Content_Uri = new();
+        private TextBlock Source_Label = new();
+        private TextBlock Source_Content = new();
+        private TextBlock ManifestUrl_Label = new();
+        private TextBlock ManifestUrl_Content = new();
+        private TextBlock InstallerHash_Label = new();
+        private TextBlock InstallerHash_Content = new();
+        private TextBlock InstallerSize_Content = new();
+        private Button DownloadInstaller_Button = new();
+        private TextBlock InstallerUrl_Label = new();
+        private TextBlock InstallerUrl_Content = new();
+        private TextBlock InstallerType_Label = new();
+        private TextBlock InstallerType_Content = new();
+        private TextBlock PackageId_Label = new();
+        private TextBlock PackageId_Content = new();
+        private StackPanel RightPanel = new();
+
         private enum LayoutMode
         {
             Normal,
@@ -381,7 +419,8 @@ namespace UniGetUI.Interface.Dialogs
                 DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                 {
                     Text = CoreTools.Translate("Not available"),
-                    Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
+                    // TODO: Avalonia - Run.Foreground not supported
+                    //Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
                 });
             }
             else if (details.Dependencies.Any())
@@ -404,7 +443,8 @@ namespace UniGetUI.Interface.Dialogs
                     DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                     {
                         Text = line,
-                        FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
+                        // TODO: Avalonia - Run.FontStyle not supported
+                        //FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
                     });
                     DependenciesParagraph.Inlines.Add(new LineBreak());
                 }

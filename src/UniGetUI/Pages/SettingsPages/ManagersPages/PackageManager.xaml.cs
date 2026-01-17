@@ -44,6 +44,10 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public string ShortTitle => Manager is null ? "" : CoreTools.Translate("{0} settings", Manager.DisplayName);
         private bool _isLoading = false;
 
+        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+        private Panel ManagerStatusBar = new();
+        private object? savePicker = null; // TODO: Implement file picker
+
         public PackageManagerPage()
         {
             this.InitializeComponent();

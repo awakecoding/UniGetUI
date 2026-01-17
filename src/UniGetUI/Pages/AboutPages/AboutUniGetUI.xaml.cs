@@ -13,6 +13,8 @@ namespace UniGetUI.Interface.Pages.AboutPages
     /// </summary>
     public partial class AboutUniGetUI : UserControl
     {
+        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+        private object? WebView = null; // TODO: Implement WebView
         public AboutUniGetUI()
         {
             InitializeComponent();

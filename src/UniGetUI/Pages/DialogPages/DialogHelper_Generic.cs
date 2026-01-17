@@ -425,7 +425,8 @@ public static partial class DialogHelper
         p.Inlines.Add(new Avalonia.Controls.Documents.Run
         {
             Text = CoreTools.Translate("Do you accept that UniGetUI collects and sends anonymous usage statistics, with the sole purpose of understanding and improving the user experience?"),
-            FontWeight = FontWeights.SemiBold
+            // TODO: Avalonia - Run.FontWeight not supported
+            //FontWeight = FontWeights.SemiBold
         });
 
         // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Decline");

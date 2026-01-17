@@ -174,6 +174,30 @@ namespace UniGetUI.Interface
         public Type? SourcePageType { get; set; }
         public object? Parameter { get; set; }
     }
+
+    /// <summary>
+    /// Stub for LineBreak inline element (used in RichTextBlock)
+    /// </summary>
+    public class LineBreak
+    {
+        public LineBreak() { }
+    }
+
+    /// <summary>
+    /// Stub for RadioButtons control
+    /// </summary>
+    public class RadioButtons : Control
+    {
+        public RadioButtons() { }
+    }
+
+    /// <summary>
+    /// Stub for ScrollView control
+    /// </summary>
+    public class ScrollView : ScrollViewer
+    {
+        public ScrollView() { }
+    }
 }
 
 namespace Avalonia.Controls

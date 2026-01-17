@@ -14,8 +14,10 @@ namespace UniGetUI.Interface.Dialogs
     /// </summary>
     public partial class ReleaseNotes : UserControl, IDisposable
     {
-
         public event EventHandler<EventArgs>? Close;
+
+        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+        private object? WebView = null; // TODO: Implement WebView
         public ReleaseNotes()
         {
             InitializeComponent();

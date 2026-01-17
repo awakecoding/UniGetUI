@@ -19,6 +19,9 @@ public partial class OperationFailedDialog : UserControl
     public event EventHandler<EventArgs>? Close;
     Avalonia.Controls.Documents.Paragraph par;
 
+    // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
+    private TextBlock _textblock = new();
+
     private static SolidColorBrush errorColor = null!;
     private static SolidColorBrush debugColor = null!;
 
