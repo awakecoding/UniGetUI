@@ -28,7 +28,7 @@ namespace UniGetUI.Interface.Widgets
                 setting_name = value;
                 IS_INVERTED = Settings.ResolveKey(value).StartsWith("Disable");
                 _checkbox.IsChecked = Settings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
             }
         }
 
@@ -36,7 +36,7 @@ namespace UniGetUI.Interface.Widgets
 
         public bool Checked
         {
-            get => _checkbox.IsChecked;
+            get => _checkbox.IsChecked ?? false;
         }
         public virtual event EventHandler<EventArgs>? StateChanged;
 
@@ -99,9 +99,9 @@ namespace UniGetUI.Interface.Widgets
         }
         protected virtual void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            Settings.Set(setting_name, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
+            Settings.Set(setting_name, (_checkbox.IsChecked ?? false) ^ IS_INVERTED ^ ForceInversion);
             StateChanged?.Invoke(this, EventArgs.Empty);
-            _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+            _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
         }
     }
 
@@ -120,7 +120,7 @@ namespace UniGetUI.Interface.Widgets
             {
                 _disableStateChangedEvent = true;
                 _checkbox.IsChecked = Settings.GetDictionaryItem<string, bool>(_dictName, _keyName) ^ IS_INVERTED ^ ForceInversion;
-                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
                 _disableStateChangedEvent = false;
             }
         } }
@@ -134,7 +134,7 @@ namespace UniGetUI.Interface.Widgets
                 if (_dictName != Settings.K.Unset && _keyName.Any())
                 {
                     _checkbox.IsChecked = Settings.GetDictionaryItem<string, bool>(_dictName, _keyName) ^ IS_INVERTED ^ ForceInversion;
-                    _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                    _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
                 }
             }
         }
@@ -146,9 +146,9 @@ namespace UniGetUI.Interface.Widgets
         protected override void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_disableStateChangedEvent) return;
-            Settings.SetDictionaryItem(_dictName, _keyName, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
+            Settings.SetDictionaryItem(_dictName, _keyName, (_checkbox.IsChecked ?? false) ^ IS_INVERTED ^ ForceInversion);
             StateChanged?.Invoke(this, EventArgs.Empty);
-            _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+            _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace UniGetUI.Interface.Widgets
 
         public IconType Icon
         {
-            set => Glyph = $"{(char)value}";
+            set => Text = $"{(char)value}";
         }
 
         public LocalIcon()
@@ -21,7 +21,7 @@ namespace UniGetUI.Interface.Widgets
 
         public LocalIcon(IconType icon) : this()
         {
-            Glyph = $"{(char)icon}";
+            Text = $"{(char)icon}";
         }
     }
 
@@ -60,6 +60,9 @@ namespace UniGetUI.Interface.Widgets
     public partial class LocalIconSource : object
     {
         public static FontFamily font = (FontFamily)Application.Current.Resources["SymbolFont"];
+        
+        public string Glyph { get; set; } = "";
+        public FontFamily FontFamily { get; set; } = null!;
 
         public IconType Icon
         {

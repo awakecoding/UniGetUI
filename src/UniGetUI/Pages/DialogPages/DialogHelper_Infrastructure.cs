@@ -160,7 +160,7 @@ public static partial class DialogHelper
         }
     }
 
-    public static async Task<bool?> ShowDialogAsync(Window dialog, bool HighPriority = false)
+    public static async Task<ContentDialogResult> ShowDialogAsync(Window dialog, bool HighPriority = false)
     {
         try
         {
@@ -186,7 +186,10 @@ public static partial class DialogHelper
             // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             _dialogQueue.Remove(dialog);
             if (!_dialogQueue.Any()) DialogHelper._showNextLoadingDialogIfPossible();
-            return result;
+            
+            return result == true ? ContentDialogResult.Primary : 
+                   result == false ? ContentDialogResult.Secondary : 
+                   ContentDialogResult.None;
         }
         catch (Exception e)
         {

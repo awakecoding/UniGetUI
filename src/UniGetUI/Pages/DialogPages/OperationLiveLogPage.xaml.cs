@@ -48,7 +48,7 @@ public partial class OperationLiveLogPage : UserControl
     }
 
     public void AddLine_ThreadSafe(object? sender, (string, AbstractOperation.LineType) line) =>
-        MainApp.Dispatcher.TryEnqueue(() =>
+        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
     {
         if (LastLineWasProgress) par.Inlines.RemoveAt(par.Inlines.Count - 1);
 

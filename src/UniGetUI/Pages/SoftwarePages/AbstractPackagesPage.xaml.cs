@@ -394,7 +394,7 @@ namespace UniGetUI.Interface
             // Ensure we are in the UI thread
             if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_PackagesChanged(sender, packagesChangedEvent));
+                Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_PackagesChanged(sender, packagesChangedEvent));
                 return;
             }
 
@@ -446,7 +446,7 @@ namespace UniGetUI.Interface
             // Ensure we are in the UI thread
             if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_FinishedLoading(sender, e));
+                Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_FinishedLoading(sender, e));
                 return;
             }
 
@@ -462,7 +462,7 @@ namespace UniGetUI.Interface
             // Ensure we are in the UI thread
             if (Microsoft.UI.Dispatching.Avalonia.Threading.Dispatcher.GetForCurrentThread() is null)
             {
-                Avalonia.Threading.Dispatcher.TryEnqueue(() => Loader_StartedLoading(sender, e));
+                Avalonia.Threading.Dispatcher.UIThread.Post(() => Loader_StartedLoading(sender, e));
                 return;
             }
             LoadingProgressBar.IsVisible = true;
@@ -631,7 +631,7 @@ namespace UniGetUI.Interface
             if (retryCount > 20)
                 return;
 
-            Avalonia.Threading.Dispatcher.TryEnqueue(
+            Avalonia.Threading.Dispatcher.UIThread.Post(
                 DispatcherQueuePriority.Low,
                 () =>
                 {

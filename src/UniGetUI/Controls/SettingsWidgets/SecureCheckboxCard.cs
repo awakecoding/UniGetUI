@@ -27,8 +27,8 @@ namespace UniGetUI.Interface.Widgets
                 _checkbox.IsEnabled = false;
                 setting_name = value;
                 IS_INVERTED = SecureSettings.ResolveKey(value).StartsWith("Disable");
-                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                (_checkbox.IsChecked ?? false) = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
                 _checkbox.IsEnabled = true;
             }
         }
@@ -47,7 +47,7 @@ namespace UniGetUI.Interface.Widgets
 
         public bool Checked
         {
-            get => _checkbox.IsChecked;
+            get => (_checkbox.IsChecked ?? false);
         }
         public virtual event EventHandler<EventArgs>? StateChanged;
 
@@ -115,17 +115,17 @@ namespace UniGetUI.Interface.Widgets
 
                 _loading.IsVisible = true;
                 _checkbox.IsEnabled = false;
-                await SecureSettings.TrySet(setting_name, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
+                await SecureSettings.TrySet(setting_name, (_checkbox.IsChecked ?? false) ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);
-                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
-                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
+                (_checkbox.IsChecked ?? false) = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Warn(ex);
-                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                (_checkbox.IsChecked ?? false) = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }

@@ -155,7 +155,7 @@ public static partial class DialogHelper
 
     public static void ShowSharedPackage_ThreadSafe(string id, string managerName, string sourceName)
     {
-        MainApp.Instance.MainWindow.Avalonia.Threading.Dispatcher.TryEnqueue(() =>
+        MainApp.Instance.MainWindow.Avalonia.Threading.Dispatcher.UIThread.Post(() =>
         {
             _ = GetPackageFromIdAndManager(id, managerName, sourceName, "DEFAULT");
         });
