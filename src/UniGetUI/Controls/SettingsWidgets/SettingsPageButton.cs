@@ -28,7 +28,7 @@ namespace UniGetUI.Interface.Widgets
         public SettingsPageButton()
         {
             CornerRadius = new CornerRadius(8);
-            HorizontalAlignment = HorizontalAlignment.Stretch;
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
             IsClickEnabled = true;
         }
     }

@@ -79,14 +79,14 @@ namespace UniGetUI.Interface.Widgets
                     p.Children.Add(new TextBlock { Text = CoreTools.Translate("Select the source you want to add:") });
                     p.Children.Add(SourcesCombo);
 
-                    TextBox SourceNameTextBox = new() { HorizontalAlignment = HorizontalAlignment.Stretch, Width = 400 };
-                    TextBox SourceUrlTextBox = new() { HorizontalAlignment = HorizontalAlignment.Stretch };
+                    TextBox SourceNameTextBox = new() { HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch, Width = 400 };
+                    TextBox SourceUrlTextBox = new() { HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch };
 
-                    StackPanel p1 = new() { Spacing = 2, HorizontalAlignment = HorizontalAlignment.Stretch };
-                    p1.Children.Add(new TextBlock { Text = CoreTools.Translate("Source name:"), VerticalAlignment = VerticalAlignment.Center });
+                    StackPanel p1 = new() { Spacing = 2, HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch };
+                    p1.Children.Add(new TextBlock { Text = CoreTools.Translate("Source name:"), VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center });
                     p1.Children.Add(SourceNameTextBox);
 
-                    StackPanel p2 = new() { Spacing = 2, HorizontalAlignment = HorizontalAlignment.Stretch };
+                    StackPanel p2 = new() { Spacing = 2, HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch };
                     p2.Children.Add(new TextBlock { Text = CoreTools.Translate("Source URL:"), VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center });
                     p2.Children.Add(SourceUrlTextBox);
 

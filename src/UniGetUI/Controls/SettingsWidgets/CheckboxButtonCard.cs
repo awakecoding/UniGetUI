@@ -76,7 +76,7 @@ namespace UniGetUI.Interface.Widgets
             _textblock = new TextBlock()
             {
                 Margin = new Thickness(2,0,0,0),
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["BaseTextBlockStyle"],
                 FontWeight = new FontWeight(450),

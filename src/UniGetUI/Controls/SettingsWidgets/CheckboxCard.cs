@@ -93,7 +93,7 @@ namespace UniGetUI.Interface.Widgets
                 Children = { _textblock, _warningBlock }
             };
 
-            _checkbox.HorizontalAlignment = HorizontalAlignment.Stretch;
+            _checkbox.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
             _checkbox.Toggled += _checkbox_Toggled;
         }
         protected virtual void _checkbox_Toggled(object sender, Avalonia.Interactivity.RoutedEventArgs e)

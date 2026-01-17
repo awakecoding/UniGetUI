@@ -236,7 +236,7 @@ namespace UniGetUI.Services
             var hyperlinkButton = new HyperlinkButton
             {
                 Padding = new Thickness(0),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("More details"),
@@ -249,7 +249,7 @@ namespace UniGetUI.Services
             var hyperlinkButton2 = new HyperlinkButton
             {
                 Padding = new Thickness(0),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("Package backup settings"),
@@ -261,7 +261,7 @@ namespace UniGetUI.Services
 
             var loginButton = new PointButton
             {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = CoreTools.Translate("Log out"),
                 Background = new SolidColorBrush(ActualTheme is ElementTheme.Dark? Colors.DarkRed: Colors.PaleVioletRed),
                 BorderThickness = new(0)

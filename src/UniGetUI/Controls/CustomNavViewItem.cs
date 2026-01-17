@@ -70,15 +70,15 @@ internal partial class CustomNavViewItem : ListBoxItem
         _progressRing = new ProgressBar
         {
             Margin = new Thickness(-46, 0, 0, 0),
-            HorizontalAlignment = HorizontalAlignment.Left,
-            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             IsIndeterminate = true,
             Visibility = Visibility.Collapsed,
         };
 
         _textBlock = new TextBlock
         {
-            VerticalAlignment = VerticalAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
 
         grid.Children.Add(_progressRing);
