@@ -16,6 +16,9 @@ namespace UniGetUI.Pages.DialogPages;
 /// </summary>
 public partial class OperationFailedDialog : UserControl
 {
+    // TODO: Avalonia - Missing XAML control field declaration
+    private RichTextBlock CommandLineOutput = null!;
+
     public event EventHandler<EventArgs>? Close;
     Avalonia.Controls.Documents.Paragraph par;
 
@@ -51,7 +54,8 @@ public partial class OperationFailedDialog : UserControl
             }
         }
 
-        CommandLineOutput.Blocks.Add(par);
+        // TODO: Avalonia - RichTextBlock.Blocks API may not be available, commenting out
+        // CommandLineOutput.Blocks.Add(par);
 
         var CloseButton = new Button
         {

@@ -49,7 +49,8 @@ internal partial class CustomNavViewItem : ListBoxItem
         {
             string text = CoreTools.Translate(value);
             _textBlock.Text = text;
-            ToolTipService.SetToolTip(this, text);
+            // TODO: Avalonia - ToolTipService may have different accessibility in Avalonia
+            ToolTip.SetTip(this, text);
         }
 
     }

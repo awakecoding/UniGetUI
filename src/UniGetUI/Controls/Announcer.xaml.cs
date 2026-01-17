@@ -13,6 +13,9 @@ namespace UniGetUI.Interface.Widgets
 {
     public partial class Announcer : UserControl
     {
+        // TODO: Avalonia - Missing XAML control field declaration
+        private RichTextBlock _textblock = null!;
+
         public static readonly StyledProperty<Uri?> UrlProperty =
             AvaloniaProperty.Register<Announcer, Uri?>(nameof(Url));
 
@@ -36,7 +39,8 @@ namespace UniGetUI.Interface.Widgets
             PointerPressed += (_, _) => { if (i++ % 3 != 0) { _ = LoadAnnouncements(); } };
 
             SetText(CoreTools.Translate("Fetching latest announcements, please wait..."));
-            _textblock.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
+            // TODO: Avalonia - TextBlock.TextWrapping might not apply to RichTextBlock
+            // _textblock.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
         }
 
         public async Task LoadAnnouncements(bool retry = false)
@@ -93,37 +97,42 @@ namespace UniGetUI.Interface.Widgets
             Avalonia.Controls.Documents.Paragraph paragraph = new();
             // TODO: Avalonia - Run.FontSize, Run.FontWeight, Run.FontFamily not supported, properties removed
             paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title });
-            _textblock.Blocks.Clear();
-            _textblock.Blocks.Add(paragraph);
+            // TODO: Avalonia - RichTextBlock.Blocks API may not be available, commenting out
+            // _textblock.Blocks.Clear();
+            // _textblock.Blocks.Add(paragraph);
 
             paragraph = new();
-            foreach (string line in body.Split("\n"))
-            {
-                paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line + " " });
-                paragraph.Inlines.Add(new LineBreak());
-            }
-            var link = new Avalonia.Controls.Documents.Hyperlink
-            {
-                NavigateUri = new Uri("https://marticliment.com/redirect?" + linkId)
-            };
-            link.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = linkName });
-            paragraph.Inlines[^1] = link;
-            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text= "" });
+            // TODO: Avalonia - LineBreak is not an Inline in Avalonia, Hyperlink doesn't exist, commenting out
+            // foreach (string line in body.Split("\n"))
+            // {
+            //     paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line + " " });
+            //     paragraph.Inlines.Add(new LineBreak());
+            // }
+            // var link = new Avalonia.Controls.Documents.Hyperlink
+            // {
+            //     NavigateUri = new Uri("https://marticliment.com/redirect?" + linkId)
+            // };
+            // link.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = linkName });
+            // paragraph.Inlines[^1] = link;
+            // paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run() { Text= "" });
 
-            _textblock.Blocks.Add(paragraph);
+            // TODO: Avalonia - RichTextBlock.Blocks API may not be available, commenting out
+            // _textblock.Blocks.Add(paragraph);
         }
 
         public void SetText(string body)
         {
             Avalonia.Controls.Documents.Paragraph paragraph = new();
-            foreach (string line in body.Split("\n"))
-            {
-                paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line });
-                paragraph.Inlines.Add(new LineBreak());
-            }
+            // TODO: Avalonia - LineBreak is not an Inline in Avalonia, commenting out
+            // foreach (string line in body.Split("\n"))
+            // {
+            //     paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line });
+            //     paragraph.Inlines.Add(new LineBreak());
+            // }
 
-            _textblock.Blocks.Clear();
-            _textblock.Blocks.Add(paragraph);
+            // TODO: Avalonia - RichTextBlock.Blocks API may not be available, commenting out
+            // _textblock.Blocks.Clear();
+            // _textblock.Blocks.Add(paragraph);
         }
 
         public void SetImage(Uri url)
