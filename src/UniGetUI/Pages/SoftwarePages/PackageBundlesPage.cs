@@ -608,7 +608,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 Logger.ImportantInfo("XML payload was converted to JSON dynamically before deserialization");
             }
 
-            DeserializedData = await Task.Avalonia.Controls.Documents.Run(() =>
+            DeserializedData = await Task.Run(() =>
             {
                 return new SerializableBundle(JsonNode.Parse(content) ?? throw new JsonException("Could not parse JSON object"));
             });
@@ -752,7 +752,8 @@ namespace UniGetUI.Interface.SoftwarePages
             try
             {
                 string defaultName = CoreTools.Translate("Install script") + ".ps1";
-                string file = await Task.Avalonia.Controls.Documents.Run(() => (new FileSavePicker(MainApp.Instance.MainWindow.GetWindowHandle())).Show(["*.ps1"], defaultName));
+                // TODO: Implement file picker for Avalonia (MainWindow.GetWindowHandle() not available)
+                string file = await Task.Run(() => (new FileSavePicker(IntPtr.Zero)).Show(["*.ps1"], defaultName));
                 if (file != String.Empty)
                 {
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Saving packages, please wait..."));

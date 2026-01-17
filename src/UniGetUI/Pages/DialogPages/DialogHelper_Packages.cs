@@ -209,11 +209,12 @@ public static partial class DialogHelper
         Brush bad = new SolidColorBrush(Colors.PaleVioletRed);
         Brush good = new SolidColorBrush(Colors.Gold);
 
-        if (Window.NavigationPage.ActualTheme is ElementTheme.Light)
-        {
-            bad = new SolidColorBrush(Colors.Red);
-            good = new SolidColorBrush(Colors.DarkGoldenrod);
-        }
+        // TODO: Implement theme detection for Avalonia (MainWindow.NavigationPage.ActualTheme not available)
+        // if (Window.NavigationPage.ActualTheme is ElementTheme.Light)
+        // {
+        //     bad = new SolidColorBrush(Colors.Red);
+        //     good = new SolidColorBrush(Colors.DarkGoldenrod);
+        // }
 
         var title = CoreTools.Translate("Bundle security report");
         dialog.Title = title;
@@ -298,6 +299,7 @@ public static partial class DialogHelper
             return;
         }
 
+#if WINDOWS
         IntPtr hWnd = Window.GetWindowHandle();
 
         NativeHelpers.IDataTransferManagerInterop interop =
@@ -316,16 +318,23 @@ public static partial class DialogHelper
                                + "&sourceName=" + HttpUtility.UrlEncode(package.Source.Name)
                                + "&managerName=" + HttpUtility.UrlEncode(package.Manager.DisplayName));
 
-            dataPackage.Data.SetWebLink(ShareUrl);
-            dataPackage.Data.Properties.Title = "Sharing " + package.Name;
-            dataPackage.Data.Properties.ApplicationName = "WingetUI";
-            dataPackage.Data.Properties.ContentSourceWebLink = ShareUrl;
-            dataPackage.Data.Properties.Description = "Share " + package.Name + " with your friends";
-            dataPackage.Data.Properties.PackageFamilyName = "WingetUI";
-        };
+        dataPackage.Data.SetWebLink(ShareUrl);
+        dataPackage.Data.Properties.Title = "Sharing " + package.Name;
+        dataPackage.Data.Properties.ApplicationName = "WingetUI";
+        dataPackage.Data.Properties.ContentSourceWebLink = ShareUrl;
+        dataPackage.Data.Properties.Description = "Share " + package.Name + " with your friends";
+        dataPackage.Data.Properties.PackageFamilyName = "WingetUI";
+    };
 
-        interop.ShowShareUIForWindow(hWnd);
-    }
+    interop.ShowShareUIForWindow(hWnd);
+#else
+    // TODO: Implement cross-platform sharing for Avalonia
+    await DialogHelper.ShowErrorDialog(
+        CoreTools.Translate("Sharing not supported"),
+        CoreTools.Translate("Sharing is currently only supported on Windows")
+    );
+#endif
+}
 
     /// <summary>
     /// Returns true if the user confirms to lose unsaved changes, and wants to proceed with the creation of a new bundle
@@ -333,19 +342,21 @@ public static partial class DialogHelper
     /// <returns></returns>
     public static async Task<bool> AskLoseChangesAndCreateBundle()
     {
-        RichTextBlock rtb = new();
-        var p = new Avalonia.Controls.Documents.Paragraph();
-        rtb.Blocks.Add(p);
-        p.Inlines.Add(new Avalonia.Controls.Documents.Run {Text = CoreTools.Translate("Are you sure you want to create a new package bundle? ")});
-        p.Inlines.Add(new LineBreak());
-        p.Inlines.Add(new Avalonia.Controls.Documents.Run {Text = CoreTools.Translate("Any unsaved changes will be lost"), FontWeight = new FontWeight(600)});
+        // Avalonia doesn't have RichTextBlock - use StackPanel with TextBlocks
+        var panel = new StackPanel { Spacing = 10 };
+        panel.Children.Add(new TextBlock { Text = CoreTools.Translate("Are you sure you want to create a new package bundle? ") });
+        panel.Children.Add(new TextBlock { 
+            Text = CoreTools.Translate("Any unsaved changes will be lost"),
+            FontWeight = Avalonia.Media.FontWeight.SemiBold
+        });
 
         Window dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Warning!");
-        dialog.Content = rtb;
-        dialog.DefaultButton = ContentDialogButton.Secondary;
-        dialog.PrimaryButtonText = CoreTools.Translate("Yes");
-        dialog.SecondaryButtonText = CoreTools.Translate("No");
+        dialog.Content = panel;
+        // TODO: Implement dialog button properties for Avalonia
+        // dialog.DefaultButton = ContentDialogButton.Secondary;
+        // dialog.PrimaryButtonText = CoreTools.Translate("Yes");
+        // dialog.SecondaryButtonText = CoreTools.Translate("No");
 
         return await DialogHelper.ShowDialogAsync(dialog) is ContentDialogResult.Primary;
     }
