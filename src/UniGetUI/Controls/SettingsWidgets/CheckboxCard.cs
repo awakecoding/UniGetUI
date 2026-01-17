@@ -49,7 +49,7 @@ namespace UniGetUI.Interface.Widgets
             set
             {
                 _warningBlock.Text = CoreTools.Translate(value);
-                _warningBlock.Visibility = value.Any() ? Visibility.Visible : Visibility.Collapsed;
+                _warningBlock.IsVisible = value.Any();
             }
         }
 

@@ -29,7 +29,7 @@ internal partial class CustomNavViewItem : ListBoxItem
         {
             if (value) _ = increaseMargins();
             else _ = decreaseMargins();
-            _progressRing.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            _progressRing.IsVisible = value;
         }
     }
 
@@ -73,7 +73,7 @@ internal partial class CustomNavViewItem : ListBoxItem
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             IsIndeterminate = true,
-            Visibility = Visibility.Collapsed,
+            IsVisible = false,
         };
 
         _textBlock = new TextBlock

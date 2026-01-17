@@ -24,7 +24,7 @@ namespace UniGetUI.Interface.Pages
         public BaseLogPage(bool log_level_enabled)
         {
             InitializeComponent();
-            LogLevelPane.Visibility = log_level_enabled ? Visibility.Visible : Visibility.Collapsed;
+            LogLevelPane.IsVisible = log_level_enabled;
             if (log_level_enabled) LoadLogLevels();
 
             ActualThemeChanged += (_, _) => LoadLog();
