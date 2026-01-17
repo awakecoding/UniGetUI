@@ -119,7 +119,7 @@ namespace UniGetUI.Interface.Dialogs
             MainActionButton.Padding = new Thickness(0);
             var textBlock = new TextBlock()
             {
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.WrapWholeWords,
+                TextWrapping = Avalonia.Media.TextWrapping.WrapWholeWords,
                 Padding = new Thickness(0),
                 TextAlignment = TextAlignment.Center
             };

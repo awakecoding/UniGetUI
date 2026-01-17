@@ -1,3 +1,4 @@
+using Avalonia.Layout;
 using Avalonia;
 using Avalonia.Interactivity;
 using Avalonia.Controls;
@@ -227,7 +228,7 @@ namespace UniGetUI.Services
             var text2 = new TextBlock
             {
                 Margin = new Thickness(4),
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 FontSize = 12,
                 FontWeight = new(500),
                 Text = CoreTools.Translate("If you have cloud backup enabled, it will be saved as a GitHub Gist on this account")
@@ -240,7 +241,7 @@ namespace UniGetUI.Services
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("More details"),
-                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };
@@ -253,7 +254,7 @@ namespace UniGetUI.Services
                 Content = new TextBlock()
                 {
                     Text = CoreTools.Translate("Package backup settings"),
-                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 },
                 FontSize = 12
             };

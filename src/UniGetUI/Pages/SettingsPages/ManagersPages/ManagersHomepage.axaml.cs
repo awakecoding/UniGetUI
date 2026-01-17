@@ -1,3 +1,4 @@
+using Avalonia.Layout;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -94,7 +95,7 @@ namespace UniGetUI.Pages.SettingsPages
                 {
                     if (_isLoadingToggles) return;
 
-                    bool disabled = !toggle.IsOn;
+                    bool disabled = !toggle.IsChecked;
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
                     Settings.SetDictionaryItem(Settings.K.DisabledManagers, manager.Name, disabled);
                     await Task.Run(manager.Initialize);
@@ -130,7 +131,7 @@ namespace UniGetUI.Pages.SettingsPages
             for(int i = 0; i < managerControls.Count; i++)
             {
                 var toggle = (ToggleSwitch)((StackPanel)managerControls[i].Content).Children.First();
-                toggle.IsOn = !Settings.GetDictionaryItem<string, bool>(Settings.K.DisabledManagers, PEInterface.Managers[i].Name);
+                toggle.IsChecked = !Settings.GetDictionaryItem<string, bool>(Settings.K.DisabledManagers, PEInterface.Managers[i].Name);
             }
             _isLoadingToggles = false;
             base.OnNavigatedTo(e);

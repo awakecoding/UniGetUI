@@ -1,3 +1,4 @@
+using Avalonia.Layout;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia;
@@ -144,7 +145,7 @@ public static partial class DialogHelper
                     new TextBlock()
                     {
                         HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
-                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                        TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Text = data.Text
                     },
                     new ProgressBar()
@@ -214,18 +215,18 @@ public static partial class DialogHelper
                         Text = CoreTools.Translate("UniGetUI or some of its components are missing or corrupt.")
                 + " " + CoreTools.Translate("It is strongly recommended to reinstall UniGetUI to adress the situation."),
                         FontWeight = new FontWeight(600),
-                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                        TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                         Foreground = Application.Current.Resources["SystemControlErrorTextForegroundBrush"] as Brush,
                     },
                     new TextBlock()
                     {
                         Text = " ● " + CoreTools.Translate("Refer to the UniGetUI Logs to get more details regarding the affected file(s)"),
-                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                        TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                     },
                     new TextBlock()
                     {
                         Text = " ● " + CoreTools.Translate("Integrity checks can be disabled from the Experimental Settings"),
-                        Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                        TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                     }
                 }
             },

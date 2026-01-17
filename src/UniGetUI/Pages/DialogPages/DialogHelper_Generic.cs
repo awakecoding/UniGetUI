@@ -1,3 +1,4 @@
+using Avalonia.Layout;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
@@ -47,7 +48,7 @@ public static partial class DialogHelper
         {
             Text = CoreTools.Translate(
                 "UniGetUI requires {0} to operate, but it was not found on your system.", dep_name),
-            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 5)
         });
 
@@ -55,7 +56,7 @@ public static partial class DialogHelper
         {
             Text = CoreTools.Translate(
                 "Click on Install to begin the installation process. If you skip the installation, UniGetUI may not work as expected."),
-            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 10),
             Opacity = .7F,
             FontStyle = Windows.UI.Text.FontStyle.Italic,
@@ -67,7 +68,7 @@ public static partial class DialogHelper
             Text = CoreTools.Translate(
                 "Alternatively, you can also install {0} by running the following command in a Windows PowerShell prompt:",
                 dep_name),
-            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 4),
             Opacity = .7F,
         };
@@ -76,7 +77,7 @@ public static partial class DialogHelper
         TextBlock manualInstallCommand = new()
         {
             Text = fancy_command,
-            Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 4),
             Opacity = .7F,
             IsTextSelectionEnabled = true,
@@ -545,7 +546,7 @@ public static partial class DialogHelper
     public static void ShowDismissableBalloon(string title, string message)
     {
         Window.DismissableNotification.Title = title;
-        Window.DismissableNotification.Content = new TextBlock() { Text = message, Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap };
+        Window.DismissableNotification.Content = new TextBlock() { Text = message, TextWrapping = Avalonia.Media.TextWrapping.Wrap };
         Window.DismissableNotification.IsOpen = true;
     }
 
@@ -571,7 +572,7 @@ public static partial class DialogHelper
                 new TextBlock() {
                     Text = CoreTools.Translate(
                         "Select the backup you want to open. Later, you will be able to review which packages you want to install."),
-                    Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap
                 },
                 new ScrollViewer()
                 {

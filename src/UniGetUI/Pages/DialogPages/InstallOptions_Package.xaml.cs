@@ -60,7 +60,7 @@ namespace UniGetUI.Interface.Dialogs
                 });
             };
 
-            FollowGlobalOptionsSwitch.IsOn = !options.OverridesNextLevelOpts;
+            FollowGlobalOptionsSwitch.IsChecked = !options.OverridesNextLevelOpts;
             FollowGlobalOptionsSwitch.Toggled += (_, _) =>
             {
                 EnableDisableControls(ProfileComboBox.SelectedIndex switch
@@ -205,7 +205,7 @@ namespace UniGetUI.Interface.Dialogs
         }
         private void EnableDisableControls(OperationType operation)
         {
-            if(FollowGlobalOptionsSwitch.IsOn)
+            if(FollowGlobalOptionsSwitch.IsChecked)
             {
                 OptionsPanel0.Opacity = 0.3;
                 SettingsSwitchPresenter.Opacity = 0.3;
@@ -307,7 +307,7 @@ namespace UniGetUI.Interface.Dialogs
             options.InteractiveInstallation = InteractiveCheckBox?.IsChecked ?? false;
             options.SkipHashCheck = HashCheckbox?.IsChecked ?? false;
             options.UninstallPreviousVersionsOnUpdate = UninstallPreviousOnUpdate?.IsChecked ?? false;
-            options.OverridesNextLevelOpts = !FollowGlobalOptionsSwitch.IsOn;
+            options.OverridesNextLevelOpts = !FollowGlobalOptionsSwitch.IsChecked;
 
             options.Architecture = "";
             var userSelection = ArchitectureComboBox.SelectedValue?.ToString() ?? "";
@@ -426,7 +426,7 @@ namespace UniGetUI.Interface.Dialogs
 
         private void UnlockSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            FollowGlobalOptionsSwitch.IsOn = false;
+            FollowGlobalOptionsSwitch.IsChecked = false;
         }
 
         private void GoToDefaultOptionsSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)

@@ -1,3 +1,4 @@
+using Avalonia.Layout;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -26,8 +27,8 @@ namespace UniGetUI.Interface.Widgets
                 _checkbox.IsEnabled = false;
                 setting_name = value;
                 IS_INVERTED = SecureSettings.ResolveKey(value).StartsWith("Disable");
-                _checkbox.IsOn = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _textblock.Opacity = _checkbox.IsOn ? 1 : 0.7;
+                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
                 _checkbox.IsEnabled = true;
             }
         }
@@ -46,7 +47,7 @@ namespace UniGetUI.Interface.Widgets
 
         public bool Checked
         {
-            get => _checkbox.IsOn;
+            get => _checkbox.IsChecked;
         }
         public virtual event EventHandler<EventArgs>? StateChanged;
 
@@ -76,13 +77,13 @@ namespace UniGetUI.Interface.Widgets
             {
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap
             };
             _warningBlock = new TextBlock()
             {
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlErrorTextForegroundBrush"],
                 FontSize = 12,
                 IsVisible = false,
@@ -114,17 +115,17 @@ namespace UniGetUI.Interface.Widgets
 
                 _loading.IsVisible = true;
                 _checkbox.IsEnabled = false;
-                await SecureSettings.TrySet(setting_name, _checkbox.IsOn ^ IS_INVERTED ^ ForceInversion);
+                await SecureSettings.TrySet(setting_name, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);
-                _textblock.Opacity = _checkbox.IsOn ? 1 : 0.7;
-                _checkbox.IsOn = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Warn(ex);
-                _checkbox.IsOn = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }

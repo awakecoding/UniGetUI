@@ -27,9 +27,9 @@ namespace UniGetUI.Interface.Widgets
             set {
                 setting_name = value;
                 IS_INVERTED = Settings.ResolveKey(value).StartsWith("Disable");
-                _checkbox.IsOn = Settings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
-                _textblock.Opacity = _checkbox.IsOn ? 1 : 0.7;
-                Button.IsEnabled = (_checkbox.IsOn) || _buttonAlwaysOn ;
+                _checkbox.IsChecked = Settings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
+                Button.IsEnabled = (_checkbox.IsChecked) || _buttonAlwaysOn ;
             }
         }
 
@@ -37,7 +37,7 @@ namespace UniGetUI.Interface.Widgets
 
         public bool Checked
         {
-            get => _checkbox.IsOn;
+            get => _checkbox.IsChecked;
         }
         public event EventHandler<EventArgs>? StateChanged;
         public new event EventHandler<Avalonia.Interactivity.RoutedEventArgs>? Click;
@@ -58,7 +58,7 @@ namespace UniGetUI.Interface.Widgets
             set
             {
                 _buttonAlwaysOn = value;
-                Button.IsEnabled = (_checkbox.IsOn) || _buttonAlwaysOn ;
+                Button.IsEnabled = (_checkbox.IsChecked) || _buttonAlwaysOn ;
             }
         }
 
@@ -77,7 +77,7 @@ namespace UniGetUI.Interface.Widgets
             {
                 Margin = new Thickness(2,0,0,0),
                 VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-                Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["BaseTextBlockStyle"],
                 FontWeight = new FontWeight(450),
                 Foreground = (SolidColorBrush)Application.Current.Resources["ButtonForeground"]
@@ -89,10 +89,10 @@ namespace UniGetUI.Interface.Widgets
             Description = Button;
             _checkbox.Toggled += (_, _) =>
             {
-                Settings.Set(setting_name, _checkbox.IsOn ^ IS_INVERTED ^ ForceInversion);
+                Settings.Set(setting_name, _checkbox.IsChecked ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);
-                Button.IsEnabled = _checkbox.IsOn ? true : _buttonAlwaysOn;
-                _textblock.Opacity = _checkbox.IsOn ? 1 : 0.7;
+                Button.IsEnabled = _checkbox.IsChecked ? true : _buttonAlwaysOn;
+                _textblock.Opacity = _checkbox.IsChecked ? 1 : 0.7;
             };
 
             Button.Click += (s, e) => Click?.Invoke(s, e);
