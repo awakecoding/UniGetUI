@@ -67,13 +67,7 @@ public static partial class DialogHelper
 
         Window OptionsDialog = DialogFactory.Create_AsWindow(true, true);
 
-        // TODO: Avalonia - OptionsDialog.SecondaryButtonText = operation switch
-        {
-            OperationType.Install => CoreTools.Translate("Install"),
-            OperationType.Uninstall => CoreTools.Translate("Uninstall"),
-            OperationType.Update => CoreTools.Translate("Update"),
-            _ => ""
-        };
+        // TODO: Avalonia - OptionsDialog.SecondaryButtonText = operation switch { ... };
         // TODO: Avalonia - OptionsDialog.PrimaryButtonText = CoreTools.Translate("Save and close");
         // TODO: Avalonia - OptionsDialog.DefaultButton = ContentDialogButton.Secondary;
         // OptionsDialog.Title = CoreTools.Translate("{0} installation options", package.Name);

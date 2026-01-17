@@ -153,9 +153,7 @@ public static partial class DialogHelper
                     infotext.Text = CoreTools.Translate("An error occurred:") + " " + ex.Message + "\n" +
                                     CoreTools.Translate("Please click on \"Continue\" to continue");
                     // TODO: Avalonia - dialog.SecondaryButtonText = "";
-                    // TODO: Avalonia - dialog.PrimaryButtonText = (current < total)
-                        ? CoreTools.Translate("Continue")
-                        : CoreTools.Translate("Close");
+                    // TODO: Avalonia - dialog.PrimaryButtonText = (current < total) ? CoreTools.Translate("Continue") : CoreTools.Translate("Close");
                 }
 
                 has_installed = true;
