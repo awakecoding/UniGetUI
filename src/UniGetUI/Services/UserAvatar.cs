@@ -183,7 +183,7 @@ namespace UniGetUI.Services
 
         private async Task<PointButton> GenerateLogoutControl()
         {
-            await Task.Avalonia.Controls.Documents.Run(CoreTools.WaitForInternetConnection);
+            await Task.Run(CoreTools.WaitForInternetConnection);
             User user;
             try
             {

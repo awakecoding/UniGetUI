@@ -83,7 +83,7 @@ namespace UniGetUI.Interface.Dialogs
             PackageIcon.Source = iconSource;
             async Task LoadImage()
             {
-                iconSource.UriSource = await Task.Avalonia.Controls.Documents.Run(package.GetIconUrl);
+                iconSource.UriSource = await Task.Run(package.GetIconUrl);
             }
             _ = LoadImage();
             DialogTitle.Text = CoreTools.Translate("{0} installation options", package.Name);
@@ -194,7 +194,7 @@ namespace UniGetUI.Interface.Dialogs
 
         private async Task _loadProcesses()
         {
-            var processNames = await Task.Avalonia.Controls.Documents.Run(() =>
+            var processNames = await Task.Run(() =>
                 Process.GetProcesses().Select(p => p.ProcessName).Distinct().ToList());
 
             _runningProcesses.Clear();
@@ -285,7 +285,7 @@ namespace UniGetUI.Interface.Dialogs
             IgnoreUpdatesCheckbox.IsChecked = await Package.HasUpdatesIgnoredAsync();
             VersionComboBox.IsEnabled = false;
 
-            IReadOnlyList<string> versions = await Task.Avalonia.Controls.Documents.Run(() => Package.Manager.DetailsHelper.GetVersions(Package));
+            IReadOnlyList<string> versions = await Task.Run(() => Package.Manager.DetailsHelper.GetVersions(Package));
             foreach (string ver in versions)
             {
                 VersionComboBox.Items.Add(ver);
@@ -415,7 +415,7 @@ namespace UniGetUI.Interface.Dialogs
                 2 => OperationType.Uninstall,
                 _ => OperationType.Install,
             };
-            var commandline = await Task.Avalonia.Controls.Documents.Run(() => Package.Manager.OperationHelper.GetParameters(Package, options, op));
+            var commandline = await Task.Run(() => Package.Manager.OperationHelper.GetParameters(Package, options, op));
             CommandBox.Text = Package.Manager.Properties.ExecutableFriendlyName + " " + string.Join(" ", commandline);
         }
 

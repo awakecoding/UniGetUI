@@ -1244,7 +1244,7 @@ namespace UniGetUI.Interface
             // Load their icons, one at a time.
             foreach (var wrapper in PackagesWithoutIcon)
             {
-                var icon = await Task.Avalonia.Controls.Documents.Run(wrapper.Package.GetIconUrlIfAny);
+                var icon = await Task.Run(wrapper.Package.GetIconUrlIfAny);
                 if (icon is not null) wrapper.PackageIcon = icon;
             }
         }

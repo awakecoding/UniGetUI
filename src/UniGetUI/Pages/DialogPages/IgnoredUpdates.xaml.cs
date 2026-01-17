@@ -132,7 +132,7 @@ namespace UniGetUI.Interface
         public async Task RemoveFromIgnoredUpdates()
         {
             string ignoredId = $"{Manager.Properties.Name.ToLower()}\\{Id}";
-            await Task.Avalonia.Controls.Documents.Run(() => IgnoredUpdatesDatabase.Remove(ignoredId));
+            await Task.Run(() => IgnoredUpdatesDatabase.Remove(ignoredId));
 
             // If possible, add the package to the software updates tab again
             if (UpgradablePackagesLoader.Instance.IgnoredPackages.TryRemove(Id, out IPackage? nativePackage)

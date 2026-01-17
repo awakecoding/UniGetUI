@@ -141,7 +141,7 @@ public partial class MainApp
 
                 var hWnd = MainApp.Instance.MainWindow.GetWindowHandle();
                 var a = new ExternalLibraries.Pickers.FolderPicker(hWnd);
-                var outputPath = await Task.Avalonia.Controls.Documents.Run(a.Show);
+                var outputPath = await Task.Run(a.Show);
                 if (outputPath == "")
                     return;
 

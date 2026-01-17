@@ -69,7 +69,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             if (file != string.Empty)
             {
                 int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
-                await Task.Avalonia.Controls.Documents.Run(() => Settings.ImportFromFile_JSON(file));
+                await Task.Run(() => Settings.ImportFromFile_JSON(file));
                 DialogHelper.HideLoadingDialog(loadingId);
                 ShowRestartBanner(this, new());
             }
@@ -86,7 +86,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 if (file != string.Empty)
                 {
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
-                    await Task.Avalonia.Controls.Documents.Run(() => Settings.ExportToFile_JSON(file));
+                    await Task.Run(() => Settings.ExportToFile_JSON(file));
                     DialogHelper.HideLoadingDialog(loadingId);
                     _ = CoreTools.ShowFileOnExplorer(file);
                 }

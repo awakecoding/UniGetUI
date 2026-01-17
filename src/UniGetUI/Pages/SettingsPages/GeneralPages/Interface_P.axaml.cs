@@ -74,7 +74,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         private async Task LoadIconCacheSize()
         {
-            double realSize = (await Task.Avalonia.Controls.Documents.Run(() =>
+            double realSize = (await Task.Run(() =>
             {
                 return Directory.GetFiles(CoreData.UniGetUICacheDirectory_Icons, "*", SearchOption.AllDirectories)
                     .Sum(file => new FileInfo(file).Length);

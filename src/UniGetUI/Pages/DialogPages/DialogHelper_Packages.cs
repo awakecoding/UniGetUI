@@ -174,7 +174,7 @@ public static partial class DialogHelper
         {
             Window.Activate();
 
-            var findResult = await Task.Avalonia.Controls.Documents.Run(() => DiscoverablePackagesLoader.Instance.GetPackageFromIdAndManager(id, managerName, sourceName));
+            var findResult = await Task.Run(() => DiscoverablePackagesLoader.Instance.GetPackageFromIdAndManager(id, managerName, sourceName));
 
             HideLoadingDialog(loadingId);
 

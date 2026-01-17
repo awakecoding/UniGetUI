@@ -472,7 +472,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
             _isLoading = true;
             ApplyManagerState();
-            await Task.Avalonia.Controls.Documents.Run(Manager.Initialize);
+            await Task.Run(Manager.Initialize);
             _isLoading = false;
             ApplyManagerState();
             DialogHelper.HideLoadingDialog(loadingId);

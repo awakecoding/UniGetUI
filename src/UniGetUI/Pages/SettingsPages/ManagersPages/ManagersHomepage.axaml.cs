@@ -97,7 +97,7 @@ namespace UniGetUI.Pages.SettingsPages
                     bool disabled = !toggle.IsOn;
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
                     Settings.SetDictionaryItem(Settings.K.DisabledManagers, manager.Name, disabled);
-                    await Task.Avalonia.Controls.Documents.Run(manager.Initialize);
+                    await Task.Run(manager.Initialize);
                     loadStatusBadge();
                     DialogHelper.HideLoadingDialog(loadingId);
                 };
