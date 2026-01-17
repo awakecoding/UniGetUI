@@ -131,7 +131,8 @@ namespace UniGetUI.Interface
 
         public CommandBar()
         {
-            Orientation = Orientation.Horizontal;
+            // TODO: Avalonia - Orientation is an enum, not an instance property
+            Orientation = Avalonia.Layout.Orientation.Horizontal;
         }
     }
 

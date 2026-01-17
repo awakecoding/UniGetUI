@@ -12,7 +12,8 @@ namespace UniGetUI.Interface.Widgets
         private readonly Avalonia.Styling.Style menuyStyle = (Avalonia.Styling.Style)Application.Current.Resources["BetterContextMenu"];
         public BetterMenu()
         {
-            MenuFlyoutPresenterStyle = menuyStyle;
+            // TODO: Avalonia - MenuFlyoutPresenterStyle doesn't exist in Avalonia
+            // MenuFlyoutPresenterStyle = menuyStyle;
         }
     }
 
@@ -29,8 +30,9 @@ namespace UniGetUI.Interface.Widgets
             }
         }
 
-        public string UntranslatedText { set => base.Text = value; }
-        public new string Text { set => base.Text = CoreTools.Translate(value); }
+        public string UntranslatedText { set => base.Header = value; }
+        // TODO: Avalonia - MenuItem.Text changed to Header in Avalonia
+        public new string Text { set => base.Header = CoreTools.Translate(value); }
 
         public BetterMenuItem()
         {
@@ -51,9 +53,10 @@ namespace UniGetUI.Interface.Widgets
             }
         }
 
+        // TODO: Avalonia - MenuItem.Text changed to Header in Avalonia
         public new string Text
         {
-            set => base.Text = CoreTools.Translate(value);
+            set => base.Header = CoreTools.Translate(value);
         }
 
         public BetterToggleMenuItem()
@@ -69,13 +72,15 @@ namespace UniGetUI.Interface.Widgets
         public string Line1 { set { line1 = value; LoadText(); } }
         public string Line2 { set { line2 = value; LoadText(); } }
 
-        public IconType IconName { set => IconSource = new LocalIconSource(value); }
+        // TODO: Avalonia - TabItem.IconSource doesn't exist, commenting out
+        // public IconType IconName { set => IconSource = new LocalIconSource(value); }
 
 
         public BetterTabViewItem()
         {
-            IsClosable = false;
-            CanDrag = false;
+            // TODO: Avalonia - TabItem.IsClosable and CanDrag don't exist in Avalonia
+            // IsClosable = false;
+            // CanDrag = false;
         }
 
         public void LoadText()
@@ -93,9 +98,10 @@ namespace UniGetUI.Interface.Widgets
     {
         public BetterFlyout() : base()
         {
-            ShouldConstrainToRootBounds = false;
-            SystemBackdrop = new DesktopAcrylicBackdrop();
-            FlyoutPresenterStyle = (Avalonia.Styling.Style)Application.Current.Resources["BetterFlyoutPresenterStyle"];
+            // TODO: Avalonia - Flyout properties don't exist in Avalonia (WinUI-specific)
+            // ShouldConstrainToRootBounds = false;
+            // SystemBackdrop = new DesktopAcrylicBackdrop();
+            // FlyoutPresenterStyle = (Avalonia.Styling.Style)Application.Current.Resources["BetterFlyoutPresenterStyle"];
         }
     }
 

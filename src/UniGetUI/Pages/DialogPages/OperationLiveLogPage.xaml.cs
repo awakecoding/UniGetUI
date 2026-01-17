@@ -25,8 +25,9 @@ public partial class OperationLiveLogPage : UserControl
         errorColor ??= (SolidColorBrush)Application.Current.Resources["SystemFillColorCriticalBrush"];
         debugColor ??= (SolidColorBrush)Application.Current.Resources["SystemFillColorNeutralBrush"];
         par = new Avalonia.Controls.Documents.Paragraph() { LineHeight = 4.8 };
-        TextBlock.Blocks.Clear();
-        TextBlock.Blocks.Add(par);
+        // TODO: Avalonia - TextBlock.Blocks doesn't exist in Avalonia (use RichTextBlock instead)
+        // TextBlock.Blocks.Clear();
+        // TextBlock.Blocks.Add(par);
 
         foreach (var line in operation.GetOutput())
         {
@@ -73,9 +74,11 @@ public partial class OperationLiveLogPage : UserControl
             par.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = line.Item1 + "\x0a" });
         }
 
-        this.TextBlock.Blocks.Clear();
-        this.TextBlock.Blocks.Add(par);
-        this.ScrollBar.ScrollToVerticalOffset(this.ScrollBar.ScrollableHeight);
+        // TODO: Avalonia - TextBlock.Blocks doesn't exist in Avalonia (use RichTextBlock instead)
+        // this.TextBlock.Blocks.Clear();
+        // this.TextBlock.Blocks.Add(par);
+        // TODO: Avalonia - ScrollViewer.ScrollToVerticalOffset and ScrollableHeight don't exist
+        // this.ScrollBar.ScrollToVerticalOffset(this.ScrollBar.ScrollableHeight);
 
     });
 

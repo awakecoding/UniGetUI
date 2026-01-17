@@ -71,7 +71,8 @@ namespace UniGetUI.Interface.Widgets
                         NameSourceRef.Add(source.Name, source);
                     }
 
-                    d.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style;
+                    // TODO: Avalonia - Window.Style doesn't exist in Avalonia, commenting out
+                    // d.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style;
                     StackPanel p = new()
                     {
                         Spacing = 8
@@ -143,7 +144,8 @@ namespace UniGetUI.Interface.Widgets
                     {
                         //XamlRoot = XamlRoot,
                         Title = CoreTools.Translate("An error occurred"),
-                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style,
+                        // TODO: Avalonia - Window.Style doesn't exist in Avalonia, commenting out
+                        // Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style,
                         Content = CoreTools.Translate("An error occurred when adding the source: ") + ex.Message
                     };
                     _ = DialogHelper.ShowDialogAsync(d, HighPriority: true);
@@ -154,7 +156,8 @@ namespace UniGetUI.Interface.Widgets
             };
             this.Manager = Manager;
             _datagrid = DataList;
-            DataList.ItemTemplate = (DataTemplate)Resources["ManagerSourceTemplate"];
+            // TODO: Avalonia - DataTemplate needs to be retrieved differently in Avalonia
+            // DataList.ItemTemplate = (DataTemplate)Resources["ManagerSourceTemplate"];
             _ = LoadSources();
         }
 

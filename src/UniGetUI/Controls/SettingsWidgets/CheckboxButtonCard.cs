@@ -27,7 +27,8 @@ namespace UniGetUI.Interface.Widgets
             set {
                 setting_name = value;
                 IS_INVERTED = Settings.ResolveKey(value).StartsWith("Disable");
-                (_checkbox.IsChecked ?? false) = Settings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                // TODO: Avalonia - Cannot assign to nullable bool expression, fixed
+                _checkbox.IsChecked = Settings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
                 Button.IsEnabled = ((_checkbox.IsChecked ?? false)) || _buttonAlwaysOn ;
             }

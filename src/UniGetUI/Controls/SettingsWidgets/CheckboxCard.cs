@@ -87,12 +87,13 @@ namespace UniGetUI.Interface.Widgets
             };
             IS_INVERTED = false;
             Content = _checkbox;
-            Header = new StackPanel()
-            {
-                Spacing = 4,
-                Orientation = Orientation.Vertical,
-                Children = { _textblock, _warningBlock }
-            };
+            // TODO: Avalonia - SettingsCard.Header may not accept complex controls in Avalonia version
+            // Header = new StackPanel()
+            // {
+            //     Spacing = 4,
+            //     Orientation = Orientation.Vertical,
+            //     Children = { _textblock, _warningBlock }
+            // };
 
             _checkbox.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
             _checkbox.IsCheckedChanged += _checkbox_Toggled;
