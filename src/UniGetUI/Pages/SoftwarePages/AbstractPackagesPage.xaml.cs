@@ -1318,7 +1318,7 @@ namespace UniGetUI.Interface
                     e.Handled = true;
                 }
             }
-            else if (e.Key == VirtualKey.Space && package is not null)
+            else if (e.Key == Avalonia.Input.Key.Space && package is not null)
             {
                 package.IsChecked = !package.IsChecked;
                 e.Handled = true;
