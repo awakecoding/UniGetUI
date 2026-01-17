@@ -73,11 +73,17 @@ public partial class MainApp
                     return null;
                 }
 
+#if WINDOWS
                 FileSavePicker savePicker = new();
                 MainWindow window = Instance.MainWindow;
                 IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                 WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
                 savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
+#else
+                // TODO: Avalonia - Implement cross-platform file picker
+                Logger.Warn("File picker not implemented for non-Windows platforms");
+                return null;
+#endif
 
                 string name = await package.GetInstallerFileName() ?? "";
                 string extension;

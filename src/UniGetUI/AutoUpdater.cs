@@ -239,6 +239,7 @@ public class AutoUpdater
                 UpdateNowButton);
 
             // Show a toast notification
+#if WINDOWS
             AppNotificationBuilder builder = new AppNotificationBuilder()
                 .SetScenario(AppNotificationScenario.Default)
                 .SetTag(CoreData.UniGetUICanBeUpdated.ToString())
@@ -251,6 +252,10 @@ public class AutoUpdater
             AppNotification notification = builder.BuildNotification();
             notification.ExpiresOnReboot = true;
             AppNotificationManager.Default.Show(notification);
+#else
+            // TODO: Avalonia - Implement cross-platform update notifications
+            Logger.Info("Update notification not available on non-Windows platforms");
+#endif
 
         });
 

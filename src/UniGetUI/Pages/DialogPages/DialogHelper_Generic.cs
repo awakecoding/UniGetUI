@@ -214,6 +214,7 @@ public static partial class DialogHelper
 
         if (!Settings.AreNotificationsDisabled())
         {
+#if WINDOWS
             await AppNotificationManager.Default.RemoveByTagAsync(CoreData.NewShortcutsNotificationTag.ToString());
             AppNotification notification;
 
@@ -258,6 +259,10 @@ public static partial class DialogHelper
 
             notification.ExpiresOnReboot = true;
             AppNotificationManager.Default.Show(notification);
+#else
+            // TODO: Avalonia - Implement cross-platform notifications
+            Logger.Info("Desktop shortcut notifications not available on non-Windows platforms");
+#endif
         }
 
         await ManageDesktopShortcuts(unknownShortcuts);

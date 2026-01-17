@@ -378,6 +378,7 @@ namespace UniGetUI.Interface.SoftwarePages
                 if (Settings.AreUpdatesNotificationsDisabled())
                     return;
 
+#if WINDOWS
                 _ = AppNotificationManager.Default.RemoveByTagAsync(CoreData.UpdatesAvailableNotificationTag.ToString());
 
                 AppNotification notification;
@@ -481,6 +482,10 @@ namespace UniGetUI.Interface.SoftwarePages
                     notification.ExpiresOnReboot = true;
                     AppNotificationManager.Default.Show(notification);
                 }
+#else
+                // TODO: Avalonia - Implement cross-platform update notifications
+                Logger.Info("Update notifications not available on non-Windows platforms");
+#endif
             }
             catch (Exception ex)
             {

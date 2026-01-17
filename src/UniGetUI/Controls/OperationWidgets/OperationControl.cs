@@ -125,7 +125,9 @@ public partial class OperationControl: INotifyPropertyChanged
     private async Task _onOperationFinished()
     {
         // Remove progress notification (if any)
+#if WINDOWS
         AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
+#endif
 
         if (Operation.Status is OperationStatus.Failed)
         {
@@ -403,6 +405,7 @@ public partial class OperationControl: INotifyPropertyChanged
 
         try
         {
+#if WINDOWS
             AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
             AppNotificationBuilder builder = new AppNotificationBuilder()
                 .SetScenario(AppNotificationScenario.Default)
@@ -417,6 +420,9 @@ public partial class OperationControl: INotifyPropertyChanged
             notification.ExpiresOnReboot = true;
             notification.SuppressDisplay = true;
             AppNotificationManager.Default.Show(notification);
+#else
+            // TODO: Avalonia - Implement cross-platform progress notifications
+#endif
         }
         catch (Exception ex)
         {
@@ -432,6 +438,7 @@ public partial class OperationControl: INotifyPropertyChanged
 
         try
         {
+#if WINDOWS
             AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
             AppNotificationBuilder builder = new AppNotificationBuilder()
                 .SetScenario(AppNotificationScenario.Default)
@@ -442,6 +449,9 @@ public partial class OperationControl: INotifyPropertyChanged
             AppNotification notification = builder.BuildNotification();
             notification.ExpiresOnReboot = true;
             AppNotificationManager.Default.Show(notification);
+#else
+            // TODO: Avalonia - Implement cross-platform success notifications
+#endif
         }
         catch (Exception ex)
         {
@@ -457,6 +467,7 @@ public partial class OperationControl: INotifyPropertyChanged
 
         try
         {
+#if WINDOWS
             AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
             AppNotificationBuilder builder = new AppNotificationBuilder()
                 .SetScenario(AppNotificationScenario.Urgent)
@@ -467,6 +478,9 @@ public partial class OperationControl: INotifyPropertyChanged
             AppNotification notification = builder.BuildNotification();
             notification.ExpiresOnReboot = true;
             AppNotificationManager.Default.Show(notification);
+#else
+            // TODO: Avalonia - Implement cross-platform error notifications
+#endif
         }
         catch (Exception ex)
         {
