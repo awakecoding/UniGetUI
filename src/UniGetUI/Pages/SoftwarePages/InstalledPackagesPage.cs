@@ -365,7 +365,8 @@ namespace UniGetUI.Interface.SoftwarePages
         private void ExportSelection_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportSelection_Click();
         private async Task _exportSelection_Click()
         {
-            MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
+            // TODO: Implement navigation in Avalonia - MainWindow.NavigationPage was removed
+            // MainApp.Instance.MainWindow.NavigationPage.NavigateTo(PageType.Bundles);
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
             await PackageBundlesLoader.Instance.AddPackagesAsync(FilteredPackages.GetCheckedPackages());
             DialogHelper.HideLoadingDialog(loadingId);

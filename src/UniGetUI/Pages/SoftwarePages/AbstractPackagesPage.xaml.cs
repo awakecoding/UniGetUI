@@ -28,7 +28,7 @@ using DispatcherPriority = Avalonia.Threading.DispatcherPriority;
 
 namespace UniGetUI.Interface
 {
-    public abstract partial class AbstractPackagesPage : IKeyboardShortcutListener, IEnterLeaveListener, ISearchBoxPage
+    public abstract partial class AbstractPackagesPage : Avalonia.Controls.UserControl, IKeyboardShortcutListener, IEnterLeaveListener, ISearchBoxPage
     {
 
         protected struct PackagesPageData
@@ -1290,12 +1290,11 @@ namespace UniGetUI.Interface
 
             IPackage? package = packageItemContainer.Package;
 
-            bool IS_CONTROL_PRESSED = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-            //bool IS_SHIFT_PRESSED = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
-            bool IS_ALT_PRESSED = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.LeftMenu).HasFlag(CoreVirtualKeyStates.Down);
-            IS_ALT_PRESSED |= InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.RightMenu).HasFlag(CoreVirtualKeyStates.Down);
+            bool IS_CONTROL_PRESSED = e.KeyModifiers.HasFlag(Avalonia.Input.KeyModifiers.Control);
+            //bool IS_SHIFT_PRESSED = e.KeyModifiers.HasFlag(Avalonia.Input.KeyModifiers.Shift);
+            bool IS_ALT_PRESSED = e.KeyModifiers.HasFlag(Avalonia.Input.KeyModifiers.Alt);
 
-            if (e.Key == VirtualKey.Enter && package is not null)
+            if (e.Key == Avalonia.Input.Key.Enter && package is not null)
             {
                 if (IS_ALT_PRESSED)
                 {
@@ -1338,7 +1337,7 @@ namespace UniGetUI.Interface
             ToggleFiltersButton.IsChecked = false;
 
             // await Task.Delay(200);
-            FilteringPanel.Shadow = new ThemeShadow();
+            // FilteringPanel.Shadow = new ThemeShadow(); // Shadow not available in Avalonia
             SidePanel.BorderThickness = new Thickness(0, 1, 1, 1);
 
             if (FilteringPanel.Pane is ScrollViewer filters)
@@ -1373,15 +1372,15 @@ namespace UniGetUI.Interface
 
         private void ChangeFilteringPaneLayout()
         {
-            if (FilteringPanel.ActualWidth <= 0)
+            if (FilteringPanel.Bounds.Width <= 0)
             {
                 // Nothing, panel is not loaded yet
             }
-            else if (FilteringPanel.ActualWidth < 1000)
+            else if (FilteringPanel.Bounds.Width < 1000)
             {
                 SetFilterMode_Overlay();
             }
-            else /*(FilteringPanel.ActualWidth >= 1000)*/
+            else /*(FilteringPanel.Bounds.Width >= 1000)*/
             {
                 SetFilterMode_Inline();
             }
@@ -1400,7 +1399,8 @@ namespace UniGetUI.Interface
 
         private void ViewModeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Settings.SetDictionaryItem(Settings.K.PackageListViewMode, PAGE_NAME, ViewModeSelector.SelectedIndex);
+            // ViewModeSelector is now a StackPanel with RadioButtons, not a control with SelectedIndex
+            // Settings.SetDictionaryItem(Settings.K.PackageListViewMode, PAGE_NAME, ViewModeSelector.SelectedIndex);
             GenerateHeaderBarTitles();
         }
 
@@ -1415,7 +1415,7 @@ namespace UniGetUI.Interface
         private bool? _titleHidden;
         private void ABSTRACT_PAGE_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (ActualWidth < 500)
+            if (Bounds.Width < 500)
             {
                 if (_titleHidden != false)
                 {
@@ -1433,7 +1433,7 @@ namespace UniGetUI.Interface
                 }
             }
 
-            if (ActualWidth < 700)
+            if (Bounds.Width < 700)
             {
                 if (_pageIsWide != false)
                 {
@@ -1464,7 +1464,7 @@ namespace UniGetUI.Interface
                 ClearSourcesList();
                 WrappedPackages.Clear();
                 FilterPackages(true);
-                MegaQueryBlock.Focus(FocusState.Programmatic);
+                MegaQueryBlock.Focus();
                 MegaQueryBlock.Text = "";
             }
         }
