@@ -26,7 +26,7 @@
             Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="6"
             HorizontalScrollBarVisibility="Disabled">
-            <TextBlock
+            <RichTextBlock
                 Name="CommandLineOutput"
                 Padding="6"
                 FontFamily="Consolas"

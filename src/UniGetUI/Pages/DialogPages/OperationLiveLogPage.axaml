@@ -22,7 +22,7 @@
             x:FieldModifier="public"
             Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="6">
-            <TextBlock
+            <RichTextBlock
                 Name="TextBlock"
                 Margin="8"
                 x:FieldModifier="public"

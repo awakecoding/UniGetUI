@@ -209,18 +209,18 @@ namespace UniGetUI.Interface.SoftwarePages
 
             AppBarButton HelpButton = new();
 
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(InstallationSettings);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(PackageDetails);
-            ToolBar.PrimaryCommands.Add(SharePackage);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(IgnoreSelected);
-            ToolBar.PrimaryCommands.Add(ManageIgnored);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(ExportSelection);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(HelpButton);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(InstallationSettings);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(PackageDetails);
+            // ToolBar.PrimaryCommands.Add(SharePackage);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(IgnoreSelected);
+            // ToolBar.PrimaryCommands.Add(ManageIgnored);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(ExportSelection);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(HelpButton);
 
             Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             { // Entries with a trailing space are collapsed

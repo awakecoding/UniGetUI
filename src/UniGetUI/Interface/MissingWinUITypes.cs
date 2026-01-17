@@ -103,6 +103,42 @@ namespace UniGetUI.Interface
     }
 
     /// <summary>
+    /// AppBar controls - stub implementations for WinUI 3 compatibility
+    /// </summary>
+    public class AppBarButton : Button
+    {
+        public AppBarButton() { }
+    }
+
+    public class AppBarSeparator : Separator
+    {
+        public AppBarSeparator() { }
+    }
+
+    /// <summary>
+    /// CommandBar control with PrimaryCommands support
+    /// </summary>
+    public class CommandBar : StackPanel
+    {
+        public List<Control> PrimaryCommands { get; } = new();
+        public List<Control> SecondaryCommands { get; } = new();
+        public CommandBarLabelPosition DefaultLabelPosition { get; set; } = CommandBarLabelPosition.Bottom;
+
+        public CommandBar()
+        {
+            Orientation = Orientation.Horizontal;
+        }
+    }
+
+    public enum CommandBarLabelPosition
+    {
+        Default,
+        Bottom,
+        Right,
+        Collapsed
+    }
+
+    /// <summary>
     /// Picker location enum
     /// </summary>
     public enum PickerLocationId
@@ -276,6 +312,103 @@ namespace Avalonia.Controls
         {
             var state = GetOrCreateState(frame);
             state.RemoveNavigating(handler);
+        }
+    }
+
+    /// <summary>
+    /// Extension methods for CommandBar and StackPanel compatibility
+    /// </summary>
+    public static class CommandBarExtensions
+    {
+        private static readonly Dictionary<StackPanel, CommandBarProxy> _stackPanelProxies = new();
+
+        private class CommandBarProxy
+        {
+            public List<Control> PrimaryCommands { get; } = new();
+            public List<Control> SecondaryCommands { get; } = new();
+        }
+
+        /// <summary>
+        /// Get or create a CommandBar proxy for a StackPanel
+        /// </summary>
+        private static CommandBarProxy GetOrCreateProxy(this StackPanel stackPanel)
+        {
+            if (!_stackPanelProxies.TryGetValue(stackPanel, out var proxy))
+            {
+                proxy = new CommandBarProxy();
+                _stackPanelProxies[stackPanel] = proxy;
+            }
+            return proxy;
+        }
+
+        /// <summary>
+        /// Access PrimaryCommands as a property
+        /// </summary>
+        public static List<Control> GetPrimaryCommands(StackPanel stackPanel)
+        {
+            return stackPanel.GetOrCreateProxy().PrimaryCommands;
+        }
+
+        /// <summary>
+        /// Access SecondaryCommands as a property
+        /// </summary>
+        public static List<Control> GetSecondaryCommands(StackPanel stackPanel)
+        {
+            return stackPanel.GetOrCreateProxy().SecondaryCommands;
+        }
+        
+        /// <summary>
+        /// Helper method to add items to PrimaryCommands and directly to StackPanel
+        /// </summary>
+        public static void AddToPrimaryCommands(this StackPanel stackPanel, Control item)
+        {
+            stackPanel.Children.Add(item);
+            GetPrimaryCommands(stackPanel).Add(item);
+        }
+    }
+
+    /// <summary>
+    /// Extension property accessor for StackPanel to simulate attached properties
+    /// This allows code like: ToolBar.PrimaryCommands.Add(...)
+    /// </summary>
+    public static class StackPanelExtensions
+    {
+        private static readonly Dictionary<StackPanel, object> _primaryCommands = new();
+
+        public static PrimaryCommandsAccessor PrimaryCommands(this StackPanel sp)
+        {
+            if (!_primaryCommands.TryGetValue(sp, out var accessor))
+            {
+                accessor = new PrimaryCommandsAccessor(sp);
+                _primaryCommands[sp] = accessor;
+            }
+            return (PrimaryCommandsAccessor)accessor;
+        }
+
+        public class PrimaryCommandsAccessor
+        {
+            private readonly StackPanel _stackPanel;
+            private readonly List<Control> _commands = new();
+
+            public PrimaryCommandsAccessor(StackPanel stackPanel)
+            {
+                _stackPanel = stackPanel;
+            }
+
+            public void Add(Control control)
+            {
+                _commands.Add(control);
+                // Also add to the visual tree
+                _stackPanel.Children.Add(control);
+            }
+
+            public void Remove(Control control)
+            {
+                _commands.Remove(control);
+                _stackPanel.Children.Remove(control);
+            }
+
+            public int Count => _commands.Count;
         }
     }
 }

@@ -202,20 +202,20 @@ namespace UniGetUI.Interface.SoftwarePages
             AppBarButton SharePackage = new();
             AppBarButton HelpButton = new();
 
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(NewBundle);
-            ToolBar.PrimaryCommands.Add(OpenBundle);
-            ToolBar.PrimaryCommands.Add(SaveBundle);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(ToBatchScript);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(AddPackagesToBundle);
-            ToolBar.PrimaryCommands.Add(RemoveSelected);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(PackageDetails);
-            ToolBar.PrimaryCommands.Add(SharePackage);
-            ToolBar.PrimaryCommands.Add(new AppBarSeparator());
-            ToolBar.PrimaryCommands.Add(HelpButton);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(NewBundle);
+            // ToolBar.PrimaryCommands.Add(OpenBundle);
+            // ToolBar.PrimaryCommands.Add(SaveBundle);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(ToBatchScript);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(AddPackagesToBundle);
+            // ToolBar.PrimaryCommands.Add(RemoveSelected);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(PackageDetails);
+            // ToolBar.PrimaryCommands.Add(SharePackage);
+            // ToolBar.PrimaryCommands.Add(new AppBarSeparator());
+            // ToolBar.PrimaryCommands.Add(HelpButton);
 
             Dictionary<Avalonia.AvaloniaObject, string> Labels = new()
             { // Entries with a trailing space are collapsed

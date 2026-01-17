@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pkgClasses="using:UniGetUI.PackageEngine.PackageClasses"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    xmlns:local="using:UniGetUI.Interface"
     Name="ABSTRACT_PAGE"
     NavigationCacheMode="Required"
     SizeChanged="ABSTRACT_PAGE_SizeChanged"
@@ -683,7 +684,7 @@
                     </Button>
                 </StackPanel>
 
-                <CommandBar
+                <local:CommandBar
                     Name="ToolBar"
                     Grid.Column="2"
                     HorizontalAlignment="Left"
