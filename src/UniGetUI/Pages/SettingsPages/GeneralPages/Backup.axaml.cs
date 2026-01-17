@@ -262,8 +262,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 var errorDialog = DialogHelper.DialogFactory.Create();
                 errorDialog.Title = CoreTools.Translate("An error occurred");
                 errorDialog.Content = CoreTools.Translate("An error occurred while loading a backup: ") + ex.Message;
-                errorDialog.PrimaryButtonText = CoreTools.Translate("OK");
-                errorDialog.DefaultButton = ContentDialogButton.Primary;
+                // TODO: Avalonia - errorDialog.PrimaryButtonText = CoreTools.Translate("OK");
+                // TODO: Avalonia - errorDialog.DefaultButton = ContentDialogButton.Primary;
                 await DialogHelper.ShowDialogAsync(errorDialog);
             }
         }
@@ -294,8 +294,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 var dialog = DialogHelper.DialogFactory.Create();
                 dialog.Title = CoreTools.Translate("Backup Failed");
                 dialog.Content = CoreTools.Translate("Could not back up packages to GitHub Gist: ") + ex.Message;
-                dialog.PrimaryButtonText = CoreTools.Translate("OK");
-                dialog.DefaultButton = ContentDialogButton.Primary;
+                // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("OK");
+                // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
                 await DialogHelper.ShowDialogAsync(dialog);
             }
         }

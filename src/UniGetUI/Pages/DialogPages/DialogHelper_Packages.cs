@@ -67,15 +67,15 @@ public static partial class DialogHelper
 
         Window OptionsDialog = DialogFactory.Create_AsWindow(true, true);
 
-        OptionsDialog.SecondaryButtonText = operation switch
+        // TODO: Avalonia - OptionsDialog.SecondaryButtonText = operation switch
         {
             OperationType.Install => CoreTools.Translate("Install"),
             OperationType.Uninstall => CoreTools.Translate("Uninstall"),
             OperationType.Update => CoreTools.Translate("Update"),
             _ => ""
         };
-        OptionsDialog.PrimaryButtonText = CoreTools.Translate("Save and close");
-        OptionsDialog.DefaultButton = ContentDialogButton.Secondary;
+        // TODO: Avalonia - OptionsDialog.PrimaryButtonText = CoreTools.Translate("Save and close");
+        // TODO: Avalonia - OptionsDialog.DefaultButton = ContentDialogButton.Secondary;
         // OptionsDialog.Title = CoreTools.Translate("{0} installation options", package.Name);
         OptionsDialog.Content = OptionsPage;
 
@@ -100,9 +100,9 @@ public static partial class DialogHelper
     {
         Window dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Are you sure?");
-        dialog.PrimaryButtonText = CoreTools.Translate("Yes");
-        dialog.SecondaryButtonText = CoreTools.Translate("No");
-        dialog.DefaultButton = ContentDialogButton.Secondary;
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Yes");
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("No");
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
         dialog.Content = CoreTools.Translate("Do you really want to uninstall {0}?", package.Name);
 
         return await ShowDialogAsync(dialog) is ContentDialogResult.Primary;
@@ -122,9 +122,9 @@ public static partial class DialogHelper
 
         Window dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Are you sure?");
-        dialog.PrimaryButtonText = CoreTools.Translate("Yes");
-        dialog.SecondaryButtonText = CoreTools.Translate("No");
-        dialog.DefaultButton = ContentDialogButton.Secondary;
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Yes");
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("No");
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
 
 
         StackPanel p = new();

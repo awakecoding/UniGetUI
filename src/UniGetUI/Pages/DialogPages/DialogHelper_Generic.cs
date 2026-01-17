@@ -34,9 +34,9 @@ public static partial class DialogHelper
 
         var dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Missing dependency") + (total > 1 ? $" ({current}/{total})" : "");
-        dialog.SecondaryButtonText = CoreTools.Translate("Not right now");
-        dialog.PrimaryButtonText = CoreTools.Translate("Install {0}", dep_name);
-        dialog.DefaultButton = ContentDialogButton.Primary;
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Not right now");
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Install {0}", dep_name);
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
 
         bool has_installed = false;
         bool block_closing = false;
@@ -110,8 +110,8 @@ public static partial class DialogHelper
                     c.IsEnabled = false;
                     dialog.IsPrimaryButtonEnabled = false;
                     dialog.IsSecondaryButtonEnabled = false;
-                    dialog.SecondaryButtonText = "";
-                    dialog.PrimaryButtonText = CoreTools.Translate("Please wait");
+                    // TODO: Avalonia - dialog.SecondaryButtonText = "";
+                    // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Please wait");
                     infotext.Text =
                         CoreTools.Translate(
                             "Please wait while {0} is being installed. A black window may show up. Please wait until it closes.",
@@ -130,8 +130,8 @@ public static partial class DialogHelper
                         infotext.Text = CoreTools.Translate("{0} has been installed successfully.", dep_name) +
                                         " " + CoreTools.Translate("Please click on \"Continue\" to continue",
                                             dep_name);
-                        dialog.SecondaryButtonText = "";
-                        dialog.PrimaryButtonText = CoreTools.Translate("Continue");
+                        // TODO: Avalonia - dialog.SecondaryButtonText = "";
+                        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Continue");
                     }
                     else
                     {
@@ -140,8 +140,8 @@ public static partial class DialogHelper
                             CoreTools.Translate(
                                 "{0} has been installed successfully. It is recommended to restart UniGetUI to finish the installation",
                                 dep_name);
-                        dialog.SecondaryButtonText = CoreTools.Translate("Restart later");
-                        dialog.PrimaryButtonText = CoreTools.Translate("Restart UniGetUI");
+                        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Restart later");
+                        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Restart UniGetUI");
                     }
                 }
                 catch (Exception ex)
@@ -152,8 +152,8 @@ public static partial class DialogHelper
                     dialog.IsSecondaryButtonEnabled = true;
                     infotext.Text = CoreTools.Translate("An error occurred:") + " " + ex.Message + "\n" +
                                     CoreTools.Translate("Please click on \"Continue\" to continue");
-                    dialog.SecondaryButtonText = "";
-                    dialog.PrimaryButtonText = (current < total)
+                    // TODO: Avalonia - dialog.SecondaryButtonText = "";
+                    // TODO: Avalonia - dialog.PrimaryButtonText = (current < total)
                         ? CoreTools.Translate("Continue")
                         : CoreTools.Translate("Close");
                 }
@@ -275,9 +275,9 @@ public static partial class DialogHelper
             await Task.Delay(100);
         }
 
-        AdminDialog.XamlRoot = Window.XamlRoot;
-        AdminDialog.PrimaryButtonText = CoreTools.Translate("I understand");
-        AdminDialog.DefaultButton = ContentDialogButton.Primary;
+        // TODO: Avalonia - AdminDialog.XamlRoot = Window.XamlRoot;
+        // TODO: Avalonia - AdminDialog.PrimaryButtonText = CoreTools.Translate("I understand");
+        // TODO: Avalonia - AdminDialog.DefaultButton = ContentDialogButton.Primary;
         AdminDialog.Title = CoreTools.Translate("Administrator privileges");
         AdminDialog.Content = CoreTools.Translate(
             "WingetUI has been ran as administrator, which is not recommended. When running WingetUI as administrator, EVERY operation launched from WingetUI will have administrator privileges. You can still use the program, but we highly recommend not running WingetUI with administrator privileges.");
@@ -351,9 +351,9 @@ public static partial class DialogHelper
                         "\n\n" +
                         CoreTools.Translate(
                             "NOTE: This troubleshooter can be disabled from UniGetUI Settings, on the WinGet section");
-            c.PrimaryButtonText = CoreTools.Translate("Close");
-            c.SecondaryButtonText = CoreTools.Translate("Restart");
-            c.DefaultButton = ContentDialogButton.Secondary;
+            // TODO: Avalonia - c.PrimaryButtonText = CoreTools.Translate("Close");
+            // TODO: Avalonia - c.SecondaryButtonText = CoreTools.Translate("Restart");
+            // TODO: Avalonia - c.DefaultButton = ContentDialogButton.Secondary;
 
             // Restart UniGetUI or reload packages depending on the user's choice
             if (await ShowDialogAsync(c) == ContentDialogResult.Secondary)
@@ -380,8 +380,8 @@ public static partial class DialogHelper
                             "An unexpected issue occurred while attempting to repair WinGet. Please try again later") +
                         "\n\n" + ex.Message + "\n\n" + CoreTools.Translate(
                             "NOTE: This troubleshooter can be disabled from UniGetUI Settings, on the WinGet section");
-            c.PrimaryButtonText = CoreTools.Translate("Close");
-            c.DefaultButton = ContentDialogButton.None;
+            // TODO: Avalonia - c.PrimaryButtonText = CoreTools.Translate("Close");
+            // TODO: Avalonia - c.DefaultButton = ContentDialogButton.None;
             await ShowDialogAsync(c);
         }
 
@@ -424,9 +424,9 @@ public static partial class DialogHelper
             FontWeight = FontWeights.SemiBold
         });
 
-        dialog.SecondaryButtonText = CoreTools.Translate("Decline");
-        dialog.PrimaryButtonText = CoreTools.Translate("Accept");
-        dialog.DefaultButton = ContentDialogButton.Primary;
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Decline");
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Accept");
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
         dialog.Closing += (_, e) =>
         {
             if (e.Result == ContentDialogResult.None) e.Cancel = true;
@@ -501,9 +501,9 @@ public static partial class DialogHelper
         dialog.Content = CoreTools.Translate("Any new shorcuts created during an install or an update operation will be deleted automatically, instead of showing a confirmation prompt the first time they are detected.")
                             + " " + CoreTools.Translate("Any shorcuts created or modified outside of UniGetUI will be ignored. You will be able to add them via the {0} button.", $"\"{CoreTools.Translate("Manual scan")}\"")
                         + " " + CoreTools.Translate("Are you really sure you want to enable this feature?");
-        dialog.PrimaryButtonText = CoreTools.Translate("Yes");
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Yes");
         dialog.CloseButtonText = CoreTools.Translate("No");
-        dialog.DefaultButton = ContentDialogButton.Close;
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Close;
         if (await ShowDialogAsync(dialog) is ContentDialogResult.Primary)
         {
             Settings.Set(Settings.K.RemoveAllDesktopShortcuts, true);
@@ -516,8 +516,8 @@ public static partial class DialogHelper
         var dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Manual scan");
         dialog.Content = CoreTools.Translate("No new shortcuts were found during the scan.");
-        dialog.PrimaryButtonText = CoreTools.Translate("Ok");
-        dialog.DefaultButton = ContentDialogButton.Primary;
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Ok");
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
         await ShowDialogAsync(dialog);
     }*/
 
@@ -530,10 +530,10 @@ public static partial class DialogHelper
                          + "\n   " + CoreTools.Translate("2. Locate the package(s) you want to add to the bundle, and select their leftmost checkbox.")
                          + "\n   " + CoreTools.Translate("3. When the packages you want to add to the bundle are selected, find and click the option \"{0}\" on the toolbar.", CoreTools.Translate("Add selection to bundle"))
                          + "\n   " + CoreTools.Translate("4. Your packages will have been added to the bundle. You can continue adding packages, or export the bundle.");
-        dialog.PrimaryButtonText = CoreTools.Translate("Discover packages");
-        dialog.SecondaryButtonText = CoreTools.Translate("Installed packages");
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Discover packages");
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Installed packages");
         dialog.CloseButtonText = CoreTools.Translate("Close");
-        dialog.DefaultButton = ContentDialogButton.None;
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.None;
         var result = await ShowDialogAsync(dialog);
         if(result is ContentDialogResult.Primary) Window.NavigationPage.NavigateTo(PageType.Discover);
         else if(result is ContentDialogResult.Secondary) Window.NavigationPage.NavigateTo(PageType.Installed);
@@ -550,9 +550,9 @@ public static partial class DialogHelper
     {
         var dialog = DialogFactory.Create();
         dialog.Title = CoreTools.Translate("Which backup do you want to open?");
-        dialog.PrimaryButtonText = CoreTools.Translate("Open");
-        dialog.SecondaryButtonText = CoreTools.Translate("Cancel");
-        dialog.DefaultButton = ContentDialogButton.Primary;
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Open");
+        // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Cancel");
+        // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
         dialog.IsPrimaryButtonEnabled = false;
 
         RadioButtons buttons = new RadioButtons();
@@ -594,9 +594,9 @@ public static partial class DialogHelper
         var d = DialogFactory.Create();
         d.Title = CoreTools.Translate("Operation in progress");
         d.Content = CoreTools.Translate("There are ongoing operations. Quitting WingetUI may cause them to fail. Do you want to continue?");
-        d.PrimaryButtonText = CoreTools.Translate("Quit");
-        d.SecondaryButtonText = CoreTools.Translate("Cancel");
-        d.DefaultButton = ContentDialogButton.Secondary;
+        // TODO: Avalonia - d.PrimaryButtonText = CoreTools.Translate("Quit");
+        // TODO: Avalonia - d.SecondaryButtonText = CoreTools.Translate("Cancel");
+        // TODO: Avalonia - d.DefaultButton = ContentDialogButton.Secondary;
         return await ShowDialogAsync(d) is ContentDialogResult.Primary;
     }
 }

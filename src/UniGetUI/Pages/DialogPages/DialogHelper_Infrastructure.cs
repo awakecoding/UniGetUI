@@ -234,15 +234,15 @@ public static partial class DialogHelper
         string installerPath = Path.Join(CoreData.UniGetUIExecutableDirectory, "UniGetUI.Installer.exe");
         if (File.Exists(installerPath))
         {
-            dialog.SecondaryButtonText = CoreTools.Translate("Repair UniGetUI");
-            dialog.DefaultButton = ContentDialogButton.Secondary;
+            // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Repair UniGetUI");
+            // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
             dialog.SecondaryButtonClick += (_, _) =>
             {
                 Process.Start(installerPath, "/silent /NoDeployInstaller");
             };
         }
 
-        dialog.PrimaryButtonText = CoreTools.Translate("Close");
+        // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Close");
         await ShowDialogAsync(dialog);
     }
 }

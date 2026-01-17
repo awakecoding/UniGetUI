@@ -119,11 +119,11 @@ namespace UniGetUI.Interface.Widgets
                     };
                     SourcesCombo.SelectedIndex = 0;
 
-                    d.XamlRoot = XamlRoot;
+                    // TODO: Avalonia - d.XamlRoot = XamlRoot;
                     d.Content = p;
-                    d.PrimaryButtonText = CoreTools.Translate("Add");
-                    d.SecondaryButtonText = CoreTools.Translate("Cancel");
-                    d.DefaultButton = ContentDialogButton.Primary;
+                    // TODO: Avalonia - d.PrimaryButtonText = CoreTools.Translate("Add");
+                    // TODO: Avalonia - d.SecondaryButtonText = CoreTools.Translate("Cancel");
+                    // TODO: Avalonia - d.DefaultButton = ContentDialogButton.Primary;
 
                     if (await DialogHelper.ShowDialogAsync(d) == ContentDialogResult.Primary)
                     {
@@ -147,7 +147,7 @@ namespace UniGetUI.Interface.Widgets
                         Content = CoreTools.Translate("An error occurred when adding the source: ") + ex.Message
                     };
                     _ = DialogHelper.ShowDialogAsync(d, HighPriority: true);
-                    d.PrimaryButtonText = CoreTools.Translate("Close");
+                    // TODO: Avalonia - d.PrimaryButtonText = CoreTools.Translate("Close");
                     Logger.Error("An error occurred when adding the source");
                     Logger.Error(ex);
                 }
