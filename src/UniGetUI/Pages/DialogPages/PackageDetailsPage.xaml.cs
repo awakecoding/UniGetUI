@@ -660,11 +660,11 @@ namespace UniGetUI.Interface.Dialogs
             try
             {
                 SaveInstallOptionsButton.IsEnabled = false;
-                SaveInstallOptionsButton.Content = new TextBlock { Glyph = "\uE9F5" };
+                SaveInstallOptionsButton.Content = new TextBlock { Text = "\uE9F5" }; // TODO: Avalonia - Glyph → Text
                 var options = await InstallOptionsPage.GetUpdatedOptions();
                 await InstallOptionsFactory.SaveForPackageAsync(options, Package);
                 await Task.Delay(400); // Give feedback to the user that things are being done
-                SaveInstallOptionsButton.Content = new TextBlock { Glyph = "\uE73E" };
+                SaveInstallOptionsButton.Content = new TextBlock { Text = "\uE73E" }; // TODO: Avalonia - Glyph → Text
                 SaveInstallOptionsButton.IsEnabled = true;
                 await Task.Delay(2000);
                 SaveInstallOptionsButton.Content = CoreTools.Translate("Save");

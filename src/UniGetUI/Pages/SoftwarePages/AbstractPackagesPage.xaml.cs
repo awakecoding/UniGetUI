@@ -1105,10 +1105,11 @@ namespace UniGetUI.Interface
 
         public async Task ShowContextMenu(PackageWrapper wrapper)
         {
-            CurrentPackageList.Select(wrapper.Index);
+            // TODO: Avalonia - ItemsControl.Select() method doesn't exist in Avalonia
+            // CurrentPackageList.Select(wrapper.Index);
             await Task.Delay(20);
             if(_lastContextMenuButtonTapped is not null)
-                (CurrentPackageList.ContextFlyout as BetterMenu)?.ShowAt(_lastContextMenuButtonTapped, new FlyoutShowOptions { Placement = FlyoutPlacementMode.RightEdgeAlignedTop });
+                (CurrentPackageList.ContextFlyout as BetterMenu)?.ShowAt(_lastContextMenuButtonTapped, true); // TODO: Avalonia - FlyoutShowOptions parameter changed to bool
             WhenShowingContextMenu(wrapper.Package);
         }
 
@@ -1116,7 +1117,8 @@ namespace UniGetUI.Interface
         {
             if (sender is PackageItemContainer container && container.Package is not null)
             {
-                CurrentPackageList.Select(container.Wrapper.Index);
+                // TODO: Avalonia - ItemsControl.Select() method doesn't exist in Avalonia
+                // CurrentPackageList.Select(container.Wrapper.Index);
                 container.Focus(); // TODO: Avalonia - FocusState enum not available
                 WhenShowingContextMenu(container.Package);
             }
@@ -1126,7 +1128,8 @@ namespace UniGetUI.Interface
         {
             if (sender is PackageItemContainer container && container.Package is not null)
             {
-                CurrentPackageList.Select(container.Wrapper.Index);
+                // TODO: Avalonia - ItemsControl.Select() method doesn't exist in Avalonia
+                // CurrentPackageList.Select(container.Wrapper.Index);
                 container.Focus(); // TODO: Avalonia - FocusState enum not available
 
                 TEL_InstallReferral referral = TEL_InstallReferral.ALREADY_INSTALLED;
@@ -1150,12 +1153,14 @@ namespace UniGetUI.Interface
 
         private async Task ForceRedrawByScroll()
         {
-            if (CurrentPackageList is not null)
-            {
-                CurrentPackageList.ScrollView?.ScrollBy(0, 1);
-                await Task.Delay(10);
-                CurrentPackageList.ScrollView?.ScrollBy(0, -1);
-            }
+            // TODO: Avalonia - ItemsControl.ScrollView property doesn't exist in Avalonia
+            // if (CurrentPackageList is not null)
+            // {
+            //     CurrentPackageList.ScrollView?.ScrollBy(0, 1);
+            //     await Task.Delay(10);
+            //     CurrentPackageList.ScrollView?.ScrollBy(0, -1);
+            // }
+            await Task.CompletedTask; // TODO: Avalonia - Implement scroll-based redraw alternative
         }
 
         private void ToggleFiltersButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
