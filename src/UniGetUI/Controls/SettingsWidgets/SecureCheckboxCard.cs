@@ -74,13 +74,13 @@ namespace UniGetUI.Interface.Widgets
             _loading = new ProgressBar() { IsIndeterminate = true, IsVisible = false};
             _textblock = new TextBlock()
             {
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
             };
             _warningBlock = new TextBlock()
             {
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Foreground = (SolidColorBrush)Application.Current.Resources["SystemControlErrorTextForegroundBrush"],

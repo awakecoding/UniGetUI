@@ -111,7 +111,7 @@ namespace UniGetUI.Interface.Dialogs
             InstallOptionsPage.HideCloseButton();
             InstallOptionsPage.HideHeaderBar();
             InstallOptionsPage.MaxWidth = double.PositiveInfinity;
-            InstallOptionsPage.HorizontalAlignment = HorizontalAlignment.Stretch;
+            InstallOptionsPage.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
             InstallOptionsPage.Margin = new(0, -16, 0, 0);
             InstallOptionsExpander.Content = InstallOptionsPage;
 

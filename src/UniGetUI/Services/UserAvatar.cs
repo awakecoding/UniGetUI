@@ -146,7 +146,7 @@ namespace UniGetUI.Services
 
             var loginButton = new PointButton
             {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch,
                 Content = CoreTools.Translate("Log in")
             };
             loginButton.Click += LoginButton_Click;

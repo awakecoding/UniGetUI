@@ -34,7 +34,7 @@ namespace UniGetUI.Pages.SettingsPages
             RestartRequired.Message = CoreTools.Translate("Restart WingetUI to fully apply changes");
             var RestartButton = new Button
             {
-                HorizontalAlignment = HorizontalAlignment.Right,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
                 Content = CoreTools.Translate("Restart WingetUI"),
             };
             RestartButton.Click += (_, _) => MainApp.Instance.KillAndRestart();

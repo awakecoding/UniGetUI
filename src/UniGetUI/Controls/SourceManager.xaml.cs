@@ -87,14 +87,14 @@ namespace UniGetUI.Interface.Widgets
                     p1.Children.Add(SourceNameTextBox);
 
                     StackPanel p2 = new() { Spacing = 2, HorizontalAlignment = HorizontalAlignment.Stretch };
-                    p2.Children.Add(new TextBlock { Text = CoreTools.Translate("Source URL:"), VerticalAlignment = VerticalAlignment.Center });
+                    p2.Children.Add(new TextBlock { Text = CoreTools.Translate("Source URL:"), VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center });
                     p2.Children.Add(SourceUrlTextBox);
 
                     p.Children.Add(p1);
                     p.Children.Add(p2);
 
                     SourcesCombo.Items.Add(CoreTools.Translate("Other"));
-                    SourcesCombo.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    SourcesCombo.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
                     SourcesCombo.SelectionChanged += (_, _) =>
                     {
                         if (SourcesCombo.SelectedValue.ToString() == CoreTools.Translate("Other"))

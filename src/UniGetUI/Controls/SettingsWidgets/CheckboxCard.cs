@@ -71,18 +71,18 @@ namespace UniGetUI.Interface.Widgets
             };
             _textblock = new TextBlock()
             {
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap
             };
             _warningBlock = new TextBlock()
             {
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 0, 0),
                 Avalonia.Media.TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 FontSize = 12,
                 Opacity = 0.7,
-                Visibility = Visibility.Collapsed,
+                IsVisible = false,
             };
             IS_INVERTED = false;
             Content = _checkbox;
