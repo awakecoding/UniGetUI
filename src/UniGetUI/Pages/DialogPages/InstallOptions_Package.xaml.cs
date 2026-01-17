@@ -135,7 +135,8 @@ namespace UniGetUI.Interface.Dialogs
             PlaceholderText.Text = CoreTools.Translate("{0} Install options are currently locked because {0} follows the default install options.", package.Name);
 
             KillProcessesLabel.Text = CoreTools.Translate("Select the processes that should be closed before this package is installed, updated or uninstalled.");
-            KillProcessesBox.PlaceholderText = CoreTools.Translate("Write here the process names here, separated by commas (,)");
+            // TODO: Avalonia - TextBox.PlaceholderText changed to Watermark in Avalonia
+            KillProcessesBox.Watermark = CoreTools.Translate("Write here the process names here, separated by commas (,)");
 
             packageInstallLocation = Package.Manager.DetailsHelper.GetInstallLocation(package) ?? CoreTools.Translate("Unset or unknown");
 
@@ -250,7 +251,8 @@ namespace UniGetUI.Interface.Dialogs
         }
         private void EnableDisableControls(OperationType operation)
         {
-            if(FollowGlobalOptionsSwitch.IsChecked)
+            // TODO: Avalonia - CheckBox.IsChecked is nullable, adding null check
+            if(FollowGlobalOptionsSwitch.IsChecked == true)
             {
                 OptionsPanel0.Opacity = 0.3;
                 SettingsSwitchPresenter.Opacity = 0.3;
@@ -352,7 +354,8 @@ namespace UniGetUI.Interface.Dialogs
             options.InteractiveInstallation = InteractiveCheckBox?.IsChecked ?? false;
             options.SkipHashCheck = HashCheckbox?.IsChecked ?? false;
             options.UninstallPreviousVersionsOnUpdate = UninstallPreviousOnUpdate?.IsChecked ?? false;
-            options.OverridesNextLevelOpts = !FollowGlobalOptionsSwitch.IsChecked;
+            // TODO: Avalonia - CheckBox.IsChecked is nullable, adding null check
+            options.OverridesNextLevelOpts = !(FollowGlobalOptionsSwitch.IsChecked ?? false);
 
             options.Architecture = "";
             var userSelection = ArchitectureComboBox.SelectedValue?.ToString() ?? "";

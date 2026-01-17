@@ -61,7 +61,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Update"),
                 IconName = IconType.Update,
-                KeyboardAcceleratorTextOverride = "Ctrl+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Ctrl+Enter"
             };
             menuInstall.Click += MenuInstall_Invoked;
 
@@ -69,7 +70,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Update options"),
                 IconName = IconType.Options,
-                KeyboardAcceleratorTextOverride = "Alt+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Alt+Enter"
             };
             menuInstallSettings.Click += (_, _) => _ = ShowInstallationOptionsForPackage(SelectedItem);
 
@@ -147,14 +149,17 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Package details"),
                 IconName = IconType.Info_Round,
-                KeyboardAcceleratorTextOverride = "Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Enter"
             };
             menuDetails.Click += (_, _) => ShowDetailsForPackage(SelectedItem, TEL_InstallReferral.ALREADY_INSTALLED);
 
             MenuFlyoutSubItem menuPause = new()
             {
-                Text = CoreTools.Translate("Pause updates for"),
-                Icon = new TextBlock { Glyph = "\uE769" },
+                // TODO: Avalonia - MenuFlyoutSubItem.Text doesn't exist, use Header instead
+                Header = CoreTools.Translate("Pause updates for"),
+                // TODO: Avalonia - TextBlock.Glyph doesn't exist, use Text instead
+                Icon = new TextBlock { Text = "\uE769" },
             };
             foreach (IgnoredUpdatesDatabase.PauseTime menuTime in new List<IgnoredUpdatesDatabase.PauseTime>{
                 new() { Days = 1 }, new() { Days = 3 },

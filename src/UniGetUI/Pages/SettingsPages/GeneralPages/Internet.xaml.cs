@@ -28,8 +28,9 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             this.InitializeComponent();
 
 
-            UsernameBox.PlaceholderText = CoreTools.Translate("Username");
-            PasswordBox.PlaceholderText = CoreTools.Translate("Password");
+            // TODO: Avalonia - TextBox.PlaceholderText changed to Watermark in Avalonia
+            UsernameBox.Watermark = CoreTools.Translate("Username");
+            PasswordBox.Watermark = CoreTools.Translate("Password");
 
             var creds = Settings.GetProxyCredentials();
             if (creds is not null)

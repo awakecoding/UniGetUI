@@ -25,7 +25,8 @@ public static partial class DialogHelper
         {
             var dialog = new Window()
             {
-                XamlRoot = Window.MainContentGrid.XamlRoot,
+                // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
+                // XamlRoot = Window.MainContentGrid.XamlRoot,
                 Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
             };
             return dialog;
@@ -42,16 +43,18 @@ public static partial class DialogHelper
                 {
                     double maxW, maxH;
                     int tresholdW = 1300, tresholdH = 1300;
-                    if (Window.NavigationPage.ActualWidth < tresholdW) maxW = 100;
-                    else if (Window.NavigationPage.ActualWidth >= tresholdW + 200) maxW = 300;
-                    else maxW = Window.NavigationPage.ActualWidth - (tresholdW - 100);
+                    // TODO: Avalonia - Control.ActualWidth changed to Bounds.Width
+                    if (Window.NavigationPage.Bounds.Width < tresholdW) maxW = 100;
+                    else if (Window.NavigationPage.Bounds.Width >= tresholdW + 200) maxW = 300;
+                    else maxW = Window.NavigationPage.Bounds.Width - (tresholdW - 100);
 
-                    if (Window.NavigationPage.ActualHeight < tresholdH) maxH = (hasTitle? 104: 64) + (hasButtons? 80: 0);
-                    else if (Window.NavigationPage.ActualHeight >= tresholdH + 200) maxH = (hasTitle ? 320 : 280) + (hasButtons ? 80 : 0);
-                    else maxH = Window.NavigationPage.ActualHeight - (tresholdH - (hasTitle ? 120 : 80)) + (hasButtons ? 80 : 0);
+                    // TODO: Avalonia - Control.ActualHeight changed to Bounds.Height
+                    if (Window.NavigationPage.Bounds.Height < tresholdH) maxH = (hasTitle? 104: 64) + (hasButtons? 80: 0);
+                    else if (Window.NavigationPage.Bounds.Height >= tresholdH + 200) maxH = (hasTitle ? 320 : 280) + (hasButtons ? 80 : 0);
+                    else maxH = Window.NavigationPage.Bounds.Height - (tresholdH - (hasTitle ? 120 : 80)) + (hasButtons ? 80 : 0);
 
-                    page.Width = Math.Min(Math.Abs(Window.NavigationPage.ActualWidth - maxW), 8192);
-                    page.Height = Math.Min(Math.Abs(Window.NavigationPage.ActualHeight - maxH), 4096);
+                    page.Width = Math.Min(Math.Abs(Window.NavigationPage.Bounds.Width - maxW), 8192);
+                    page.Height = Math.Min(Math.Abs(Window.NavigationPage.Bounds.Height - maxH), 4096);
                 }
             };
             return dialog;
@@ -178,9 +181,11 @@ public static partial class DialogHelper
                 await Task.Delay(100);
             }
 
-            dialog.RequestedTheme = Window.MainContentGrid.RequestedTheme;
+            // TODO: Avalonia - Window.RequestedTheme doesn't exist (use Application.RequestedThemeVariant)
+            // dialog.RequestedTheme = Window.MainContentGrid.RequestedTheme;
             // TODO: Avalonia - Window.AppWindow.TitleBar not available
             // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
+            // TODO: Avalonia - Window.ShowAsync() doesn't exist, use ShowDialog() or Show()
             bool? result = await dialog.ShowAsync();
             // TODO: Avalonia - Window.AppWindow.TitleBar not available
             // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
@@ -242,10 +247,11 @@ public static partial class DialogHelper
         {
             // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Repair UniGetUI");
             // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
-            dialog.SecondaryButtonClick += (_, _) =>
-            {
-                Process.Start(installerPath, "/silent /NoDeployInstaller");
-            };
+            // TODO: Avalonia - Window.SecondaryButtonClick doesn't exist (custom event needed)
+            // dialog.SecondaryButtonClick += (_, _) =>
+            // {
+            //     Process.Start(installerPath, "/silent /NoDeployInstaller");
+            // };
         }
 
         // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Close");

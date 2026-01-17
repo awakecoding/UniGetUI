@@ -69,7 +69,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Uninstall"),
                 IconName = IconType.Delete,
-                KeyboardAcceleratorTextOverride = "Ctrl+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Ctrl+Enter"
             };
             menuUninstall.Click += MenuUninstall_Invoked;
             menu.Items.Add(menuUninstall);
@@ -80,7 +81,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Uninstall options"),
                 IconName = IconType.Options,
-                KeyboardAcceleratorTextOverride = "Alt+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Alt+Enter"
             };
             MenuInstallationOptions.Click += MenuInstallSettings_Invoked;
             menu.Items.Add(MenuInstallationOptions);
@@ -170,7 +172,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Package details"),
                 IconName = IconType.Info_Round,
-                KeyboardAcceleratorTextOverride = "Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Enter"
             };
             MenuPackageDetails.Click += MenuDetails_Invoked;
             menu.Items.Add(MenuPackageDetails);

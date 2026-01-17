@@ -26,7 +26,8 @@ namespace UniGetUI.Interface.Widgets
 
         public string Placeholder
         {
-            set => _textbox.PlaceholderText = CoreTools.Translate(value);
+            // TODO: Avalonia - TextBox.PlaceholderText changed to Watermark in Avalonia
+            set => _textbox.Watermark = CoreTools.Translate(value);
         }
 
         public string Text

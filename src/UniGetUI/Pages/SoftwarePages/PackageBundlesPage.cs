@@ -88,7 +88,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Install"),
                 IconName = IconType.Download,
-                KeyboardAcceleratorTextOverride = "Ctrl+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Ctrl+Enter"
             };
             MenuInstall.Click += MenuInstall_Invoked;
             menu.Items.Add(MenuInstall);
@@ -99,7 +100,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Install options"),
                 IconName = IconType.Options,
-                KeyboardAcceleratorTextOverride = "Alt+Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Alt+Enter"
             };
             MenuInstallOptions.Click += MenuInstallSettings_Invoked;
             menu.Items.Add(MenuInstallOptions);
@@ -161,7 +163,8 @@ namespace UniGetUI.Interface.SoftwarePages
             {
                 Text = CoreTools.AutoTranslated("Package details"),
                 IconName = IconType.Info_Round,
-                KeyboardAcceleratorTextOverride = "Enter"
+                // TODO: Avalonia - BetterMenuItem.KeyboardAcceleratorTextOverride doesn't exist (WinUI-specific)
+                // KeyboardAcceleratorTextOverride = "Enter"
             };
             MenuDetails.Click += MenuDetails_Invoked;
             menu.Items.Add(MenuDetails);
@@ -485,9 +488,12 @@ namespace UniGetUI.Interface.SoftwarePages
                 {
                     Title = CoreTools.Translate("The package bundle is not valid"),
                     Content = CoreTools.Translate("The bundle you are trying to load appears to be invalid. Please check the file and try again.") + "\n\n" + ex.Message,
-                    CloseButtonText = CoreTools.Translate("Ok"),
-                    DefaultButton = ContentDialogButton.Close,
-                    XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
+                    // TODO: Avalonia - Window.CloseButtonText doesn't exist (WinUI-specific property)
+                    // CloseButtonText = CoreTools.Translate("Ok"),
+                    // TODO: Avalonia - Window.DefaultButton doesn't exist (WinUI-specific property)
+                    // DefaultButton = ContentDialogButton.Close,
+                    // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
+                    // XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
                 };
 
                 DialogHelper.HideLoadingDialog(loadingId);
@@ -554,9 +560,12 @@ namespace UniGetUI.Interface.SoftwarePages
                 {
                     Title = CoreTools.Translate("Could not create bundle"),
                     Content = CoreTools.Translate("The package bundle could not be created due to an error.") + "\n\n" + ex.Message,
-                    CloseButtonText = CoreTools.Translate("Ok"),
-                    DefaultButton = ContentDialogButton.Close,
-                    XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
+                    // TODO: Avalonia - Window.CloseButtonText doesn't exist (WinUI-specific property)
+                    // CloseButtonText = CoreTools.Translate("Ok"),
+                    // TODO: Avalonia - Window.DefaultButton doesn't exist (WinUI-specific property)
+                    // DefaultButton = ContentDialogButton.Close,
+                    // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
+                    // XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
                 };
 
                 DialogHelper.HideAllLoadingDialogs();

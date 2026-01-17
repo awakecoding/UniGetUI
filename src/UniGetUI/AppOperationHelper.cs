@@ -66,8 +66,10 @@ public partial class MainApp
                     var dialog = new Window { Title = CoreTools.Translate("Download failed"),
                         Content = CoreTools.Translate("No applicable installer was found for the package {0}", package.Name),
                         PrimaryButtonText = CoreTools.Translate("Ok"),
-                        DefaultButton = ContentDialogButton.Primary,
-                        XamlRoot = Instance.MainWindow.Content.XamlRoot,
+                        // TODO: Avalonia - Window.DefaultButton doesn't exist (WinUI-specific property)
+                        // DefaultButton = ContentDialogButton.Primary,
+                        // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
+                        // XamlRoot = Instance.MainWindow.Content.XamlRoot,
                     };
                     await DialogHelper.ShowDialogAsync(dialog);
                     return null;

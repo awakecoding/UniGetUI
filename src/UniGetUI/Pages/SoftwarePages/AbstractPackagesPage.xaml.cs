@@ -597,34 +597,38 @@ namespace UniGetUI.Interface
             if (index < 0 || index >= FilteredPackages.Count)
                 return;
 
-            CurrentPackageList.Select(index);
+            // TODO: Avalonia - ItemsControl.Select() doesn't exist in Avalonia
+            // CurrentPackageList.Select(index);
 
             double position;
-            if (CurrentPackageList.Layout is StackLayout)
-            {
-                position = index * 39;
-            }
-            else if (CurrentPackageList.Layout is UniformGridLayout gl)
-            {
-                int columnCount = (int)((CurrentPackageList.ActualWidth - 8) / (gl.MinItemWidth + 8));
-                int row = index / Math.Max(columnCount, 1);
-                position = Math.Max(row - 1, 0) * (gl.MinItemHeight + 8);
-                Debug.WriteLine($"pos: {position}, colCount:{columnCount}, {row}");
-            }
-            else
-            {
-                throw new InvalidCastException("The layout was not recognized");
-            }
+            // TODO: Avalonia - ItemsControl.Layout doesn't exist in Avalonia (WinUI-specific layout system)
+            // if (CurrentPackageList.Layout is StackLayout)
+            // {
+            //     position = index * 39;
+            // }
+            // else if (CurrentPackageList.Layout is UniformGridLayout gl)
+            // {
+            //     int columnCount = (int)((CurrentPackageList.ActualWidth - 8) / (gl.MinItemWidth + 8));
+            //     int row = index / Math.Max(columnCount, 1);
+            //     position = Math.Max(row - 1, 0) * (gl.MinItemHeight + 8);
+            //     Debug.WriteLine($"pos: {position}, colCount:{columnCount}, {row}");
+            // }
+            // else
+            // {
+            //     throw new InvalidCastException("The layout was not recognized");
+            // }
+            position = index * 39; // TODO: Avalonia - Simplified calculation without Layout
 
 
-            if (position < CurrentPackageList.ScrollView.VerticalOffset || position >
-                CurrentPackageList.ScrollView.VerticalOffset + CurrentPackageList.ScrollView.ActualHeight)
-            {
-                CurrentPackageList.ScrollView.ScrollTo(0, position, new ScrollingScrollOptions(
-                    ScrollingAnimationMode.Disabled,
-                    ScrollingSnapPointsMode.Ignore
-                ));
-            }
+            // TODO: Avalonia - ItemsControl.ScrollView doesn't exist in Avalonia (WinUI-specific property)
+            // if (position < CurrentPackageList.ScrollView.VerticalOffset || position >
+            //     CurrentPackageList.ScrollView.VerticalOffset + CurrentPackageList.ScrollView.ActualHeight)
+            // {
+            //     CurrentPackageList.ScrollView.ScrollTo(0, position, new ScrollingScrollOptions(
+            //         ScrollingAnimationMode.Disabled,
+            //         ScrollingSnapPointsMode.Ignore
+            //     ));
+            // }
 
             if (focus) Focus(FilteredPackages[index].Package);
         }
@@ -638,25 +642,26 @@ namespace UniGetUI.Interface
                 DispatcherQueuePriority.Low,
                 () =>
                 {
-                    PackageItemContainer? containerToFocus = CurrentPackageList.FindDescendant<PackageItemContainer>(c => c.Package?.Equals(packageToFocus) == true);
-                    if (containerToFocus == null)
-                    {
-                        Focus(packageToFocus, ++retryCount);
-                        return;
-                    }
+                    // TODO: Avalonia - ItemsControl.FindDescendant<T>() doesn't exist in Avalonia
+                    // PackageItemContainer? containerToFocus = CurrentPackageList.FindDescendant<PackageItemContainer>(c => c.Package?.Equals(packageToFocus) == true);
+                    // if (containerToFocus == null)
+                    // {
+                    //     Focus(packageToFocus, ++retryCount);
+                    //     return;
+                    // }
 
-                    if (!containerToFocus.IsSelected)
-                    {
-                        PackageItemContainer? selectedContainer = CurrentPackageList.FindDescendant<PackageItemContainer>(c => c.IsSelected);
-                        if (selectedContainer?.Package?.Equals(packageToFocus) == true)
-                            containerToFocus = selectedContainer;
-                        else
-                        {
-                            Focus(packageToFocus, ++retryCount);
-                            return;
-                        }
-                    }
-                    containerToFocus.Focus(); // TODO: Avalonia - FocusState enum not available
+                    // if (!containerToFocus.IsSelected)
+                    // {
+                    //     PackageItemContainer? selectedContainer = CurrentPackageList.FindDescendant<PackageItemContainer>(c => c.IsSelected);
+                    //     if (selectedContainer?.Package?.Equals(packageToFocus) == true)
+                    //         containerToFocus = selectedContainer;
+                    //     else
+                    //     {
+                    //         Focus(packageToFocus, ++retryCount);
+                    //         return;
+                    //     }
+                    // }
+                    // containerToFocus.Focus(); // TODO: Avalonia - FocusState enum not available
                 });
         }
 

@@ -507,7 +507,8 @@ public static partial class DialogHelper
                             + " " + CoreTools.Translate("Any shorcuts created or modified outside of UniGetUI will be ignored. You will be able to add them via the {0} button.", $"\"{CoreTools.Translate("Manual scan")}\"")
                         + " " + CoreTools.Translate("Are you really sure you want to enable this feature?");
         // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Yes");
-        dialog.CloseButtonText = CoreTools.Translate("No");
+        // TODO: Avalonia - Window.CloseButtonText doesn't exist (WinUI-specific property)
+        // dialog.CloseButtonText = CoreTools.Translate("No");
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Close;
         if (await ShowDialogAsync(dialog) is ContentDialogResult.Primary)
         {
@@ -537,7 +538,8 @@ public static partial class DialogHelper
                          + "\n   " + CoreTools.Translate("4. Your packages will have been added to the bundle. You can continue adding packages, or export the bundle.");
         // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Discover packages");
         // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Installed packages");
-        dialog.CloseButtonText = CoreTools.Translate("Close");
+        // TODO: Avalonia - Window.CloseButtonText doesn't exist (WinUI-specific property)
+        // dialog.CloseButtonText = CoreTools.Translate("Close");
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.None;
         var result = await ShowDialogAsync(dialog);
         if(result is ContentDialogResult.Primary) Window.NavigationPage.NavigateTo(PageType.Discover);

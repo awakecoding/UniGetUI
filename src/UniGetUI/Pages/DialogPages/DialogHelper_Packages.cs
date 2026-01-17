@@ -187,9 +187,12 @@ public static partial class DialogHelper
             {
                 Title = CoreTools.Translate("Package not found"),
                 Content = CoreTools.Translate("An error occurred when attempting to show the package with Id {0}", id) + ":\n" + ex.Message,
-                CloseButtonText = CoreTools.Translate("Ok"),
-                DefaultButton = ContentDialogButton.Close,
-                XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
+                // TODO: Avalonia - Window.CloseButtonText doesn't exist (WinUI-specific property)
+                // CloseButtonText = CoreTools.Translate("Ok"),
+                // TODO: Avalonia - Window.DefaultButton doesn't exist (WinUI-specific property)
+                // DefaultButton = ContentDialogButton.Close,
+                // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
+                // XamlRoot = MainApp.Instance.MainWindow.Content.XamlRoot // Ensure the dialog is shown in the correct context
             };
 
             await ShowDialogAsync(warningDialog);

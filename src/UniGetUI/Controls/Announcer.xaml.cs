@@ -91,7 +91,8 @@ namespace UniGetUI.Interface.Widgets
         public void SetText(string title, string body, string linkId, string linkName)
         {
             Avalonia.Controls.Documents.Paragraph paragraph = new();
-            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title, FontSize = 24, FontWeight = FontWeight.Bold, FontFamily = new FontFamily("Segoe UI Variable Display") });
+            // TODO: Avalonia - Run.FontSize, Run.FontWeight, Run.FontFamily not supported, properties removed
+            paragraph.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = title });
             _textblock.Blocks.Clear();
             _textblock.Blocks.Add(paragraph);
 
