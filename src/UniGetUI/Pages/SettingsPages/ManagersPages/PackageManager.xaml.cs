@@ -36,6 +36,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// </summary>
     public partial class PackageManagerPage : UserControl, ISettingsPage
     {
+        private Panel ManagerStatusBar = null!;
+        
         IPackageManager? Manager;
         public event EventHandler? RestartRequired;
         public event EventHandler<Type>? NavigationRequested;

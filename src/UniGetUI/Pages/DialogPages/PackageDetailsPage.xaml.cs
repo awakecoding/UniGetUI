@@ -489,6 +489,20 @@ namespace UniGetUI.Interface.Dialogs
             }
         }
 
+        public void SetTextToItem(TextBlock t, string? s)
+        {
+            if (s is null)
+            {
+                t.Text = CoreTools.Translate("Not available");
+                t.Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127));
+            }
+            else
+            {
+                t.Text = s;
+                t.Foreground = Brushes.Black; // TODO: Use theme-appropriate color
+            }
+        }
+
         public void SetTextToItem(Button h, Uri? u, string prefix = "", string suffix = "")
         {
             // Button.Inlines, NavigateUri don't exist in Avalonia - use Content instead

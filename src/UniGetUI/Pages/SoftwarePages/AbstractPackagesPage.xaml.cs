@@ -166,6 +166,9 @@ namespace UniGetUI.Interface
         private readonly ObservableCollection<PackageWrapper> WrappedPackages = [];
         private IEnumerable<PackageWrapper>? LastQueryResult;
 
+        // TODO: Avalonia - TreeView doesn't have SelectedNodes, using manual tracking
+        private readonly ObservableCollection<TreeViewItem> _selectedTreeNodes = [];
+
 
         protected List<IPackageManager> UsedManagers = [];
         protected ConcurrentDictionary<IPackageManager, List<IManagerSource>> UsedSourcesForManager = [];
@@ -304,13 +307,13 @@ namespace UniGetUI.Interface
                     return;
                 }
 
-                if (SourcesTreeView.SelectedNodes.Contains(node))
+                if (SourcesTreeView.GetSelectedNodes().Contains(node))
                 {
-                    SourcesTreeView.SelectedNodes.Remove(node);
+                    SourcesTreeView.GetSelectedNodes().Remove(node);
                 }
                 else
                 {
-                    SourcesTreeView.SelectedNodes.Add(node);
+                    SourcesTreeView.GetSelectedNodes().Add(node);
                 }
 
                 FilterPackages();
@@ -325,8 +328,8 @@ namespace UniGetUI.Interface
                     return;
                 }
 
-                SourcesTreeView.SelectedNodes.Clear();
-                SourcesTreeView.SelectedNodes.Add(node);
+                SourcesTreeView.GetSelectedNodes().Clear();
+                SourcesTreeView.GetSelectedNodes().Add(node);
                 FilterPackages();
             };
 
@@ -512,11 +515,11 @@ namespace UniGetUI.Interface
                 // - Otherwise, Check a source only if half of the sources have already been checked
                 if (SourcesTreeView.RootNodes.Count == 0)
                 {
-                    SourcesTreeView.SelectedNodes.Add(node);
+                    SourcesTreeView.GetSelectedNodes().Add(node);
                 }
-                else if (SourcesTreeView.SelectedNodes.Count >= SourcesTreeView.RootNodes.Count / 2)
+                else if (SourcesTreeView.GetSelectedNodes().Count >= SourcesTreeView.RootNodes.Count / 2)
                 {
-                    SourcesTreeView.SelectedNodes.Add(node);
+                    SourcesTreeView.GetSelectedNodes().Add(node);
                 }
 
                 RootNodeForManager.TryAdd(source.Manager, node);
@@ -537,7 +540,7 @@ namespace UniGetUI.Interface
                     if (!SourcesTreeView.RootNodes.Contains(LocalPackagesNode))
                     {
                         SourcesTreeView.RootNodes.Add(LocalPackagesNode);
-                        SourcesTreeView.SelectedNodes.Add(LocalPackagesNode);
+                        SourcesTreeView.GetSelectedNodes().Add(LocalPackagesNode);
                     }
                 }
                 else
@@ -801,9 +804,9 @@ namespace UniGetUI.Interface
             List<IManagerSource> visibleSources = [];
             List<IPackageManager> visibleManagers = [];
 
-            if (SourcesTreeView.SelectedNodes.Count > 0)
+            if (SourcesTreeView.GetSelectedNodes().Count > 0)
             {
-                foreach (TreeViewItem node in SourcesTreeView.SelectedNodes)
+                foreach (TreeViewItem node in SourcesTreeView.GetSelectedNodes())
                 {
                     if (NodesForSources.Values.Contains(node))
                     {
@@ -1472,6 +1475,22 @@ namespace UniGetUI.Interface
             if (!DISABLE_FILTER_ON_QUERY_CHANGE)
                 FilterPackages(true);
 
+        }
+    }
+
+    // TODO: Avalonia - TreeView extension to simulate WinUI SelectedNodes
+    public static class TreeViewExtensions
+    {
+        private static readonly Dictionary<TreeView, ObservableCollection<TreeViewItem>> _selectedNodesDictionary = new();
+
+        public static ObservableCollection<TreeViewItem> GetSelectedNodes(this TreeView treeView)
+        {
+            if (!_selectedNodesDictionary.TryGetValue(treeView, out var collection))
+            {
+                collection = new ObservableCollection<TreeViewItem>();
+                _selectedNodesDictionary[treeView] = collection;
+            }
+            return collection;
         }
     }
 }
