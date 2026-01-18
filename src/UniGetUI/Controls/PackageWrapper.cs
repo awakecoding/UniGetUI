@@ -39,13 +39,13 @@ namespace UniGetUI.PackageEngine.PackageClasses
         }
 
         public bool IconWasLoaded;
-        public bool AlternateIdIconVisible;
-        public bool ShowCustomPackageIcon;
-        public bool ShowDefaultPackageIcon = true;
-        public string VersionComboString;
+        public bool AlternateIdIconVisible { get; set; }
+        public bool ShowCustomPackageIcon { get; set; }
+        public bool ShowDefaultPackageIcon { get; set; } = true;
+        public string VersionComboString { get; set; } = "";
         public IconType MainIconId = IconType.Id;
         public IconType AlternateIconId = IconType.Id;
-        public Avalonia.Media.IImage? MainIconSource;
+        public Avalonia.Media.IImage? MainIconSource { get; set; }
 
         public Uri? PackageIcon
         {
@@ -56,9 +56,9 @@ namespace UniGetUI.PackageEngine.PackageClasses
             }
         }
 
-        public string ListedNameTooltip = "";
-        public readonly string ExtendedTooltip = "";
-        public float ListedOpacity = 1.0f;
+        public string ListedNameTooltip { get; set; } = "";
+        public string ExtendedTooltip { get; set; } = "";
+        public float ListedOpacity { get; set; } = 1.0f;
 
         public int NewVersionLabelWidth { get => Package.IsUpgradable ? 125 : 0; }
         public int NewVersionIconWidth { get => Package.IsUpgradable ? 24 : 0; }

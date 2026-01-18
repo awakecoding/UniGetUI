@@ -68,7 +68,6 @@
                         Margin="8,0,-4,-2"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
                         FontSize="20"
                         FontWeight="ExtraLight"
                         Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
@@ -83,7 +82,6 @@
                         Margin="8,0,-4,-2"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding MainIconId}"
                         FontSize="20"
                         FontWeight="ExtraLight"
                         ToolTip.Tip="{Binding ListedNameTooltip}"
@@ -162,7 +160,6 @@
                         Grid.Column="5"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        widgets:IconBuilder.Icon="{Binding Package.Source.IconId}"
                         FontSize="24"
                         FontWeight="ExtraLight"
                         ToolTip.Tip="{Binding Package.Source.AsString_DisplayName}" />
@@ -223,7 +220,6 @@
                         Margin="0,0,-4,-2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
                         FontSize="30"
                         FontWeight="ExtraLight"
                         Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
@@ -235,7 +231,6 @@
                         Margin="0,0,-4,-2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding MainIconId}"
                         FontSize="30"
                         FontWeight="ExtraLight"
                         ToolTip.Tip="{Binding ListedNameTooltip}"
@@ -256,7 +251,6 @@
                         VerticalAlignment="Bottom"
                         Background="Transparent"
                         BorderThickness="0"
-                        Click="{Binding RightClick}"
                         Tapped="ContextMenuButton_Tapped">
                         <TextBlock widgets:IconBuilder.Glyph="&#xE712;" FontSize="18" />
                     </Button>
@@ -296,7 +290,6 @@
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 CornerRadius="4"
                 Package="{Binding Package}"
-                RightTapped="{Binding PackageItemContainer_RightTapped}"
                 Wrapper="{Binding Self}">
 
                 <Grid
@@ -341,7 +334,6 @@
                         Margin="0,0,20,-2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding AlternateIconId}"
                         FontSize="40"
                         FontWeight="ExtraLight"
                         Foreground="{DynamicResource AccentAAFillColorTertiaryBrush}"
@@ -353,7 +345,6 @@
                         Margin="0,0,20,-2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        widgets:IconBuilder.Icon="{Binding MainIconId}"
                         FontSize="40"
                         FontWeight="ExtraLight"
                         ToolTip.Tip="{Binding ListedNameTooltip}"
@@ -374,7 +365,6 @@
                         VerticalAlignment="Top"
                         Background="Transparent"
                         BorderThickness="0"
-                        Click="{Binding RightClick}"
                         Tapped="ContextMenuButton_Tapped">
                         <TextBlock widgets:IconBuilder.Glyph="&#xE712;" FontSize="18" />
                     </Button>
@@ -494,7 +484,7 @@
                                 <widgets:BetterToggleMenuItem
                                     x:Name="OrderByNewVer_Menu"
                                     Text="New version"
-                                    IsVisible="{Binding RoleIsUpdateLike}" />
+                                    IsVisible="{ReflectionBinding RoleIsUpdateLike}" />
                                 <widgets:BetterToggleMenuItem x:Name="OrderBySrc_Menu" Text="Source" />
                                 <Separator />
                                 <widgets:BetterToggleMenuItem x:Name="OrderAsc_Menu" Text="Ascendant" />
@@ -625,7 +615,6 @@
             BorderThickness="0"
             DisplayMode="Inline"
             PaneBackground="Transparent"
-            PaneClosing="FilteringPanel_PaneClosing"
             PanePlacement="Left"
             SizeChanged="FilteringPanel_SizeChanged">
             <SplitView.Pane>
@@ -721,7 +710,6 @@
                                             Grid.ColumnSpan="2"
                                             Padding="0"
                                             HorizontalAlignment="Stretch"
-                                            SelectionChanged="SourcesTreeView_SelectionChanged"
                                             SelectionMode="Multiple" />
                                     </Grid>
 
@@ -885,8 +873,8 @@
                             <ColumnDefinition Width="*" MinWidth="100" />
                             <ColumnDefinition Width="32" />
                             <ColumnDefinition Width="*" MaxWidth="125" />
-                            <ColumnDefinition Width="32" MaxWidth="{Binding NewVersionIconWidth}" />
-                            <ColumnDefinition Width="*" MaxWidth="{Binding NewVersionLabelWidth}" />
+                            <ColumnDefinition Width="32" MaxWidth="{ReflectionBinding NewVersionIconWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{ReflectionBinding NewVersionLabelWidth}" />
                             <ColumnDefinition Width="32" />
                             <ColumnDefinition Width="*" MaxWidth="150" />
                             <ColumnDefinition Width="11" />
@@ -936,7 +924,7 @@
                             VerticalAlignment="Stretch"
                             BorderThickness="0"
                             CornerRadius="0"
-                            IsVisible="{Binding RoleIsUpdateLike}" />
+                            IsVisible="{ReflectionBinding RoleIsUpdateLike}" />
                         <Button
                             Name="SourceHeader"
                             Grid.Column="10"
@@ -957,7 +945,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             ItemTemplate="{StaticResource PackageTemplate_List}"
-                            ItemsSource="{Binding FilteredPackages}"
+                            ItemsSource="{ReflectionBinding FilteredPackages}"
                             IsVisible="{Binding #Selector_List.IsChecked}" />
                         <ItemsControl
                             x:Name="PackageList_Grid"
@@ -965,7 +953,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             ItemTemplate="{StaticResource PackageTemplate_Grid}"
-                            ItemsSource="{Binding FilteredPackages}"
+                            ItemsSource="{ReflectionBinding FilteredPackages}"
                             IsVisible="{Binding #Selector_Grid.IsChecked}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -979,7 +967,7 @@
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             ItemTemplate="{StaticResource PackageTemplate_Icons}"
-                            ItemsSource="{Binding FilteredPackages}"
+                            ItemsSource="{ReflectionBinding FilteredPackages}"
                             IsVisible="{Binding #Selector_Icons.IsChecked}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -1021,7 +1009,7 @@
                     HorizontalAlignment="Left"
                     CornerRadius="2"
                     ResizeDirection="Columns"
-                    IsVisible="{Binding FilteringPanel.IsPaneOpen}">
+                    IsVisible="{ReflectionBinding FilteringPanel.IsPaneOpen}">
                     <GridSplitter.RenderTransform>
                         <TranslateTransform X="0" />
                     </GridSplitter.RenderTransform>

@@ -58,8 +58,7 @@
                 SettingName="ProhibitElevation"
                 StateChanged="ShowRestartBanner"
                 Text="Prohibit any kind of Elevation via UniGetUI Elevator or GSudo"
-                WarningText="This option WILL cause issues. Any operation incapable of elevating itself WILL FAIL. Install/update/uninstall as administrator will NOT WORK."
-                WarningForeground="Red">
+                WarningText="This option WILL cause issues. Any operation incapable of elevating itself WILL FAIL. Install/update/uninstall as administrator will NOT WORK.">
             </widgets:CheckboxCard>
             <widgets:TranslatedTextBlock
                 Margin="4,32,4,8"
