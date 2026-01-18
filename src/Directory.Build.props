@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <ImplicitUsings>enable</ImplicitUsings>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
         
         <SdkVersion>8.0.407</SdkVersion>
         <Authors>Martí Climent and the contributors</Authors>
@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <RuntimeIdentifiers>win-x64;win-arm64;linux-x64;osx-x64;osx-arm64</RuntimeIdentifiers>
+        <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
         <RuntimeIdentifier Condition="'$(Platform)' == 'x64' And $([MSBuild]::IsOSPlatform('Windows'))">win-x64</RuntimeIdentifier>
         <RuntimeIdentifier Condition="'$(Platform)' == 'ARM64' And $([MSBuild]::IsOSPlatform('Windows'))">win-arm64</RuntimeIdentifier>
         <Platforms>x64</Platforms>

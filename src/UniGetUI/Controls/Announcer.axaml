@@ -10,12 +10,13 @@
     mc:Ignorable="d">
 
     <Grid TabIndex="99">
-        <Grid x:Name="g" ColumnSpacing="8">
+        <Grid x:Name="g">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
-            <RichTextBlock
+            <!-- TODO: Avalonia - RichTextBlock replaced with TextBlock (no rich text formatting) -->
+            <TextBlock
                 x:Name="_textblock"
                 Grid.Row="0"
                 Grid.Column="0"

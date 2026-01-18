@@ -15,6 +15,8 @@ using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.Classes.Packages.Classes;
 using UniGetUI.PackageEngine.PackageLoader;
 
+
+
 namespace UniGetUI.Pages.DialogPages;
 
 public static partial class DialogHelper
@@ -217,6 +219,9 @@ public static partial class DialogHelper
         if (!Settings.AreNotificationsDisabled())
         {
 #if WINDOWS
+            // TODO: Windows App SDK notifications not compatible with Avalonia - temporarily disabled
+            Logger.Info($"Desktop shortcut notification temporarily disabled ({unknownShortcuts.Count} shortcuts)");
+            /*
             await AppNotificationManager.Default.RemoveByTagAsync(CoreData.NewShortcutsNotificationTag.ToString());
             AppNotification notification;
 
@@ -227,7 +232,7 @@ public static partial class DialogHelper
                     .SetTag(CoreData.NewShortcutsNotificationTag.ToString())
                     .AddText(CoreTools.Translate("Desktop shortcut created"))
                     .AddText(CoreTools.Translate("UniGetUI has detected a new desktop shortcut that can be deleted automatically."))
-                    .SetAttributionText(unknownShortcuts.First().Split("\\").Last())
+                    .SetAttributionText(unknownShortcuts.First().Split("\\\\").Last())
                     .AddButton(new AppNotificationButton(CoreTools.Translate("Open UniGetUI").Replace("'", "´"))
                         .AddArgument("action", NotificationArguments.Show)
                     )
@@ -240,7 +245,7 @@ public static partial class DialogHelper
                 string attribution = "";
                 foreach (string shortcut in unknownShortcuts)
                 {
-                    attribution += shortcut.Split("\\").Last() + ", ";
+                    attribution += shortcut.Split("\\\\").Last() + ", ";
                 }
 
                 attribution = attribution.TrimEnd(' ').TrimEnd(',');
@@ -261,6 +266,7 @@ public static partial class DialogHelper
 
             notification.ExpiresOnReboot = true;
             AppNotificationManager.Default.Show(notification);
+            */
 #else
             // TODO: Avalonia - Implement cross-platform notifications
             Logger.Info("Desktop shortcut notifications not available on non-Windows platforms");

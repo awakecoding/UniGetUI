@@ -16,6 +16,7 @@ using UniGetUI.Pages.DialogPages;
 using UniGetUI.Interface.Enums;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.PackageLoader;
+using UniGetUI.Extensions;
 
 namespace UniGetUI;
 
@@ -76,13 +77,9 @@ public partial class MainApp
                     return null;
                 }
 
-#if WINDOWS
-                FileSavePicker savePicker = new();
-                MainWindow window = Instance.MainWindow;
-                IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
-                savePicker.SuggestedStartLocation = PickerLocationId.Downloads;
-
+                // Use Avalonia's SaveFileDialog
+                SaveFileDialog savePicker = new();
+                
                 string name = await package.GetInstallerFileName() ?? "";
                 string extension;
                 if (!name.Where(x => x == '.').Any())
@@ -95,30 +92,31 @@ public partial class MainApp
                     extension = CoreTools.MakeValidFileName(name.Split('.')[^1]);
                 }
 
-                savePicker.SuggestedFileName = name;
+                savePicker.InitialFileName = name;
 
+                var filters = new List<FileDialogFilter>();
                 if (package.Manager is BaseNuGet)
                 {
                     extension = "nupkg";
-                    savePicker.FileTypeChoices.Add("NuGet package", [".nupkg"]);
+                    filters.Add(new FileDialogFilter { Name = "NuGet package", Extensions = { "nupkg" } });
                 }
 
-                savePicker.FileTypeChoices.Add("Automatic", [$".{extension}"]);
-                savePicker.FileTypeChoices.Add("Executable", [".exe"]);
-                savePicker.FileTypeChoices.Add("MSI", [".msi"]);
-                savePicker.FileTypeChoices.Add("Compressed file", [".zip"]);
-                savePicker.FileTypeChoices.Add("MSIX", [".msix"]);
-                savePicker.FileTypeChoices.Add("APPX", [".appx"]);
-                savePicker.FileTypeChoices.Add("Tarball", [".tar"]);
-                savePicker.FileTypeChoices.Add("Compressed Tarball", [".tgz"]);
+                filters.Add(new FileDialogFilter { Name = "Automatic", Extensions = { extension } });
+                filters.Add(new FileDialogFilter { Name = "Executable", Extensions = { "exe" } });
+                filters.Add(new FileDialogFilter { Name = "MSI", Extensions = { "msi" } });
+                filters.Add(new FileDialogFilter { Name = "Compressed file", Extensions = { "zip" } });
+                filters.Add(new FileDialogFilter { Name = "MSIX", Extensions = { "msix" } });
+                filters.Add(new FileDialogFilter { Name = "APPX", Extensions = { "appx" } });
+                filters.Add(new FileDialogFilter { Name = "Tarball", Extensions = { "tar" } });
+                filters.Add(new FileDialogFilter { Name = "Compressed Tarball", Extensions = { "tgz" } });
+                savePicker.Filters = filters;
 
-
-                StorageFile file = await savePicker.PickSaveFileAsync();
+                string? filePath = await savePicker.ShowAsync(Instance.MainWindow);
 
                 DialogHelper.HideLoadingDialog(loadingId);
-                if (file is not null)
+                if (filePath is not null)
                 {
-                    var op = new DownloadOperation(package, file.Path);
+                    var op = new DownloadOperation(package, filePath);
                     op.OperationSucceeded += (_, _) => TelemetryHandler.DownloadPackage(package, TEL_OP_RESULT.SUCCESS, referral);
                     op.OperationFailed += (_, _) => TelemetryHandler.DownloadPackage(package, TEL_OP_RESULT.FAILED, referral);
                     Add(op);
@@ -127,12 +125,6 @@ public partial class MainApp
                 }
 
                 return null;
-#else
-                // TODO: Avalonia - Implement cross-platform file picker
-                Logger.Warn("File picker not implemented for non-Windows platforms");
-                DialogHelper.HideLoadingDialog(loadingId);
-                return null;
-#endif
             }
             catch (Exception ex)
             {

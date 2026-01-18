@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate x:Key="ManagerSourceTemplate" DataType="widgets:SourceItem">
-            <Grid ColumnSpacing="5">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                     Width="32"
                     Height="32"
                     Padding="0"
-                    Click="{Binding Remove}">
+                    Command="{Binding Remove}">
                     <TextBlock FontSize="16" FontFamily="Segoe Fluent Icons,Segoe MDL2 Assets" Text="&#xE74D;" />
                 </Button>
             </Grid>
@@ -78,8 +78,7 @@
             Grid.Row="0"
             Grid.Column="0"
             Height="48"
-            HorizontalAlignment="Stretch"
-            ColumnSpacing="5">
+            HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="150" />

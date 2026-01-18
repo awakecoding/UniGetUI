@@ -80,29 +80,25 @@ namespace UniGetUI.Interface.Pages
         public void ExportButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportButton_Click();
         public async Task _exportButton_Click()
         {
-#if WINDOWS
-            FileSavePicker savePicker = new()
+            SaveFileDialog savePicker = new()
             {
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+                InitialFileName = CoreTools.Translate("WingetUI Log")
             };
-            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, WinRT.Interop.WindowNative.GetWindowHandle(MainApp.Instance.MainWindow));
-            savePicker.FileTypeChoices.Add(CoreTools.Translate("Text"), [".txt"]);
-            savePicker.SuggestedFileName = CoreTools.Translate("WingetUI Log");
+            savePicker.Filters = new List<FileDialogFilter>
+            {
+                new FileDialogFilter { Name = CoreTools.Translate("Text"), Extensions = { "txt" } }
+            };
 
-            StorageFile file = await savePicker.PickSaveFileAsync();
-            if (file is not null)
+            string? filePath = await savePicker.ShowAsync(MainApp.Instance.MainWindow);
+            if (filePath is not null)
             {
                 LogTextBox.SelectAll();
-                await File.WriteAllTextAsync(file.Path, LogTextBox.SelectedText);
-                //LogTextBox.Select(LogTextBox.SelectionStart, LogTextBox.SelectionStart);
+                LogTextBox.Copy();
+                await File.WriteAllTextAsync(filePath, (LogTextBox.SelectedText ?? "").Replace("\0", ""));
                 LogTextBox.SelectionStart = 0;
                 LogTextBox.SelectionEnd = 0;
-                await CoreTools.ShowFileOnExplorer(file.Path);
+                await CoreTools.ShowFileOnExplorer(filePath);
             }
-#else
-            // TODO: Avalonia - Implement cross-platform file save dialog
-            await Task.CompletedTask;
-#endif
         }
 
         public void ReloadButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)

@@ -18,6 +18,12 @@ using UniGetUI.Pages.SettingsPages.GeneralPages;
 // TODO: Avalonia - Using project's ContentDialogResult enum
 using ContentDialogResult = UniGetUI.Interface.ContentDialogResult;
 
+#if WINDOWS
+using Windows.ApplicationModel.DataTransfer;
+#endif
+
+using UniGetUI.Extensions;
+
 namespace UniGetUI.Pages.DialogPages;
 
 public static partial class DialogHelper

@@ -9,8 +9,11 @@ namespace Avalonia.Controls.Documents
     // This should be replaced with proper text formatting later
     public class Paragraph : TextBlock
     {
+        public ObservableCollection<Run> Inlines { get; }
+        
         public Paragraph()
         {
+            Inlines = new ObservableCollection<Run>();
             TextWrapping = Media.TextWrapping.Wrap;
         }
     }

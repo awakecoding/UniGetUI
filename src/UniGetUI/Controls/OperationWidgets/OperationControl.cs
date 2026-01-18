@@ -21,6 +21,8 @@ using UniGetUI.Interface.Telemetry;
 using UniGetUI.PackageEngine;
 using UniGetUI.PackageEngine.PackageLoader;
 
+
+
 namespace UniGetUI.Controls.OperationWidgets;
 
 public partial class OperationControl: INotifyPropertyChanged
@@ -129,7 +131,8 @@ public partial class OperationControl: INotifyPropertyChanged
     {
         // Remove progress notification (if any)
 #if WINDOWS
-        AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
+        // TODO: Windows App SDK notifications not compatible with Avalonia
+        // AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
 #endif
 
         if (Operation.Status is OperationStatus.Failed)
@@ -413,20 +416,21 @@ public partial class OperationControl: INotifyPropertyChanged
         try
         {
 #if WINDOWS
-            AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
-            AppNotificationBuilder builder = new AppNotificationBuilder()
-                .SetScenario(AppNotificationScenario.Default)
-                .SetTag(Operation.Metadata.Identifier + "progress")
-                .AddProgressBar(new AppNotificationProgressBar()
-                    .SetStatus(CoreTools.Translate("Please wait..."))
-                    .SetValueStringOverride("\u2003")
-                    .SetTitle(Operation.Metadata.Status)
-                    .SetValue(1.0))
-                .AddArgument("action", NotificationArguments.Show);
-            AppNotification notification = builder.BuildNotification();
-            notification.ExpiresOnReboot = true;
-            notification.SuppressDisplay = true;
-            AppNotificationManager.Default.Show(notification);
+            // TODO: Windows App SDK notifications not compatible with Avalonia
+            // AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier + "progress");
+            // AppNotificationBuilder builder = new AppNotificationBuilder()
+            //     .SetScenario(AppNotificationScenario.Default)
+            //     .SetTag(Operation.Metadata.Identifier + "progress")
+            //     .AddProgressBar(new AppNotificationProgressBar()
+            //         .SetStatus(CoreTools.Translate("Please wait..."))
+            //         .SetValueStringOverride("\u2003")
+            //         .SetTitle(Operation.Metadata.Status)
+            //         .SetValue(1.0))
+            //     .AddArgument("action", NotificationArguments.Show);
+            // AppNotification notification = builder.BuildNotification();
+            // notification.ExpiresOnReboot = true;
+            // notification.SuppressDisplay = true;
+            // AppNotificationManager.Default.Show(notification);
 #else
             // TODO: Avalonia - Implement cross-platform progress notifications
 #endif
@@ -446,16 +450,17 @@ public partial class OperationControl: INotifyPropertyChanged
         try
         {
 #if WINDOWS
-            AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
-            AppNotificationBuilder builder = new AppNotificationBuilder()
-                .SetScenario(AppNotificationScenario.Default)
-                .SetTag(Operation.Metadata.Identifier)
-                .AddText(Operation.Metadata.SuccessTitle)
-                .AddText(Operation.Metadata.SuccessMessage)
-                .AddArgument("action", NotificationArguments.Show);
-            AppNotification notification = builder.BuildNotification();
-            notification.ExpiresOnReboot = true;
-            AppNotificationManager.Default.Show(notification);
+            // TODO: Windows App SDK notifications not compatible with Avalonia
+            // AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
+            // AppNotificationBuilder builder = new AppNotificationBuilder()
+            //     .SetScenario(AppNotificationScenario.Default)
+            //     .SetTag(Operation.Metadata.Identifier)
+            //     .AddText(Operation.Metadata.SuccessTitle)
+            //     .AddText(Operation.Metadata.SuccessMessage)
+            //     .AddArgument("action", NotificationArguments.Show);
+            // AppNotification notification = builder.BuildNotification();
+            // notification.ExpiresOnReboot = true;
+            // AppNotificationManager.Default.Show(notification);
 #else
             // TODO: Avalonia - Implement cross-platform success notifications
 #endif
@@ -475,16 +480,17 @@ public partial class OperationControl: INotifyPropertyChanged
         try
         {
 #if WINDOWS
-            AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
-            AppNotificationBuilder builder = new AppNotificationBuilder()
-                .SetScenario(AppNotificationScenario.Urgent)
-                .SetTag(Operation.Metadata.Identifier)
-                .AddText(Operation.Metadata.FailureTitle)
-                .AddText(Operation.Metadata.FailureMessage)
-                .AddArgument("action", NotificationArguments.Show);
-            AppNotification notification = builder.BuildNotification();
-            notification.ExpiresOnReboot = true;
-            AppNotificationManager.Default.Show(notification);
+            // TODO: Windows App SDK notifications not compatible with Avalonia
+            // AppNotificationManager.Default.RemoveByTagAsync(Operation.Metadata.Identifier);
+            // AppNotificationBuilder builder = new AppNotificationBuilder()
+            //     .SetScenario(AppNotificationScenario.Urgent)
+            //     .SetTag(Operation.Metadata.Identifier)
+            //     .AddText(Operation.Metadata.FailureTitle)
+            //     .AddText(Operation.Metadata.FailureMessage)
+            //     .AddArgument("action", NotificationArguments.Show);
+            // AppNotification notification = builder.BuildNotification();
+            // notification.ExpiresOnReboot = true;
+            // AppNotificationManager.Default.Show(notification);
 #else
             // TODO: Avalonia - Implement cross-platform error notifications
 #endif

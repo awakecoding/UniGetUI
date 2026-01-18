@@ -10,6 +10,7 @@ using UniGetUI.Core.Data;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;
+using UniGetUI.Extensions;
 using UniGetUI.Interface.SoftwarePages;
 using UniGetUI.PackageEngine.Enums;
 using UniGetUI.Pages.DialogPages;

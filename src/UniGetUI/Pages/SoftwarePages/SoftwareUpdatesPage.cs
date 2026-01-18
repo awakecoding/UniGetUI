@@ -16,6 +16,11 @@ using UniGetUI.PackageEngine.Interfaces;
 using UniGetUI.PackageEngine.PackageLoader;
 using UniGetUI.Pages.DialogPages;
 
+#if WINDOWS
+using Windows.Networking.Connectivity;
+using Windows.System.Power;
+#endif
+
 namespace UniGetUI.Interface.SoftwarePages
 {
     public partial class SoftwareUpdatesPage : AbstractPackagesPage
@@ -390,6 +395,9 @@ namespace UniGetUI.Interface.SoftwarePages
                     return;
 
 #if WINDOWS
+                // TODO: Windows App SDK notifications not compatible with Avalonia - temporarily disabled
+                Logger.Info($"Update notifications temporarily disabled (found {upgradablePackages.Count} updates)");
+                /*
                 _ = AppNotificationManager.Default.RemoveByTagAsync(CoreData.UpdatesAvailableNotificationTag.ToString());
 
                 AppNotification notification;
@@ -493,6 +501,7 @@ namespace UniGetUI.Interface.SoftwarePages
                     notification.ExpiresOnReboot = true;
                     AppNotificationManager.Default.Show(notification);
                 }
+                */
 #else
                 // TODO: Avalonia - Implement cross-platform update notifications
                 Logger.Info("Update notifications not available on non-Windows platforms");

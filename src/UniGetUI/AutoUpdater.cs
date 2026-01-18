@@ -9,6 +9,8 @@ using UniGetUI.Core.SettingsEngine;
 using UniGetUI.Core.Tools;
 using UniGetUI.Interface.Enums;
 
+
+
 namespace UniGetUI;
 
 public class AutoUpdater
@@ -241,18 +243,20 @@ public class AutoUpdater
 
             // Show a toast notification
 #if WINDOWS
-            AppNotificationBuilder builder = new AppNotificationBuilder()
-                .SetScenario(AppNotificationScenario.Default)
-                .SetTag(CoreData.UniGetUICanBeUpdated.ToString())
-                .AddText(CoreTools.Translate("{0} can be updated to version {1}", "UniGetUI", NewVersion))
-                .SetAttributionText(CoreTools.Translate("You have currently version {0} installed", CoreData.VersionName))
-                .AddArgument("action", NotificationArguments.Show)
-                .AddButton(new AppNotificationButton(CoreTools.Translate("Update now"))
-                    .AddArgument("action", NotificationArguments.ReleaseSelfUpdateLock)
-                );
-            AppNotification notification = builder.BuildNotification();
-            notification.ExpiresOnReboot = true;
-            AppNotificationManager.Default.Show(notification);
+            // TODO: Windows App SDK notifications not compatible with Avalonia - implement alternative
+            // AppNotificationBuilder builder = new AppNotificationBuilder()
+            //     .SetScenario(AppNotificationScenario.Default)
+            //     .SetTag(CoreData.UniGetUICanBeUpdated.ToString())
+            //     .AddText(CoreTools.Translate("{0} can be updated to version {1}", "UniGetUI", NewVersion))
+            //     .SetAttributionText(CoreTools.Translate("You have currently version {0} installed", CoreData.VersionName))
+            //     .AddArgument("action", NotificationArguments.Show)
+            //     .AddButton(new AppNotificationButton(CoreTools.Translate("Update now"))
+            //         .AddArgument("action", NotificationArguments.ReleaseSelfUpdateLock)
+            //     );
+            // AppNotification notification = builder.BuildNotification();
+            // notification.ExpiresOnReboot = true;
+            // AppNotificationManager.Default.Show(notification);
+            Logger.Info("Update notification temporarily disabled - Windows App SDK notifications not compatible with Avalonia");
 #else
             // TODO: Avalonia - Implement cross-platform update notifications
             Logger.Info("Update notification not available on non-Windows platforms");
