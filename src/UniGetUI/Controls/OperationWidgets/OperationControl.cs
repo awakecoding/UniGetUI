@@ -28,9 +28,9 @@ namespace UniGetUI.Controls.OperationWidgets;
 public partial class OperationControl: INotifyPropertyChanged
 {
     public AbstractOperation Operation;
-    public BetterMenu OpMenu;
+    public BetterMenu OpMenu { get; set; }
     public OperationStatus? MenuStateOnLoaded;
-    public ObservableCollection<OperationBadge> Badges = [];
+    public ObservableCollection<OperationBadge> Badges { get; } = [];
     private int _errorCount = 0;
 
     public OperationControl(AbstractOperation operation)

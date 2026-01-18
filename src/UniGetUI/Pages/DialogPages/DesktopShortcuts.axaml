@@ -7,6 +7,7 @@
     xmlns:local="using:UniGetUI.Interface"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    x:DataType="local:DesktopShortcutsManager"
     MaxWidth="950"
     MaxHeight="500"
     mc:Ignorable="d">
@@ -40,7 +41,7 @@
             HorizontalAlignment="Stretch"
             Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="6"
-            Items="{Binding Shortcuts}">
+            ItemsSource="{Binding Shortcuts}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="local:ShortcutEntry">
                     <Grid Margin="8,4" ColumnDefinitions="Auto,2,24,200*,24,2*,Auto,Auto">

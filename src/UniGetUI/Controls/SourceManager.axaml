@@ -7,9 +7,10 @@
     xmlns:local="using:UniGetUI.Interface.Widgets"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    x:DataType="widgets:SourceManager"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="ManagerSourceTemplate" DataType="widgets:SourceItem">
+        <DataTemplate x:Key="ManagerSourceTemplate" x:DataType="widgets:SourceItem">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
@@ -132,6 +133,7 @@
             Padding="3,6,3,6"
             Background="{DynamicResource SystemAltLowColor}"
             CornerRadius="6"
-            ItemsSource="{Binding Sources}" />
+            ItemsSource="{Binding Sources}"
+            ItemTemplate="{StaticResource ManagerSourceTemplate}" />
     </Grid>
 </UserControl>

@@ -18,7 +18,7 @@ namespace UniGetUI.Interface.Widgets
     public class SourceItem
     {
         public SourceManager Parent;
-        public IManagerSource Source;
+        public IManagerSource Source { get; set; }
 
         public SourceItem(SourceManager Parent, IManagerSource Source)
         {
@@ -37,8 +37,7 @@ namespace UniGetUI.Interface.Widgets
     public partial class SourceManager : UserControl
     {
         private IPackageManager Manager { get; set; }
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableCollection<SourceItem> Sources = [];
+        public ObservableCollection<SourceItem> Sources { get; } = [];
 
         private ListBox _datagrid { get; set; }
 

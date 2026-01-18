@@ -7,6 +7,8 @@
     xmlns:local="using:UniGetUI.Core.Classes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:widgets="using:UniGetUI.Interface.Widgets"
+    xmlns:aboutPages="using:UniGetUI.Interface.Pages.AboutPages"
+    x:DataType="aboutPages:Contributors"
     mc:Ignorable="d">
 
     <ScrollViewer

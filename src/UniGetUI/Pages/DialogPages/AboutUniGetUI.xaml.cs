@@ -30,11 +30,13 @@ namespace UniGetUI.Interface
             SelectorBarItemPage5.Header = CoreTools.Translate("Support me");
         }
 
-        private void SelectorBar_SelectionChanged(TabControl sender, SelectionChangedEventArgs args)
+        private void SelectorBar_SelectionChanged(object? sender, SelectionChangedEventArgs args)
         {
+            if (sender is not TabControl tabControl) return;
+            
             // TODO: Avalonia - SelectorBarItem type doesn't exist, using object
-            object selectedItem = sender.SelectedItem;
-            int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
+            object selectedItem = tabControl.SelectedItem;
+            int currentSelectedIndex = tabControl.Items.IndexOf(selectedItem);
             Type pageType = currentSelectedIndex switch
             {
                 0 => typeof(Pages.AboutPages.AboutUniGetUI),

@@ -13,7 +13,7 @@ namespace UniGetUI.Interface.Pages.AboutPages
     /// </summary>
     public partial class Translators : UserControl
     {
-        public ObservableCollection<Person> TranslatorList = [];
+        public ObservableCollection<Person> TranslatorList { get; } = [];
         public Translators()
         {
             InitializeComponent();

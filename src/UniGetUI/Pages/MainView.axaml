@@ -18,19 +18,19 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <widgets:BetterMenu x:Name="MoreNavButtonMenu" Placement="Right">
+            <widgets:BetterMenu x:Key="MoreNavButtonMenu" Placement="Right">
                 <widgets:BetterMenuItem
-                    Name="WingetUILogs"
+                    x:Name="WingetUILogs"
                     Click="UniGetUILogs_Click"
                     IconName="buggy"
                     Text="WingetUI Log" />
                 <widgets:BetterMenuItem
-                    Name="ManagerLogsMenu"
+                    x:Name="ManagerLogsMenu"
                     Click="ManagerLogsMenu_Click"
                     IconName="console"
                     Text="Package Manager logs" />
                 <widgets:BetterMenuItem
-                    Name="OperationHistoryMenu"
+                    x:Name="OperationHistoryMenu"
                     Click="OperationHistoryMenu_Click"
                     IconName="history"
                     Text="Operation history" />
@@ -40,55 +40,55 @@
                     IconName="info_round"
                     IsEnabled="False" />
                 <widgets:BetterMenuItem
-                    Name="ReleaseNotesMenu"
+                    x:Name="ReleaseNotesMenu"
                     Click="ReleaseNotesMenu_Click"
                     IconName="megaphone"
                     Text="Release notes" />
                 <Separator Height="5" />
                 <widgets:BetterMenuItem
-                    Name="HelpMenu"
+                    x:Name="HelpMenu"
                     Click="HelpMenu_Click"
                     IconName="help"
                     Text="Help" />
                 <widgets:BetterMenuItem
-                    Name="InfoMenu"
+                    x:Name="InfoMenu"
                     Click="AboutNavButton_Click"
                     IconName="Info_Round"
                     Text="About" />
                 <Separator Height="5" />
                 <widgets:BetterMenuItem
-                    Name="QuitWingetUI"
+                    x:Name="QuitWingetUI"
                     Click="QuitUniGetUI_Click"
                     IconName="close_round"
                     Text="Quit WingetUI" />
             </widgets:BetterMenu>
 
-            <widgets:BetterMenu x:Name="OperationListMenu" Placement="Bottom">
+            <widgets:BetterMenu x:Key="OperationListMenu" Placement="Bottom">
                 <widgets:BetterMenuItem
-                    Name="RetryFailedOps"
+                    x:Name="RetryFailedOps"
                     Click="RetryFailedOps_Click"
                     IconName="Reload"
                     Text="Retry failed operations" />
                 <Separator />
                 <widgets:BetterMenuItem
-                    Name="ClearSuccessful"
+                    x:Name="ClearSuccessful"
                     Click="ClearSuccessfulOps_Click"
                     IconName="ClipboardList"
                     Text="Clear successful operations" />
                 <widgets:BetterMenuItem
-                    Name="ClearAllFinished"
+                    x:Name="ClearAllFinished"
                     Click="ClearAllFinished_OnClick"
                     IconName="ClipboardList"
                     Text="Clear finished operations" />
                 <Separator />
                 <widgets:BetterMenuItem
-                    Name="CancellAllOps"
+                    x:Name="CancellAllOps"
                     Click="CancellAllOps_Click"
                     IconName="Cross"
                     Text="Cancel all operations" />
             </widgets:BetterMenu>
 
-            <DataTemplate x:Key="OperationBadgeTemplate">
+            <DataTemplate x:Key="OperationBadgeTemplate" x:DataType="operationWidgets:OperationBadge">
                 <Button
                     Width="32"
                     Height="32"
@@ -119,16 +119,13 @@
                 </Button>
             </DataTemplate>
 
-            <DataTemplate x:Key="OperationTemplate">
+            <DataTemplate x:Key="OperationTemplate" x:DataType="operationWidgets:OperationControl">
                 <Grid
                    
                     Background="{Binding Background}">
                     <Grid.Styles>
                         <Style Selector="Grid">
                             <Setter Property="Background" Value="{DynamicResource SystemFillColorNeutralBackgroundBrush}" />
-                            <Setter Property="BorderBrush" Value="{StaticResource ExpanderContentBorderBrush}" />
-                            <Setter Property="BorderThickness" Value="1" />
-                            <Setter Property="CornerRadius" Value="8" />
                             <Setter Property="Margin" Value="0" />
                         </Style>
                     </Grid.Styles>
@@ -143,15 +140,13 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <Style Selector="Button">
-                                <Setter Property="Height" Value="32" />
-                                <Setter Property="CornerRadius" Value="2" />
-                                <Setter Property="BorderThickness" Value="0" />
-                            </Style>
-                        </ResourceDictionary>
-                    </Grid.Resources>
+                    <Grid.Styles>
+                        <Style Selector="Button">
+                            <Setter Property="Height" Value="32" />
+                            <Setter Property="CornerRadius" Value="2" />
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Style>
+                    </Grid.Styles>
                     <Image
                         Grid.Column="0"
                         Width="32"
@@ -171,7 +166,6 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Left"
-                        Click="{Binding LiveLineClick}"
                         Content="{Binding LiveLine}"
                         CornerRadius="5"
                         FontFamily="Consolas" />
@@ -208,7 +202,6 @@
                         Margin="6,0,1,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Click="{Binding ButtonClick}"
                         Content="{Binding ButtonText}"
                         CornerRadius="6,0,0,6" />
                     <Button
@@ -220,9 +213,7 @@
                         VerticalAlignment="Center"
                         BorderThickness="0"
                         CornerRadius="0,6,6,0"
-                        Flyout="{Binding OpMenu}"
-                        GotFocus="{Binding LoadMenu}"
-                        PointerEntered="{Binding LoadMenu}">
+                        Flyout="{Binding OpMenu}">
                         <TextBlock Text="&#xE712;" />
                     </Button>
                 </Grid>
@@ -318,7 +309,7 @@
                         Text="Package managers" />
                     <controls1:CustomNavViewItem
                         x:Name="MoreNavBtn"
-                        Icon="More"
+                        GlyphIcon="&#xE712;"
                         IconSize="20"
                         Tag="Null"
                         Tapped="MoreNavBtn_Tapped"

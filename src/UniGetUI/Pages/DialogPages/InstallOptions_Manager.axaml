@@ -41,12 +41,10 @@
            
             HorizontalAlignment="Stretch"
             Background="{DynamicResource SystemAltLowColor}"
-            CornerRadius="8"
             Spacing="8">
 
             <!--  ADMIN, HASH AND INTERACTIVE CHECKBOXES  -->
             <WrapPanel
-                Padding="8,0"
                 HorizontalAlignment="Center">
                 <CheckBox Name="AdminCheckBox" Click="AdminCheckBox_Click" />
                 <CheckBox Name="InteractiveCheckBox" Click="InteractiveCheckBox_Click" />

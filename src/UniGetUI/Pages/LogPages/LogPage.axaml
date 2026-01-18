@@ -64,7 +64,7 @@
             x:FieldModifier="protected"
             Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="8"
-            HorizontalScrollMode="Disabled">
+            HorizontalScrollBarVisibility="Disabled">
             <SelectableTextBlock
                 Name="LogTextBox"
                 Margin="8"

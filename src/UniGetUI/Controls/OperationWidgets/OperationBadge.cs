@@ -3,11 +3,11 @@ using UniGetUI.Interface.Enums;
 namespace UniGetUI.Controls.OperationWidgets;
 public class OperationBadge
 {
-    public string Tooltip;
-    public string PrimaryBanner;
-    public string SecondaryBanner;
-    public bool SecondaryBannerVisible;
-    public IconType Icon;
+    public string Tooltip { get; set; }
+    public string PrimaryBanner { get; set; }
+    public string SecondaryBanner { get; set; }
+    public bool SecondaryBannerVisible { get; set; }
+    public IconType Icon { get; set; }
 
     public OperationBadge(string tooltip, IconType icon, string primaryBanner, string? secondaryBanner = null)
     {

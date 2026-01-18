@@ -21,7 +21,7 @@ namespace UniGetUI.Interface
     public partial class DesktopShortcutsManager : UserControl
     {
         public event EventHandler? Close;
-        private readonly ObservableCollection<ShortcutEntry> Shortcuts = [];
+        public ObservableCollection<ShortcutEntry> Shortcuts { get; } = [];
 
         public DesktopShortcutsManager()
         {

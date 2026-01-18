@@ -23,7 +23,7 @@ namespace UniGetUI.Interface.Pages.AboutPages
 
     public partial class ThirdPartyLicenses : UserControl
     {
-        public ObservableCollection<LibraryLicense> Licenses = [];
+        public ObservableCollection<LibraryLicense> Licenses { get; } = [];
 
         public ThirdPartyLicenses()
         {

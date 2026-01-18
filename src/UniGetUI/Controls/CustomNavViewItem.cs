@@ -9,23 +9,39 @@ namespace UniGetUI.Controls;
 internal partial class CustomNavViewItem : ListBoxItem
 {
     int _iconSize = 28;
-    // TODO: Avalonia - ListBoxItem does not have Icon property
-    // Icon support needs to be reimplemented using a custom template or attached property
-    /*
+    
+    // Icon properties as StyledProperties for Avalonia
+    public static readonly StyledProperty<string?> GlyphIconProperty =
+        AvaloniaProperty.Register<CustomNavViewItem, string?>(nameof(GlyphIcon));
+
+    public string? GlyphIcon
+    {
+        get => GetValue(GlyphIconProperty);
+        set => SetValue(GlyphIconProperty, value);
+    }
+
+    public static readonly StyledProperty<Control?> IconProperty =
+        AvaloniaProperty.Register<CustomNavViewItem, Control?>(nameof(Icon));
+
+    public Control? Icon
+    {
+        get => GetValue(IconProperty);
+        set => SetValue(IconProperty, value);
+    }
+
+    public static readonly StyledProperty<Control?> InfoBadgeProperty =
+        AvaloniaProperty.Register<CustomNavViewItem, Control?>(nameof(InfoBadge));
+
+    public Control? InfoBadge
+    {
+        get => GetValue(InfoBadgeProperty);
+        set => SetValue(InfoBadgeProperty, value);
+    }
+
     public IconType LocalIcon
     {
-        set => base.Icon = new LocalIcon(value);
-
+        set => Icon = new LocalIcon(value);
     }
-    public string GlyphIcon
-    {
-        set => base.Icon = new TextBlock() { Glyph = value };
-    }
-    public new IconElement Icon
-    {
-        set => base.Icon = value;
-    }
-    */
 
     public bool IsLoading
     {

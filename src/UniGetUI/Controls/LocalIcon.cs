@@ -13,9 +13,18 @@ namespace UniGetUI.Interface.Widgets
     {
         public static FontFamily font = (FontFamily)Application.Current.Resources["SymbolFont"];
 
+        // Define as Avalonia StyledProperty for proper binding support
+        public static readonly StyledProperty<IconType> IconProperty =
+            AvaloniaProperty.Register<LocalIcon, IconType>(nameof(Icon));
+
         public IconType Icon
         {
-            set => Text = $"{(char)value}";
+            get => GetValue(IconProperty);
+            set
+            {
+                SetValue(IconProperty, value);
+                Text = $"{(char)value}";
+            }
         }
 
         public LocalIcon()

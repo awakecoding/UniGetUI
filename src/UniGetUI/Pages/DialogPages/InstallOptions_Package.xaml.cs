@@ -445,6 +445,27 @@ namespace UniGetUI.Interface.Dialogs
             Close?.Invoke(this, EventArgs.Empty);
         }
 
+        private async void ResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // Reset to default options - reload from saved settings
+            await LoadVersions();
+            await LoadIgnoredUpdates();
+            await _loadProcesses();
+        }
+
+        private async void SaveButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // Save current options
+            var options = await GetUpdatedOptions(updateDetachedOptions: true);
+            await InstallOptionsFactory.SaveForPackageAsync(options, Package);
+        }
+
+        private void InstallButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // Trigger install and close
+            Close?.Invoke(this, EventArgs.Empty);
+        }
+
         private void CustomParameters_TextChanged(object sender, TextChangedEventArgs e) => _ = GenerateCommand();
         private void ScopeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) => _ = GenerateCommand();
         private void VersionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => _ = GenerateCommand();
@@ -548,7 +569,7 @@ namespace UniGetUI.Interface.Dialogs
 
     public class IOP_Proc
     {
-        public readonly string Name;
+        public string Name { get; init; }
         public IOP_Proc(string name)
         {
             Name = name;

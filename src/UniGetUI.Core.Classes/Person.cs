@@ -2,12 +2,13 @@
 {
     public readonly struct Person
     {
-        public readonly string Name;
-        public readonly Uri? ProfilePicture;
-        public readonly Uri? GitHubUrl;
-        public readonly bool HasPicture;
-        public readonly bool HasGitHubProfile;
-        public readonly string Language;
+        // Properties for Avalonia compiled binding support
+        public string Name { get; init; }
+        public Uri? ProfilePicture { get; init; }
+        public Uri? GitHubUrl { get; init; }
+        public bool HasPicture { get; init; }
+        public bool HasGitHubProfile { get; init; }
+        public string Language { get; init; }
 
         public Person(string Name, Uri? ProfilePicture = null, Uri? GitHubUrl = null, string Language = "")
         {

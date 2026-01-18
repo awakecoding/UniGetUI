@@ -35,7 +35,7 @@ namespace UniGetUI.Interface.Dialogs
         private readonly OperationType OperationRole;
 
         private bool PackageHasScreenshots;
-        public ObservableCollection<TextBlock> ShowableTags = [];
+        public ObservableCollection<TextBlock> ShowableTags { get; } = [];
 
         // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
         private TextBlock UpdateDate_Label = new();

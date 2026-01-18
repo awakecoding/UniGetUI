@@ -13,7 +13,7 @@ namespace UniGetUI.Interface.Pages.AboutPages
     /// </summary>
     public partial class Contributors : UserControl
     {
-        public ObservableCollection<Person> ContributorList = [];
+        public ObservableCollection<Person> ContributorList { get; } = [];
         public Contributors()
         {
             InitializeComponent();
