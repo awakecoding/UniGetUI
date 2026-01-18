@@ -36,6 +36,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// </summary>
     public partial class PackageManagerPage : UserControl, ISettingsPage
     {
+        // TODO: Avalonia - InfoBar is WinUI control, needs Avalonia equivalent
         private Panel ManagerStatusBar = null!;
         
         IPackageManager? Manager;
@@ -58,7 +59,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             Manager = null;
             if (managerType is not Type Manager_T) throw new InvalidDataException("The passed parameter was not a type");
             // Can't do switch with types
-            if (Manager_T == typeof(WinGet)) Manager = PEInterface.WinGet;
+            // TODO: Avalonia - PEInterface.WinGet property doesn't exist yet
+            if (Manager_T == typeof(WinGet)) Manager = null; // PEInterface.WinGet;
             else if (Manager_T == typeof(Chocolatey)) Manager = PEInterface.Chocolatey;
             else if (Manager_T == typeof(Scoop)) Manager = PEInterface.Scoop;
             else if (Manager_T == typeof(Npm)) Manager = PEInterface.Npm;
@@ -95,7 +97,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             GoToSecureSettingsBtn.IsVisible = !SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths);
             ExecutableComboBox.IsEnabled = SecureSettings.Get(SecureSettings.K.AllowCustomManagerPaths);
 
-            InstallOptionsPanel.Description = new InstallOptions_Manager(Manager);
+            // TODO: Avalonia - Cannot convert InstallOptions_Manager to string/object for Description
+            // InstallOptionsPanel.Description = new InstallOptions_Manager(Manager);
             InstallOptionsPanel.Padding = new(18, 24, 18, 24);
 
             // ----------------------- SOURCES CONTROL -------------------
@@ -111,13 +114,14 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                     Padding = new(24, 24, 0, 24),
                 };
                 var man = new SourceManager(Manager);
-                SourceManagerCard.Description = man;
+                // TODO: Avalonia - Cannot convert SourceManager to string/object for Description
+                // SourceManagerCard.Description = man;
                 ExtraControls.Children.Add(SourceManagerCard);
 
                 ExtraControls.Children.Add(new TextBlock()
                 {
                     Margin = new(4, 24, 4, 8),
-                    FontWeight = FontWeight.SemiBold,
+                    FontWeight = Avalonia.Media.FontWeight.SemiBold,
                     Text=CoreTools.Translate("Advanced options")
                 });
             }
@@ -345,7 +349,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 p.Children.Add(VcPkgRootLabel);
                 p.Children.Add(ResetVcPkgRootLabel);
                 p.Children.Add(OpenVcPkgRootLabel);
-                Vcpkg_CustomVcpkgRoot.Description = p;
+                // TODO: Avalonia - Cannot convert StackPanel to string/object for Description
+                // Vcpkg_CustomVcpkgRoot.Description = p;
                 Vcpkg_CustomVcpkgRoot.Click += (_, _) => _ = ReloadPackageManager();
                 ExtraControls.Children.Add(Vcpkg_CustomVcpkgRoot);
             }
@@ -407,42 +412,46 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             // Load version block text and style
             if (_isLoading)
             {
-                ManagerStatusBar.Severity = int.Informational;
-                ManagerStatusBar.Title = CoreTools.Translate("Please wait...");
-                ManagerStatusBar.Message = "";
+                // TODO: Avalonia - InfoBar properties (Severity, Title, Message) need implementation
+                // ManagerStatusBar.Severity = InfoBarSeverity.Informational;
+                // ManagerStatusBar.Title = CoreTools.Translate("Please wait...");
+                // ManagerStatusBar.Message = "";
             }
             else if (!Manager.IsEnabled())
             {
-                ManagerStatusBar.Severity = int.Warning;
-                ManagerStatusBar.Title = CoreTools.Translate("{pm} is disabled").Replace("{pm}", Manager.DisplayName);
-                ManagerStatusBar.Message = CoreTools.Translate("Enable it to install packages from {pm}.").Replace("{pm}", Manager.DisplayName);
+                // TODO: Avalonia - InfoBar properties (Severity, Title, Message) need implementation
+                // ManagerStatusBar.Severity = InfoBarSeverity.Warning;
+                // ManagerStatusBar.Title = CoreTools.Translate("{pm} is disabled").Replace("{pm}", Manager.DisplayName);
+                // ManagerStatusBar.Message = CoreTools.Translate("Enable it to install packages from {pm}.").Replace("{pm}", Manager.DisplayName);
             }
             else if (Manager.Status.Found)
             {
-                ManagerStatusBar.Severity = int.Success;
-                ManagerStatusBar.Title = CoreTools.Translate("{pm} is enabled and ready to go").Replace("{pm}", Manager.DisplayName);
+                // TODO: Avalonia - InfoBar properties (Severity, Title, Message) need implementation
+                // ManagerStatusBar.Severity = InfoBarSeverity.Success;
+                // ManagerStatusBar.Title = CoreTools.Translate("{pm} is enabled and ready to go").Replace("{pm}", Manager.DisplayName);
                 if (!Manager.Status.Version.Contains('\n'))
                 {
-                    ManagerStatusBar.Message = CoreTools.Translate(
-                            "{pm} version:").Replace("{pm}", Manager.DisplayName) + $" {Manager.Status.Version}";
+                    // ManagerStatusBar.Message = CoreTools.Translate(
+                    //         "{pm} version:").Replace("{pm}", Manager.DisplayName) + $" {Manager.Status.Version}";
                 }
                 else if (ShowVersion)
                 {
-                    ManagerStatusBar.Message = CoreTools.Translate("{pm} version:").Replace("{pm}", Manager.DisplayName);
+                    // ManagerStatusBar.Message = CoreTools.Translate("{pm} version:").Replace("{pm}", Manager.DisplayName);
                     LongVersionTextBlock.IsVisible = true;
                 }
                 else
                 {
-                    ManagerStatusBar.Message = "";
+                    // ManagerStatusBar.Message = "";
                     ShowVersionHyperlink.IsVisible = true;
                 }
             }
             else // manager was not found
             {
-                ManagerStatusBar.Severity = int.Error;
-                ManagerStatusBar.Title = CoreTools.Translate("{pm} was not found!").Replace("{pm}", Manager.DisplayName);
-                ManagerStatusBar.Message = CoreTools.Translate("You may need to install {pm} in order to use it with WingetUI.")
-                    .Replace("{pm}", Manager.DisplayName);
+                // TODO: Avalonia - InfoBar properties (Severity, Title, Message) need implementation
+                // ManagerStatusBar.Severity = InfoBarSeverity.Error;
+                // ManagerStatusBar.Title = CoreTools.Translate("{pm} was not found!").Replace("{pm}", Manager.DisplayName);
+                // ManagerStatusBar.Message = CoreTools.Translate("You may need to install {pm} in order to use it with WingetUI.")
+                //     .Replace("{pm}", Manager.DisplayName);
             }
         }
 

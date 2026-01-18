@@ -221,7 +221,8 @@ public class AutoUpdater
         // Check if the user has disabled updates
         if (!ManualCheck && Settings.Get(Settings.K.DisableAutoUpdateWingetUI))
         {
-            Banner.IsOpen = false;
+            // TODO: Avalonia - UserControl used as InfoBar placeholder, needs InfoBar properties
+            // Banner.IsOpen = false;
             Logger.Warn("User disabled updates!");
             return true;
         }
@@ -329,12 +330,13 @@ public class AutoUpdater
                 return;
             }
 
-            Banner.Title = Title;
-            Banner.Message = Message;
-            Banner.Severity = MessageSeverity;
-            Banner.IsClosable = BannerClosable;
-            Banner.ActionButton = ActionButton;
-            Banner.IsOpen = true;
+            // TODO: Avalonia - UserControl used as InfoBar placeholder, needs InfoBar properties
+            // Banner.Title = Title;
+            // Banner.Message = Message;
+            // Banner.Severity = MessageSeverity;
+            // Banner.IsClosable = BannerClosable;
+            // Banner.ActionButton = ActionButton;
+            // Banner.IsOpen = true;
         }
         catch (Exception ex)
         {

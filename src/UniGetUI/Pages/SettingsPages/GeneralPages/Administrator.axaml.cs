@@ -21,11 +21,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 DoCacheAdminRightsForBatches.IsEnabled = true;
             }
 
-            WarningTitlebar.Title = CoreTools.Translate("Warning") + "!";
-            WarningTitlebar.Message =
-                CoreTools.Translate("The following settings may pose a security risk, hence they are disabled by default.") + " " +
-                CoreTools.Translate("Enable the settings below if and only if you fully understand what they do, and the implications they may have.") + "\n\n" +
-                CoreTools.Translate("The settings will list, in their descriptions, the potential security issues they may have.") + " ";
+            // TODO: Avalonia - Border used as InfoBar placeholder, needs InfoBar properties
+            // WarningTitlebar.Title = CoreTools.Translate("Warning") + "!";
+            // WarningTitlebar.Message =
+            //     CoreTools.Translate("The following settings may pose a security risk, hence they are disabled by default.") + " " +
+            //     CoreTools.Translate("Enable the settings below if and only if you fully understand what they do, and the implications they may have.") + "\n\n" +
+            //     CoreTools.Translate("The settings will list, in their descriptions, the potential security issues they may have.") + " ";
                 
             AllowCustomManagerPaths.StateChanged += (_, _) => RestartRequired?.Invoke(this, EventArgs.Empty);
 

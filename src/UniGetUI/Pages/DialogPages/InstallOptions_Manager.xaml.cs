@@ -48,7 +48,8 @@ public partial class InstallOptions_Manager : UserControl
 
     private async Task LoadOptions()
     {
-        LoadingIndicator.IsVisible = true;
+        // TODO: Avalonia - LoadingIndicator control not found in XAML
+        // LoadingIndicator.IsVisible = true;
         var options = await InstallOptionsFactory.LoadForManagerAsync(Manager);
 
         // This delay allows the spinner to show,
@@ -156,14 +157,17 @@ public partial class InstallOptions_Manager : UserControl
 
         ResetButton.IsEnabled = true;
         ApplyButton.IsEnabled = true;
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["DefaultButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist, should be Classes or Styles
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["DefaultButtonStyle"];
 
-        LoadingIndicator.IsVisible = false;
+        // TODO: Avalonia - LoadingIndicator control not found in XAML
+        // LoadingIndicator.IsVisible = false;
     }
 
     private async Task SaveOptions()
     {
-        LoadingIndicator.IsVisible = true;
+        // TODO: Avalonia - LoadingIndicator control not found in XAML
+        // LoadingIndicator.IsVisible = true;
         DisableAllInput();
 
         InstallOptions options = new();
@@ -208,7 +212,8 @@ public partial class InstallOptions_Manager : UserControl
 
     private async Task ResetOptions()
     {
-        LoadingIndicator.IsVisible = true;
+        // TODO: Avalonia - LoadingIndicator control not found in XAML
+        // LoadingIndicator.IsVisible = true;
         DisableAllInput();
 
         await InstallOptionsFactory.SaveForManagerAsync(new(), Manager);
@@ -235,26 +240,31 @@ public partial class InstallOptions_Manager : UserControl
 
     private void CustomParameters_TextChanged(object sender, TextChangedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist, should be Classes or Styles
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void ResetDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         CustomInstallLocation.Text = DefaultLocationLabel;
         ResetDir.IsEnabled = false;
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist, should be Classes or Styles
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void SelectDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
+#if WINDOWS
         ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
         string folder = openPicker.Show();
         if (folder != string.Empty)
         {
             CustomInstallLocation.Text = folder.TrimEnd('\\') + "\\%PACKAGE%";
             ResetDir.IsEnabled = true;
-            ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+            // TODO: Avalonia - Button.Avalonia property doesn't exist, should be Classes or Styles
+            // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
         }
+#endif
     }
 
     private void ScopeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

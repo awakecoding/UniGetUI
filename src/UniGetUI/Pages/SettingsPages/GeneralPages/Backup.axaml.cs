@@ -59,6 +59,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
 
         private void ChangeBackupDirectory_Click(object sender, EventArgs e)
         {
+#if WINDOWS
             ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
             string folder = openPicker.Show();
             if (folder != string.Empty)
@@ -67,6 +68,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
                 BackupDirectoryLabel.Text = folder;
                 ResetBackupDirectory.IsEnabled = true;
             }
+#endif
         }
 
         public void EnablePackageBackupUI(bool enabled)
@@ -152,7 +154,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             LogOutButton.IsVisible = false;
             GitHubUserTitle.Text = CoreTools.Translate("Current status: Not logged in");
             GitHubUserSubtitle.Text = CoreTools.Translate("Log in to enable cloud backup");
-            GitHubImage.ProfilePicture = null;
+            // TODO: Avalonia - Border/PersonPicture.ProfilePicture property placeholder
+            // GitHubImage.ProfilePicture = null;
         }
 
         private async Task GenerateLogoutUI(GitHubAuthService authService)
@@ -166,7 +169,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             LogOutButton.IsVisible = true;
             GitHubUserTitle.Text = CoreTools.Translate("You are logged in as {0} (@{1})", user.Name, user.Login);
             GitHubUserSubtitle.Text = CoreTools.Translate("Nice! Backups will be uploaded to a private gist on your account");
-            GitHubImage.Initials = "";
+            // TODO: Avalonia - Border/PersonPicture.Initials property placeholder
+            // GitHubImage.Initials = "";
             // TODO: Avalonia - Load Bitmap from URL
             // GitHubImage.ProfilePicture = new Avalonia.Media.Imaging.Bitmap(user.AvatarUrl);
         }

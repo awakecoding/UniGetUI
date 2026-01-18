@@ -59,7 +59,7 @@ public static partial class DialogHelper
             TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 10),
             Opacity = .7F,
-            FontStyle = Windows.UI.Text.FontStyle.Italic,
+            FontStyle = Avalonia.Media.FontStyle.Italic,
         };
         p.Children.Add(infotext);
 
@@ -80,7 +80,7 @@ public static partial class DialogHelper
             TextWrapping = Avalonia.Media.TextWrapping.Wrap,
             Margin = new Thickness(0, 0, 0, 4),
             Opacity = .7F,
-            IsTextSelectionEnabled = true,
+            // TODO: Avalonia - TextBlock.IsTextSelectionEnabled not supported
             FontFamily = new FontFamily("Consolas"),
         };
         p.Children.Add(manualInstallCommand);
@@ -98,6 +98,8 @@ public static partial class DialogHelper
         ProgressBar progress = new() { IsIndeterminate = false, Opacity = .0F };
         p.Children.Add(progress);
 
+        // TODO: Avalonia - Window.PrimaryButtonClick not supported, need to implement button click handling
+        /*
         dialog.PrimaryButtonClick += async (_, _) =>
         {
             if (!has_installed)
@@ -171,6 +173,7 @@ public static partial class DialogHelper
                 }
             }
         };
+        */
 
         dialog.Closing += (_, e) =>
         {
@@ -269,17 +272,19 @@ public static partial class DialogHelper
 
     public static async Task WarnAboutAdminRights()
     {
-        Window AdminDialog = new()
-        {
-            Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
-        };
+        // TODO: Avalonia - Window collection initializer with Style not supported
+        Window AdminDialog = new();
+        // TODO: Avalonia - Apply style: Application.Current.Resources["DefaultContentDialogStyle"]
 
+        // TODO: Avalonia - Window.XamlRoot not supported
+        /*
         while (Window.XamlRoot is null)
         {
             await Task.Delay(100);
         }
 
         // TODO: Avalonia - AdminDialog.XamlRoot = Window.XamlRoot;
+        */
         // TODO: Avalonia - AdminDialog.PrimaryButtonText = CoreTools.Translate("I understand");
         // TODO: Avalonia - AdminDialog.DefaultButton = ContentDialogButton.Primary;
         AdminDialog.Title = CoreTools.Translate("Administrator privileges");
@@ -391,6 +396,8 @@ public static partial class DialogHelper
 
     }
 
+    // TODO: Avalonia - ShowTelemetryDialog has incompatibilities: LineBreak type conversion, Button.NavigateUri/Inlines, WindowClosingEventArgs.Result
+    /*
     public static async Task ShowTelemetryDialog()
     {
         var dialog = DialogFactory.Create();
@@ -448,7 +455,10 @@ public static partial class DialogHelper
             Settings.Set(Settings.K.DisableTelemetry, true);
         }
     }
+    */
 
+    // TODO: Avalonia - ShowTelemetryBanner has incompatibilities: MainWindow.TelemetryWarner, Button.Avalonia.Styling.Style
+    /*
     public static void ShowTelemetryBanner()
     {
         Window.TelemetryWarner.Title = CoreTools.Translate("Share anonymous usage data");
@@ -498,6 +508,7 @@ public static partial class DialogHelper
         Window.TelemetryWarner.CloseButtonClick += (_, _) => Settings.Set(Settings.K.ShownTelemetryBanner, true);
 
     }
+    */
 
     public static async Task ConfirmSetDeleteAllShortcutsSetting()
     {

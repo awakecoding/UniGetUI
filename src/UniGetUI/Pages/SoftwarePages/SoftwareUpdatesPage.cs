@@ -354,6 +354,7 @@ namespace UniGetUI.Interface.SoftwarePages
 
                 if (EnableAutoUpdate)
                 {
+#if WINDOWS
                     var connectionCost = NetworkInformation.GetInternetConnectionProfile()?.GetConnectionCost().NetworkCostType;
                     if (connectionCost is NetworkCostType.Fixed or NetworkCostType.Variable && Settings.Get(Settings.K.DisableAUPOnMeteredConnections))
                     {
@@ -372,6 +373,7 @@ namespace UniGetUI.Interface.SoftwarePages
                         Logger.Warn("Updates will not be installed automatically because battery saver is enabled.");
                         EnableAutoUpdate = false;
                     }
+#endif
                 }
 
                 if (Environment.GetCommandLineArgs().Contains("--updateapps"))

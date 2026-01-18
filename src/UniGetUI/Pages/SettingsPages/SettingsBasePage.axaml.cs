@@ -32,14 +32,16 @@ namespace UniGetUI.Pages.SettingsPages
             MainNavigationFrame.SubscribeNavigating(MainNavigationFrame_Navigating);
             MainNavigationFrame.Navigate(isManagers ? typeof(ManagersHomepage) : typeof(SettingsHomepage), null, new DrillInNavigationTransitionInfo());
 
-            RestartRequired.Message = CoreTools.Translate("Restart WingetUI to fully apply changes");
+            // TODO: Avalonia - Border used as InfoBar placeholder, needs InfoBar properties
+            // RestartRequired.Message = CoreTools.Translate("Restart WingetUI to fully apply changes");
             var RestartButton = new Button
             {
                 HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
                 Content = CoreTools.Translate("Restart WingetUI"),
             };
             RestartButton.Click += (_, _) => MainApp.Instance.KillAndRestart();
-            RestartRequired.ActionButton = RestartButton;
+            // TODO: Avalonia - Border used as InfoBar placeholder, needs InfoBar properties
+            // RestartRequired.ActionButton = RestartButton;
 
         }
 
@@ -75,7 +77,8 @@ namespace UniGetUI.Pages.SettingsPages
 
         private void Page_RestartRequired(object? sender, EventArgs e)
         {
-            RestartRequired.IsOpen = true;
+            // TODO: Avalonia - Border used as InfoBar placeholder, needs InfoBar properties
+            // RestartRequired.IsOpen = true;
         }
 
         private void Page_NavigationRequested(object? sender, Type e)
