@@ -30,7 +30,9 @@ namespace UniGetUI.Interface.Pages.LogPage
             bool IS_DARK = true; // ActualTheme == Microsoft.UI.Xaml.ElementTheme.Dark;
 
             LogEntry[] logs = Logger.GetLogs();
-            LogTextBox.Blocks.Clear();
+            // TODO: Avalonia - TextBox.Blocks doesn't exist, needs alternative approach
+            // LogTextBox.Blocks.Clear();
+            string logText = "";
             foreach (LogEntry log_entry in logs)
             {
                 Avalonia.Controls.Documents.Paragraph p = new();
@@ -74,19 +76,25 @@ namespace UniGetUI.Interface.Pages.LogPage
                 {
                     if (date_length == -1)
                     {
-                        // TODO: Avalonia - Run.Foreground not supported, color removed
-                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"[{log_entry.Time}] {line}\n" });
+                        // TODO: Avalonia - Run.Foreground not supported, building plain text instead
+                        // p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = $"[{log_entry.Time}] {line}\n" });
+                        logText += $"[{log_entry.Time}] {line}\n";
                         date_length = $"[{log_entry.Time}] ".Length;
                     }
                     else
                     {
-                        // TODO: Avalonia - Run.Foreground not supported, color removed
-                        p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = new string(' ', date_length) + line + "\n" });
+                        // TODO: Avalonia - Run.Foreground not supported, building plain text instead
+                        // p.Inlines.Add(new Avalonia.Controls.Documents.Run { Text = new string(' ', date_length) + line + "\n" });
+                        logText += new string(' ', date_length) + line + "\n";
                     }
-                } ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
-                LogTextBox.Blocks.Add(p);
+                }
+                // TODO: Avalonia - TextBox.Blocks doesn't exist, using Text property instead
+                // ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text = ((Avalonia.Controls.Documents.Run)p.Inlines[^1]).Text.TrimEnd();
+                // LogTextBox.Blocks.Add(p);
             }
-            if (isReload) MainScroller.ScrollToVerticalOffset(MainScroller.ScrollableHeight);
+            LogTextBox.Text = logText;
+            // TODO: Avalonia - ScrollViewer methods don't exist, comment out for now
+            // if (isReload) MainScroller.ScrollToVerticalOffset(MainScroller.ScrollableHeight);
         }
     }
 }

@@ -272,7 +272,8 @@ public partial class OperationControl: INotifyPropertyChanged
                 OpMenu.Items.Add(item);
             }
 
-            OpMenu.Items.Add(new MenuFlyoutSeparator());
+            // TODO: Avalonia - MenuFlyoutSeparator doesn't exist, use Separator
+            OpMenu.Items.Add(new Separator());
         }
 
         if (Operation.Status is OperationStatus.InQueue)
@@ -290,7 +291,8 @@ public partial class OperationControl: INotifyPropertyChanged
             putLast.Click += (_, _) => Operation.BackOfTheQueue();
             OpMenu.Items.Add(putLast);
 
-            OpMenu.Items.Add(new MenuFlyoutSeparator());
+            // TODO: Avalonia - MenuFlyoutSeparator doesn't exist, use Separator
+            OpMenu.Items.Add(new Separator());
         }
 
         // Create Cancel/Retry buttons
@@ -310,7 +312,8 @@ public partial class OperationControl: INotifyPropertyChanged
             var extraRetry = GetRetryOptions(() => { });
             if (extraRetry.Count != 0)
             {
-                OpMenu.Items.Add(new MenuFlyoutSeparator());
+                // TODO: Avalonia - MenuFlyoutSeparator doesn't exist, use Separator
+                OpMenu.Items.Add(new Separator());
 
                 foreach(var item in extraRetry)
                 {
@@ -559,7 +562,8 @@ public partial class OperationControl: INotifyPropertyChanged
             if (packageOp is UpdatePackageOperation &&
                 packageOp.Status is OperationStatus.Failed or OperationStatus.Canceled)
             {
-                retryOptionsMenu.Add(new MenuFlyoutSeparator());
+                // TODO: Avalonia - MenuFlyoutSeparator doesn't exist, use Separator
+                retryOptionsMenu.Add(new Separator());
 
                 var reinstall = new BetterMenuItem() { Text = CoreTools.Translate("Reinstall package") };
                 reinstall.IconName = IconType.Download;
@@ -582,7 +586,8 @@ public partial class OperationControl: INotifyPropertyChanged
                 };
                 retryOptionsMenu.Add(uninstallReinstall);
 
-                retryOptionsMenu.Add(new MenuFlyoutSeparator());
+                // TODO: Avalonia - MenuFlyoutSeparator doesn't exist, use Separator
+                retryOptionsMenu.Add(new Separator());
 
                 var skipThisVersion = new BetterMenuItem() { Text = CoreTools.Translate("Skip this version") };
                 skipThisVersion.IconName = IconType.Skip;
