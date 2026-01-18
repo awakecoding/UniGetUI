@@ -19,6 +19,9 @@ namespace UniGetUI.Interface.Widgets
         public ProgressBar _loading;
         private bool IS_INVERTED;
 
+        // Property to expose _checkbox for XAML binding
+        public ToggleSwitch CheckBox => _checkbox;
+
         private SecureSettings.K setting_name = SecureSettings.K.Unset;
         public SecureSettings.K SettingName
         {

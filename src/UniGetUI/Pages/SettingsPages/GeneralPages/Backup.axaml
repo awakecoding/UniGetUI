@@ -28,14 +28,12 @@
                 Text="Package backup" />
 
             <Toolkit:SettingsCard CornerRadius="8">
-                <Toolkit:SettingsCard.Description>
-                    <StackPanel Orientation="Vertical">
-                        <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will include the complete list of the installed packages and their installation options. Ignored updates and skipped versions will also be saved." />
-                        <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will NOT include any binary file nor any program's saved data." />
-                        <widgets:TranslatedTextBlock Prefix=" ● " Text="The size of the backup is estimated to be less than 1MB." />
-                        <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will be performed after login." />
-                    </StackPanel>
-                </Toolkit:SettingsCard.Description>
+                <StackPanel Orientation="Vertical">
+                    <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will include the complete list of the installed packages and their installation options. Ignored updates and skipped versions will also be saved." />
+                    <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will NOT include any binary file nor any program's saved data." />
+                    <widgets:TranslatedTextBlock Prefix=" ● " Text="The size of the backup is estimated to be less than 1MB." />
+                    <widgets:TranslatedTextBlock Prefix=" ● " Text="The backup will be performed after login." />
+                </StackPanel>
             </Toolkit:SettingsCard>
 
 
@@ -47,7 +45,7 @@
 
             <Toolkit:SettingsCard
                 x:Name="GithubIdentityCard"
-                ContentAlignment="Left"
+                HorizontalContentAlignment="Left"
                 CornerRadius="8,8,0,0">
 
                 <Grid>
@@ -89,9 +87,9 @@
                         Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Click="LoginWithGitHubButton_Click"
-                        Style="{DynamicResource AccentButtonStyle}"
+                        Classes="accent"
                         IsVisible="False">
-                        <widgets:TranslatedTextBlock Text="Log in with GitHub" WrappingMode="WrapWholeWords" />
+                        <widgets:TranslatedTextBlock Text="Log in with GitHub" WrappingMode="Wrap" />
                     </Button>
                     <Button
                         x:Name="LogOutButton"
@@ -100,7 +98,7 @@
                         VerticalAlignment="Stretch"
                         Click="LogoutGitHubButton_Click"
                         IsVisible="False">
-                        <widgets:TranslatedTextBlock Text="Log out from GitHub" WrappingMode="WrapWholeWords" />
+                        <widgets:TranslatedTextBlock Text="Log out from GitHub" WrappingMode="Wrap" />
                     </Button>
                     <HyperlinkButton
                         x:Name="MoreInfoBtn"
@@ -109,7 +107,7 @@
                         Padding="0"
                         VerticalAlignment="Stretch"
                         Click="MoreInfoBtn_OnClick">
-                        <widgets:TranslatedTextBlock Text="More details" WrappingMode="WrapWholeWords" />
+                        <widgets:TranslatedTextBlock Text="More details" WrappingMode="Wrap" />
                     </HyperlinkButton>
                 </Grid>
             </Toolkit:SettingsCard>
@@ -119,10 +117,8 @@
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
                 SettingName="EnablePackageBackup_CLOUD"
-                Text="Periodically perform a cloud backup of the installed packages">
-                <widgets:CheckboxCard.Description>
-                    <widgets:TranslatedTextBlock Text="Cloud backup uses a private GitHub Gist to store a list of installed packages" />
-                </widgets:CheckboxCard.Description>
+                Text="Periodically perform a cloud backup of the installed packages"
+                WarningText="Cloud backup uses a private GitHub Gist to store a list of installed packages">
             </widgets:CheckboxCard>
 
             <UserControl Height="16" />
@@ -140,10 +136,7 @@
                 ButtonText="Select backup"
                 Click="RestoreFromGitHubButton_Click"
                 CornerRadius="0,0,8,8"
-                Text="Restore a backup from the cloud">
-                <widgets:ButtonCard.Description>
-                    <widgets:TranslatedTextBlock Text="Begin the process to select a cloud backup and review which packages to restore" />
-                </widgets:ButtonCard.Description>
+                Text="Restore a backup from the cloud&#10;Begin the process to select a cloud backup and review which packages to restore">
             </widgets:ButtonCard>
 
 

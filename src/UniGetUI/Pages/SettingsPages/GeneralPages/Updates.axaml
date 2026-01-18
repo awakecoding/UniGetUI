@@ -34,7 +34,7 @@
                 x:Name="UpdatesCheckIntervalSelector"
                 BorderThickness="1,0"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{x:Bind DisableAutoCheckForUpdates.CheckBox.IsChecked, Mode=OneWay}"
+                IsEnabled="{Binding #DisableAutoCheckForUpdates.CheckBox.IsChecked}"
                 SettingName="UpdatesCheckInterval"
                 Text="Check for updates every:"
                 ValueChanged="ShowRestartBanner" />

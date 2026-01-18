@@ -15,10 +15,7 @@
         <DataTemplate x:Key="PackageTemplate_List" x:DataType="pkgClasses:PackageWrapper">
             <widgets:PackageItemContainer
                 CornerRadius="4"
-                DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
                 Package="{Binding Package}"
-                PreviewKeyDown="{Binding PackageItemContainer_PreviewKeyDown}"
-                RightTapped="{Binding PackageItemContainer_RightTapped}"
                 Wrapper="{Binding Self}">
 
                 <Grid
@@ -186,10 +183,7 @@
             <widgets:PackageItemContainer
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 CornerRadius="4"
-                DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
                 Package="{Binding Package}"
-                PreviewKeyDown="{Binding PackageItemContainer_PreviewKeyDown}"
-                RightTapped="{Binding PackageItemContainer_RightTapped}"
                 Wrapper="{Binding Self}">
 
                 <Grid

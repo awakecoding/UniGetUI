@@ -58,7 +58,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public void ShowRestartBanner(object? sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
 
-        private void ChangeBackupDirectory_Click(object sender, EventArgs e)
+        private void ChangeBackupDirectory_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
 #if WINDOWS
             ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
@@ -112,7 +112,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             CoreTools.Launch(directory);
         }
 
-        private void DoBackup_LOCAL_Click(object sender, EventArgs e) => _ = _doBackup_LOCAL_Click();
+        private void DoBackup_LOCAL_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _doBackup_LOCAL_Click();
         private static async Task _doBackup_LOCAL_Click()
         {
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Performing backup, please wait..."));
@@ -225,7 +225,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             UpdateCloudControlsEnabled();
         }
 
-        private void RestoreFromGitHubButton_Click(object sender, EventArgs e) => _ = _restoreFromGitHubButton_Click();
+        private void RestoreFromGitHubButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _restoreFromGitHubButton_Click();
         private async Task _restoreFromGitHubButton_Click()
         {
             RestorePackagesFromGitHubButton.IsEnabled = false;
@@ -275,7 +275,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void BackupToGitHubButton_Click(object sender, EventArgs e) => _ = _backupToGitHubButton_Click();
+        private void BackupToGitHubButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _backupToGitHubButton_Click();
         private async Task _backupToGitHubButton_Click()
         {
             int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Backing up packages to GitHub Gist..."));

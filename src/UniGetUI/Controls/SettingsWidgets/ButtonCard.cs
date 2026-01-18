@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniGetUI.Core.Tools;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -20,12 +21,12 @@ namespace UniGetUI.Interface.Widgets
             set => Header = CoreTools.Translate(value);
         }
 
-        public new event EventHandler<EventArgs>? Click;
+        public new event EventHandler<RoutedEventArgs>? Click;
 
         public ButtonCard()
         {
             _button.MinWidth = 200;
-            _button.Click += (_, _) => { Click?.Invoke(this, EventArgs.Empty); };
+            _button.Click += (sender, e) => { Click?.Invoke(this, e); };
             Content = _button;
         }
     }
