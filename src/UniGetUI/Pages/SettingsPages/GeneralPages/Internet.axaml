@@ -110,17 +110,17 @@
                             Grid.Column="1"
                             FontWeight="Bold"
                             Text="Package manager"
-                            WrappingMode="WrapWholeWords" />
+                            WrappingMode="Wrap" />
                         <widgets:TranslatedTextBlock
                             Grid.Column="2"
                             FontWeight="Bold"
                             Text="Compatible with proxy"
-                            WrappingMode="WrapWholeWords" />
+                            WrappingMode="Wrap" />
                         <widgets:TranslatedTextBlock
                             Grid.Column="3"
                             FontWeight="Bold"
                             Text="Compatible with authentication"
-                            WrappingMode="WrapWholeWords" />
+                            WrappingMode="Wrap" />
 
                         <StackPanel
                             Name="ManagersPanel"

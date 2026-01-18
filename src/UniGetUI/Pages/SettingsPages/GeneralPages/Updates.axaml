@@ -84,13 +84,9 @@
                 BorderThickness="1,1,1,0"
                 Click="OperationsSettingsButton_Click"
                 CornerRadius="8,8,0,0"
+                Header="Package operation preferences"
+                Description="Change how UniGetUI handles install, update and uninstall operations."
                 IsClickEnabled="True">
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock Text="Package operation preferences" />
-                </controls:SettingsCard.Header>
-                <controls:SettingsCard.Description>
-                    <widgets:TranslatedTextBlock Text="Change how UniGetUI handles install, update and uninstall operations." />
-                </controls:SettingsCard.Description>
                 <controls:SettingsCard.HeaderIcon>
                     <widgets:LocalIcon Icon="Update" />
                 </controls:SettingsCard.HeaderIcon>
@@ -99,13 +95,9 @@
             <controls:SettingsCard
                 Click="AdminButton_Click"
                 CornerRadius="0,0,8,8"
+                Header="Administrator rights and other dangerous settings"
+                Description="Reduce UAC prompts, elevate installations by default, unlock certain dangerous features, etc."
                 IsClickEnabled="True">
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock Text="Administrator rights and other dangerous settings" />
-                </controls:SettingsCard.Header>
-                <controls:SettingsCard.Description>
-                    <widgets:TranslatedTextBlock Text="Reduce UAC prompts, elevate installations by default, unlock certain dangerous features, etc." />
-                </controls:SettingsCard.Description>
                 <controls:SettingsCard.HeaderIcon>
                     <widgets:LocalIcon Icon="UAC" />
                 </controls:SettingsCard.HeaderIcon>
