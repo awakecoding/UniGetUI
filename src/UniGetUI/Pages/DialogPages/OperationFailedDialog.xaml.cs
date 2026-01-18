@@ -16,8 +16,7 @@ namespace UniGetUI.Pages.DialogPages;
 /// </summary>
 public partial class OperationFailedDialog : UserControl
 {
-    // TODO: Avalonia - Missing XAML control field declaration
-    private RichTextBlock CommandLineOutput = null!;
+    // Auto-generated from XAML
 
     public event EventHandler<EventArgs>? Close;
     Avalonia.Controls.Documents.Paragraph par;

@@ -28,7 +28,7 @@
                 x:Name="ToolbarText"
                 Margin="0,0,0,8"
                 HorizontalAlignment="Center"
-                Foreground="{ThemeResource SystemErrorTextColor}"
+                Foreground="{DynamicResource SystemErrorTextColor}"
                 Text="The system tray icon must be enabled in order for notifications to work"
                 IsVisible="False" />
             <widgets:CheckboxCard

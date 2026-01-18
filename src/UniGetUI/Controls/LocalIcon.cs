@@ -2,9 +2,13 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using UniGetUI.Interface.Enums;
+using System;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace UniGetUI.Interface.Widgets
 {
+    [TypeConverter(typeof(IconTypeConverter))]
     public partial class LocalIcon : TextBlock
     {
         public static FontFamily font = (FontFamily)Application.Current.Resources["SymbolFont"];
@@ -22,6 +26,28 @@ namespace UniGetUI.Interface.Widgets
         public LocalIcon(IconType icon) : this()
         {
             Text = $"{(char)icon}";
+        }
+    }
+
+    // Type converter to handle string to IconType enum conversion in XAML
+    public class IconTypeConverter : TypeConverter
+    {
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
+        {
+            if (value is string stringValue)
+            {
+                // Try to parse the string as an IconType enum
+                if (Enum.TryParse<IconType>(stringValue, true, out var iconType))
+                {
+                    return iconType;
+                }
+            }
+            return base.ConvertFrom(context, culture, value);
         }
     }
 

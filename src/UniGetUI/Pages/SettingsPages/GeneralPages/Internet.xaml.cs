@@ -18,8 +18,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// </summary>
     public partial class Internet : UserControl, ISettingsPage
     {
-        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
-        private TextBox PasswordBox = new(); // TODO: Use PasswordBox control
+        // Auto-generated from XAML
         private object? WebView = null; // TODO: Implement WebView
 
 

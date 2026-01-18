@@ -12,8 +12,7 @@
 
     <Grid
         HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        RowSpacing="4">
+        VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -21,7 +20,7 @@
             <RowDefinition Height="35" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid ColumnSpacing="0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -82,7 +81,7 @@
             Grid.Row="1"
             Grid.Column="0"
             x:Name="WebViewBorder"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="6">
             <!--controls:WebView2 Name="WebView" Source="https://www.google.com/" /-->
         </Border>

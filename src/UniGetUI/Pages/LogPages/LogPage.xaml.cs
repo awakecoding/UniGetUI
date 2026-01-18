@@ -18,8 +18,7 @@ namespace UniGetUI.Interface.Pages
     {
         protected int LOG_LEVEL = 4;
 
-        // XAML control declarations (TODO: Generate from XAML after proper Avalonia migration)
-        protected TextBox LogTextBox = new();
+        // Auto-generated from XAML - no manual declaration needed
         protected object? savePicker = null; // TODO: Implement file picker
 
         protected abstract void LoadLogLevels();

@@ -211,10 +211,12 @@
             HorizontalAlignment="Right"
             Click="CloseButton_Click" />
             
-        <ProgressRing
+        <ProgressBar
             x:Name="LoadingIndicator"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            Width="100"
+            IsIndeterminate="True"
             IsVisible="False" />
     </Grid>
 </UserControl>

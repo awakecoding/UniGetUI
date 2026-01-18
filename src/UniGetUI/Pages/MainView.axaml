@@ -121,10 +121,8 @@
 
             <DataTemplate x:Key="OperationTemplate">
                 <Grid
-                    Padding="8"
-                    Background="{Binding Background}"
-                    ColumnSpacing="0"
-                    RowSpacing="6">
+                   
+                    Background="{Binding Background}">
                     <Grid.Styles>
                         <Style Selector="Grid">
                             <Setter Property="Background" Value="{DynamicResource SystemFillColorNeutralBackgroundBrush}" />
@@ -333,8 +331,7 @@
             Name="ContentGrid"
             Grid.Row="0"
             Grid.Column="1"
-            Margin="8,8,8,8"
-            RowSpacing="0">
+            Margin="8,8,8,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -357,7 +354,7 @@
                 Grid.Column="0"
                 Height="12"
                 Margin="1,0,1,0"
-                Padding="0,0,0,0"
+               
                 CornerRadius="4"
                 ResizeDirection="Rows" />
             <Grid Grid.Row="1" Grid.Column="0">

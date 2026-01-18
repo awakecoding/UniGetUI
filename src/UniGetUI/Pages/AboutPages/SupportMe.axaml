@@ -14,7 +14,7 @@
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
         <StackPanel
-            Padding="0"
+           
             Orientation="Vertical"
             Spacing="4">
             <widgets:TranslatedTextBlock

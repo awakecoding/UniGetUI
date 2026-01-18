@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
 
-    <Grid RowSpacing="8">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="1000*" MaxWidth="800" />
@@ -30,8 +30,7 @@
         <Grid
             Name="SettingsHeaderGrid"
             Grid.Row="1"
-            Grid.Column="1"
-            ColumnSpacing="10">
+            Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />

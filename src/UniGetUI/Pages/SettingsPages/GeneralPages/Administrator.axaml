@@ -60,7 +60,7 @@
                 Text="Prohibit any kind of Elevation via UniGetUI Elevator or GSudo">
                 <widgets:CheckboxCard.Description>
                     <widgets:TranslatedTextBlock
-                        Foreground="{ThemeResource SystemControlErrorTextForegroundBrush}"
+                        Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}"
                         Text="This option WILL cause issues. Any operation incapable of elevating itself WILL FAIL. Install/update/uninstall as administrator will NOT WORK."/>
                 </widgets:CheckboxCard.Description>
             </widgets:CheckboxCard>

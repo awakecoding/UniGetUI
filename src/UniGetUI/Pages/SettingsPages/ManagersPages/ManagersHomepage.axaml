@@ -21,7 +21,7 @@
             <Border
                 Name="AnnouncerBorder"
                 Padding="24,16,24,16"
-                Background="{ThemeResource ButtonBackground}"
+                Background="{DynamicResource ButtonBackground}"
                 CornerRadius="8">
                 <widgets:Announcer x:Name="SettingsAnnouncer" Url="https://marticliment.com/resources/annoucements/unigetui" />
             </Border>

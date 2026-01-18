@@ -38,7 +38,7 @@
         </Grid>
         <StackPanel
             Grid.Row="1"
-            Padding="16,12,16,12"
+           
             HorizontalAlignment="Stretch"
             Background="{DynamicResource SystemAltLowColor}"
             CornerRadius="8"
@@ -186,13 +186,15 @@
             </Grid>
         </StackPanel>
 
-        <ProgressRing
+        <ProgressBar
             x:Name="LoadingIndicator"
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            Width="100"
+            IsIndeterminate="True"
             IsVisible="False" />
     </Grid>
 </UserControl>

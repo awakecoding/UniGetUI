@@ -15,7 +15,7 @@
         VerticalAlignment="Stretch"
         CornerRadius="8">
         <StackPanel
-            Padding="0,0,0,0"
+           
             Orientation="Vertical"
             Spacing="4">
             <widgets:TranslatedTextBlock
@@ -31,13 +31,12 @@
                 FontWeight="Bold"
                 Text="Third-party licenses" />
             <widgets:TranslatedTextBlock Text="WingetUI uses the following libraries. Without them, WingetUI wouldn't have been possible." />
-            <ListView ItemsSource="{Binding Licenses}" SelectionMode="None">
-                <ListView.ItemTemplate>
+            <ListBox ItemsSource="{Binding Licenses}" SelectionMode="Single" Background="Transparent">
+                <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="local:LibraryLicense">
                         <Grid
                             Margin="0"
-                            Padding="0"
-                            ColumnSpacing="8">
+                           >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="140" />
                                 <ColumnDefinition Width="*" />
@@ -62,8 +61,8 @@
                                 NavigateUri="{Binding HomepageUrl}" />
                         </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
         </StackPanel>
     </ScrollViewer>

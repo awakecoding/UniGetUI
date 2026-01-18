@@ -22,8 +22,7 @@
                 Wrapper="{Binding Self}">
 
                 <Grid
-                    Padding="12,3,8,3"
-                    ColumnSpacing="4"
+                   
                     Opacity="{Binding ListedOpacity}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
@@ -194,9 +193,8 @@
                 Wrapper="{Binding Self}">
 
                 <Grid
-                    Padding="4,4,4,4"
+                   
                     HorizontalAlignment="Stretch"
-                    ColumnSpacing="4"
                     Opacity="{Binding ListedOpacity}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="48" />
@@ -310,10 +308,9 @@
                 Wrapper="{Binding Self}">
 
                 <Grid
-                    Padding="4,4,4,4"
+                   
                     HorizontalAlignment="Stretch"
-                    Opacity="{Binding ListedOpacity}"
-                    RowSpacing="0">
+                    Opacity="{Binding ListedOpacity}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="22" />
                         <RowDefinition Height="60" />
@@ -418,7 +415,7 @@
 
     </UserControl.Resources>
 
-    <Grid Padding="0" BorderThickness="0">
+    <Grid BorderThickness="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -432,8 +429,7 @@
         <Grid
             Name="MainHeader"
             Grid.Row="0"
-            Grid.Column="1"
-            ColumnSpacing="8">
+            Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80" />
                 <ColumnDefinition Width="*" />
@@ -480,9 +476,7 @@
                 Grid.Row="0"
                 Grid.Column="2"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                ColumnSpacing="8"
-                RowSpacing="8">
+                VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -652,7 +646,7 @@
                     BorderBrush="{DynamicResource AccentAAFillColorDefaultBrush}"
                     HorizontalScrollBarVisibility="Disabled"
                     SizeChanged="SidepanelWidth_SizeChanged">
-                    <Grid Name="SidePanelGrid" RowSpacing="8">
+                    <Grid Name="SidePanelGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -693,12 +687,10 @@
                                         FontWeight="Bold"
                                         Opacity="0.5"
                                         Text="Search for packages to start"
-                                        TextWrapping="Wrap" />
+                                        WrappingMode="Wrap" />
                                     <Grid
                                         Name="SourcesTreeViewGrid"
                                         HorizontalAlignment="Stretch"
-                                        ColumnSpacing="4"
-                                        RowSpacing="4"
                                         IsVisible="False">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -773,14 +765,14 @@
                                         x:Name="InstantSearchCheckbox"
                                         IsCheckedChanged="InstantSearchValueChanged">
                                         <CheckBox.Content>
-                                            <widgets:TranslatedTextBlock Text="Instant search" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Instant search" WrappingMode="Wrap" />
                                         </CheckBox.Content>
                                     </CheckBox>
                                     <CheckBox
                                         x:Name="UpperLowerCaseCheckbox"
                                         IsCheckedChanged="FilterOptionsChanged">
                                         <CheckBox.Content>
-                                            <widgets:TranslatedTextBlock Text="Distinguish between uppercase and lowercase" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Distinguish between uppercase and lowercase" WrappingMode="Wrap" />
                                         </CheckBox.Content>
                                     </CheckBox>
                                     <CheckBox
@@ -788,7 +780,7 @@
                                         IsChecked="True"
                                         IsCheckedChanged="FilterOptionsChanged">
                                         <CheckBox.Content>
-                                            <widgets:TranslatedTextBlock Text="Ignore special characters" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Ignore special characters" WrappingMode="Wrap" />
                                         </CheckBox.Content>
                                     </CheckBox>
                                 </StackPanel>
@@ -824,7 +816,7 @@
                                         Margin="0,-2,0,-2"
                                         GroupName="QueryMode">
                                         <RadioButton.Content>
-                                            <widgets:TranslatedTextBlock Text="Package Name" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Package Name" WrappingMode="Wrap" />
                                         </RadioButton.Content>
                                     </RadioButton>
                                     <RadioButton
@@ -833,7 +825,7 @@
                                         Margin="0,-2,0,-2"
                                         GroupName="QueryMode">
                                         <RadioButton.Content>
-                                            <widgets:TranslatedTextBlock Text="Package ID" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Package ID" WrappingMode="Wrap" />
                                         </RadioButton.Content>
                                     </RadioButton>
                                     <RadioButton
@@ -843,7 +835,7 @@
                                         GroupName="QueryMode"
                                         IsChecked="True">
                                         <RadioButton.Content>
-                                            <widgets:TranslatedTextBlock Text="Both" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Both" WrappingMode="Wrap" />
                                         </RadioButton.Content>
                                     </RadioButton>
                                     <RadioButton
@@ -852,7 +844,7 @@
                                         Margin="0,-2,0,-2"
                                         GroupName="QueryMode">
                                         <RadioButton.Content>
-                                            <widgets:TranslatedTextBlock Text="Exact match" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Exact match" WrappingMode="Wrap" />
                                         </RadioButton.Content>
                                     </RadioButton>
                                     <RadioButton
@@ -861,7 +853,7 @@
                                         Margin="0,-2,0,-2"
                                         GroupName="QueryMode">
                                         <RadioButton.Content>
-                                            <widgets:TranslatedTextBlock Text="Show similar packages" TextWrapping="Wrap" />
+                                            <widgets:TranslatedTextBlock Text="Show similar packages" WrappingMode="Wrap" />
                                         </RadioButton.Content>
                                     </RadioButton>
                                 </StackPanel>
@@ -880,7 +872,7 @@
                     IsVisible="True" />
 
                 <Grid
-                    Padding="4,6,4,6"
+                   
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{DynamicResource SystemFillColorNeutralBackgroundBrush}"
@@ -893,8 +885,7 @@
                     </Grid.RowDefinitions>
                     <Grid
                         Grid.Row="0"
-                        Margin="4,2,4,5"
-                        ColumnSpacing="0">
+                        Margin="4,2,4,5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
@@ -1039,7 +1030,7 @@
                     x:Name="FiltersResizer"
                     Width="12"
                     Margin="-12,0,0,0"
-                    Padding="0,0,0,0"
+                   
                     HorizontalAlignment="Left"
                     CornerRadius="2"
                     ResizeDirection="Columns"

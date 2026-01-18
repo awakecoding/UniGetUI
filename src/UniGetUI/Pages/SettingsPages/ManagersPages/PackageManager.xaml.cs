@@ -37,8 +37,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
     /// </summary>
     public partial class PackageManagerPage : UserControl, ISettingsPage
     {
-        // TODO: Avalonia - InfoBar is WinUI control, needs Avalonia equivalent
-        private Panel ManagerStatusBar = null!;
+        // Auto-generated from XAML
         
         IPackageManager? Manager;
         public event EventHandler? RestartRequired;

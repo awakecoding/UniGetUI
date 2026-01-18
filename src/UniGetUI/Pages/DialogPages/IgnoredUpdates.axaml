@@ -42,7 +42,7 @@
             CornerRadius="6">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="local:IgnoredPackageEntry">
-                    <Grid Padding="8,4" ColumnDefinitions="Auto,*,Auto,*,Auto,120*,Auto,170*,Auto,90*,Auto">
+                    <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,120*,Auto,170*,Auto,90*,Auto">
                         <widgets:LocalIcon
                             Grid.Column="0"
                             Width="24"

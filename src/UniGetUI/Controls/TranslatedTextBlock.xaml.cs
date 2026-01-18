@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 using UniGetUI.Core.Logging;
 using UniGetUI.Core.Tools;
 
@@ -27,9 +28,19 @@ namespace UniGetUI.Interface.Widgets
             set { __prefix = value; ApplyText(null); }
         }
 
-        public Avalonia.Media.TextWrapping WrappingMode
+        // Define as Avalonia StyledProperty for proper XAML binding
+        public static readonly StyledProperty<TextWrapping> WrappingModeProperty =
+            AvaloniaProperty.Register<TranslatedTextBlock, TextWrapping>(nameof(WrappingMode), TextWrapping.NoWrap);
+
+        public TextWrapping WrappingMode
         {
-            set => _textBlock.TextWrapping = value;
+            get => GetValue(WrappingModeProperty);
+            set
+            {
+                SetValue(WrappingModeProperty, value);
+                if (_textBlock is not null)
+                    _textBlock.TextWrapping = value;
+            }
         }
 
         public TranslatedTextBlock()

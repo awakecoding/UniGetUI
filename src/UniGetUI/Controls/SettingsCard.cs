@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
+using System;
 
 namespace CommunityToolkit.WinUI.Controls
 {
@@ -19,6 +21,16 @@ namespace CommunityToolkit.WinUI.Controls
 
         public static readonly StyledProperty<bool> IsClickEnabledProperty =
             AvaloniaProperty.Register<SettingsCard, bool>(nameof(IsClickEnabled));
+
+        // Click event for Avalonia
+        public static readonly RoutedEvent<RoutedEventArgs> ClickEvent =
+            RoutedEvent.Register<SettingsCard, RoutedEventArgs>(nameof(Click), RoutingStrategies.Bubble);
+
+        public event EventHandler<RoutedEventArgs>? Click
+        {
+            add => AddHandler(ClickEvent, value);
+            remove => RemoveHandler(ClickEvent, value);
+        }
 
         public string Header
         {
@@ -42,6 +54,15 @@ namespace CommunityToolkit.WinUI.Controls
         {
             get => GetValue(IsClickEnabledProperty);
             set => SetValue(IsClickEnabledProperty, value);
+        }
+
+        protected override void OnPointerReleased(Avalonia.Input.PointerReleasedEventArgs e)
+        {
+            base.OnPointerReleased(e);
+            if (IsClickEnabled)
+            {
+                RaiseEvent(new RoutedEventArgs(ClickEvent));
+            }
         }
     }
 }

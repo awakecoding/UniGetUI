@@ -15,6 +15,7 @@ namespace UniGetUI.Interface.Enums
         Unavailable
     }
 
+    [System.ComponentModel.TypeConverter(typeof(IconTypeConverter))]
     public enum IconType
     {
         AddTo = '\uE900',
@@ -112,5 +113,27 @@ namespace UniGetUI.Interface.Enums
         public Dictionary<string, List<BundleReportEntry>> Contents = new();
         public BundleReport()
         {}
+    }
+
+    // Type converter to handle string to IconType enum conversion in XAML
+    public class IconTypeConverter : System.ComponentModel.TypeConverter
+    {
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Type sourceType)
+        {
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
+        {
+            if (value is string stringValue)
+            {
+                // Try to parse the string as an IconType enum (case-insensitive)
+                if (System.Enum.TryParse<IconType>(stringValue, true, out var iconType))
+                {
+                    return iconType;
+                }
+            }
+            return base.ConvertFrom(context, culture, value);
+        }
     }
 }

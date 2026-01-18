@@ -11,7 +11,7 @@
     MaxHeight="600"
     mc:Ignorable="d">
 
-    <Grid RowSpacing="16">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -26,7 +26,7 @@
             Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
             CornerRadius="6"
             HorizontalScrollBarVisibility="Disabled">
-            <RichTextBlock
+            <SelectableTextBlock
                 Name="CommandLineOutput"
                 Padding="6"
                 FontFamily="Consolas"
@@ -37,10 +37,9 @@
             Name="ButtonsLayout"
             Grid.Row="3"
             Margin="-24,8,-24,-24"
-            Padding="24"
+           
             x:FieldModifier="public"
-            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
-            ColumnSpacing="8">
+            Background="{DynamicResource ApplicationPageBackgroundThemeBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

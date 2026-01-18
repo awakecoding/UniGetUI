@@ -14,7 +14,7 @@
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch"
         CornerRadius="8">
-        <StackPanel Padding="0,0,0,0" Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
             <widgets:TranslatedTextBlock
                 FontFamily="Segoe UI Variable Display"
                 FontSize="24"
@@ -22,13 +22,12 @@
                 Text="Contributors" />
             <widgets:TranslatedTextBlock Text="WingetUI wouldn't have been possible without the help of the contributors. Thank you all 🥳" />
             <TextBlock />
-            <ListView ItemsSource="{Binding ContributorList}" SelectionMode="None">
-                <ListView.ItemTemplate>
+            <ListBox ItemsSource="{Binding ContributorList}" SelectionMode="Single" Background="Transparent">
+                <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="local:Person">
                         <Grid
                             Margin="0"
-                            Padding="0"
-                            ColumnSpacing="8">
+                           >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -37,17 +36,14 @@
                             <Border
                                 Grid.Column="0"
                                 Height="32"
-                                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                Background="{DynamicResource ApplicationPageBackgroundThemeBrush}"
                                 CornerRadius="16">
                                 <Image
                                     Width="32"
                                     Height="32"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                    <Image.Source>
-                                        <BitmapImage UriSource="{Binding ProfilePicture}" />
-                                    </Image.Source>
-                                </Image>
+                                    VerticalAlignment="Center"
+                                    Source="{Binding ProfilePicture}" />
                             </Border>
                             <TextBlock
                                 Grid.Column="1"
@@ -64,8 +60,8 @@
                             </HyperlinkButton>
                         </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
