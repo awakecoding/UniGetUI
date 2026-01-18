@@ -65,11 +65,8 @@
                 Padding="24,16,24,16"
                 HorizontalContentAlignment="Left"
                 BorderThickness="1,0,1,1"
-                ContentAlignment="Vertical"
-                CornerRadius="0,0,0,0">
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock Text="Select the executable to be used. The following list shows the executables found by UniGetUI" />
-                </controls:SettingsCard.Header>
+                CornerRadius="0,0,0,0"
+                Header="Select the executable to be used. The following list shows the executables found by UniGetUI">
                 <controls:SettingsCard.Content>
                     <Grid
                         HorizontalAlignment="Left">
@@ -124,10 +121,8 @@
                 BorderThickness="1,0,1,1"
                 Click="ManagerPath_Click"
                 CornerRadius="0,0,8,8"
-                IsClickEnabled="True">
-                <controls:SettingsCard.ActionIcon>
-                    <widgets:LocalIcon Icon="Empty" />
-                </controls:SettingsCard.ActionIcon>
+                IsClickEnabled="True"
+                Header="Current executable file:">
                 <controls:SettingsCard.Content>
                     <PathIcon
                         Name="CopyButtonIcon"
@@ -135,21 +130,12 @@
                         Margin="0"
                         Data="M16,1H4C2.9,1,2,1.9,2,3v14h2V3h12V1z M19,5H8C6.9,5,6,5.9,6,7v14c0,1.1,0.9,2,2,2h11c1.1,0,2-0.9,2-2V7C21,5.9,20.1,5,19,5z M19,21H8V7h11V21z\" />
                 </controls:SettingsCard.Content>
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock
-                        Grid.ColumnSpan="2"
-                        FontSize="12"
-                        FontWeight="SemiBold"
-                        Opacity="0.7"
-                        Text="Current executable file:" />
-                </controls:SettingsCard.Header>
-                <controls:SettingsCard.Description>
-                    <TextBlock
-                        Name="LocationLabel"
-                        FontFamily="Consolas"
-                        FontSize="14"
-                        TextWrapping="Wrap" />
-                </controls:SettingsCard.Description>
+
+                <TextBlock
+                    Name="LocationLabel"
+                    FontFamily="Consolas"
+                    FontSize="14"
+                    TextWrapping="Wrap" />
             </controls:SettingsCard>
 
             <widgets:TranslatedTextBlock
@@ -191,13 +177,11 @@
                     <widgets:LocalIcon Icon="Console" />
                 </controls:SettingsCard.HeaderIcon>
 
-                <controls:SettingsCard.Description>
-                    <TextBlock
-                        x:Name="ManagerLogsLabel"
-                        FontFamily="Consolas"
-                        FontSize="14"
-                        TextWrapping="Wrap" />
-                </controls:SettingsCard.Description>
+                <TextBlock
+                    x:Name="ManagerLogsLabel"
+                    FontFamily="Consolas"
+                    FontSize="14"
+                    TextWrapping="Wrap" />
             </controls:SettingsCard>
 
             <controls:SettingsCard
@@ -209,13 +193,11 @@
                     <widgets:LocalIcon Icon="Settings" />
                 </controls:SettingsCard.HeaderIcon>
 
-                <controls:SettingsCard.Description>
-                    <TextBlock
-                        x:Name="AppExecutionAliasWarningLabel"
-                        FontFamily="Consolas"
-                        FontSize="14"
-                        TextWrapping="Wrap" />
-                </controls:SettingsCard.Description>
+                <TextBlock
+                    x:Name="AppExecutionAliasWarningLabel"
+                    FontFamily="Consolas"
+                    FontSize="14"
+                    TextWrapping="Wrap" />
             </controls:SettingsCard>
         </StackPanel>
     </ScrollViewer>
