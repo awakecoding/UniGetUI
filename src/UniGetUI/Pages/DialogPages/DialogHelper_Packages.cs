@@ -79,8 +79,8 @@ public static partial class DialogHelper
 
         OptionsPage.Close += (_, _) => { OptionsDialog.Hide(); };
 
-        bool? result = await ShowDialogAsync(OptionsDialog);
-        return (await OptionsPage.GetUpdatedOptions(), result);
+        ContentDialogResult result = await ShowDialogAsync(OptionsDialog);
+        return (await OptionsPage.GetUpdatedOptions(), result == ContentDialogResult.Primary ? true : (result == ContentDialogResult.Secondary ? false : (bool?)null));
     }
 
     public static async Task ShowPackageDetails(IPackage package, OperationType operation, TEL_InstallReferral referral)
@@ -103,8 +103,8 @@ public static partial class DialogHelper
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
         dialog.Content = CoreTools.Translate("Do you really want to uninstall {0}?", package.Name);
 
-        // TODO: Avalonia - ShowDialogAsync returns bool?, Primary button is true
-        return await ShowDialogAsync(dialog) == true;
+        // TODO: Avalonia - ShowDialogAsync returns ContentDialogResult, check for Primary
+        return await ShowDialogAsync(dialog) == ContentDialogResult.Primary;
     }
 
     public static async Task<bool> ConfirmUninstallation(IReadOnlyList<IPackage> packages)
@@ -147,8 +147,8 @@ public static partial class DialogHelper
 
         dialog.Content = p;
 
-        // TODO: Avalonia - ShowDialogAsync returns bool?, Primary button is true
-        return await ShowDialogAsync(dialog) == true;
+        // TODO: Avalonia - ShowDialogAsync returns ContentDialogResult, check for Primary
+        return await ShowDialogAsync(dialog) == ContentDialogResult.Primary;
     }
 
     public static void ShowSharedPackage_ThreadSafe(string id, string combinedSourceName)

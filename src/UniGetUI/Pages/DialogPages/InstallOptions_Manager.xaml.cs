@@ -269,32 +269,38 @@ public partial class InstallOptions_Manager : UserControl
 
     private void ScopeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void HashCheckbox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void InteractiveCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void AdminCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void ArchitectureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void PreReleaseCheckBox_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 
     private void ResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -315,6 +321,7 @@ public partial class InstallOptions_Manager : UserControl
 
     private void ClearPreviousOnUpdate_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
+        // TODO: Avalonia - Button.Avalonia property doesn't exist
+        // ApplyButton.Avalonia.Styling.Style = (Avalonia.Styling.Style)Application.Current.Resources["AccentButtonStyle"];
     }
 }

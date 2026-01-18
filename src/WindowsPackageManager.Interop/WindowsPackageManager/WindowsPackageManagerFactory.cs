@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#if WINDOWS
 using Microsoft.Management.Deployment;
 
 namespace WindowsPackageManager.Interop;
@@ -57,3 +58,4 @@ public abstract class WindowsPackageManagerFactory
         return CreateInstance<T>(clsid, iid);
     }
 }
+#endif

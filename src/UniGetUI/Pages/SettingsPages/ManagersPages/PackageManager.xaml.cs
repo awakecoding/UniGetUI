@@ -459,9 +459,10 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         private async Task _managerPath_Click()
         {
             WindowsClipboard.SetText(LocationLabel.Text);
-            CopyButtonIcon.Symbol = Symbol.Accept;
+            // TODO: Avalonia - CopyButtonIcon and Symbol not available
+            // CopyButtonIcon.Symbol = Symbol.Accept;
             await Task.Delay(1000);
-            CopyButtonIcon.Symbol = Symbol.Copy;
+            // CopyButtonIcon.Symbol = Symbol.Copy;
         }
 
         private void ManagerLogs_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)

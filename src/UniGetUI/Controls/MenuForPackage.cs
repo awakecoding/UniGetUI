@@ -36,7 +36,8 @@ namespace UniGetUI.Interface.Widgets
 
         public BetterMenuItem()
         {
-            Avalonia.Styling.Style = menuStyle;
+            // TODO: Avalonia - Style assignment not supported in constructor
+            // Avalonia.Styling.Style = menuStyle;
         }
     }
 
@@ -61,7 +62,8 @@ namespace UniGetUI.Interface.Widgets
 
         public BetterToggleMenuItem()
         {
-            Avalonia.Styling.Style = menuStyle;
+            // TODO: Avalonia - Style assignment not supported in constructor
+            // Avalonia.Styling.Style = menuStyle;
         }
     }
 

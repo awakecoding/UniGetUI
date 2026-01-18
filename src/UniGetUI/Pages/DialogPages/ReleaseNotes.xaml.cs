@@ -23,19 +23,23 @@ namespace UniGetUI.Interface.Dialogs
             InitializeComponent();
             _ = InitializeWebView();
 
-            WebView.NavigationStarting += (_, _) => { ProgressBar.IsVisible = true; };
-            WebView.NavigationCompleted += (_, _) => { ProgressBar.IsVisible = false; };
+            // TODO: Avalonia - WebView2 properties (Windows-specific)
+            // WebView.NavigationStarting += (_, _) => { ProgressBar.IsVisible = true; };
+            // WebView.NavigationCompleted += (_, _) => { ProgressBar.IsVisible = false; };
         }
 
         private async Task InitializeWebView()
         {
-            await WebView.EnsureCoreWebView2Async();
-            WebView.Source = new Uri("https://github.com/marticliment/WingetUI/releases/tag/" + CoreData.VersionName);
+            // TODO: Avalonia - WebView2 methods (Windows-specific)
+            // await WebView.EnsureCoreWebView2Async();
+            // WebView.Source = new Uri("https://github.com/marticliment/WingetUI/releases/tag/" + CoreData.VersionName);
+            await Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            WebView.Close();
+            // TODO: Avalonia - WebView2.Close method (Windows-specific)
+            // WebView.Close();
         }
 
         private void CloseButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#if WINDOWS
 using Microsoft.Management.Deployment;
 
 namespace WindowsPackageManager.Interop;
@@ -113,3 +114,4 @@ internal static class ClassesDefinition
         }
     }
 }
+#endif

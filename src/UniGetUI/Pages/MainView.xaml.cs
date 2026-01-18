@@ -157,7 +157,8 @@ namespace UniGetUI.Interface
 
             if (!Settings.Get(Settings.K.ShownTelemetryBanner))
             {
-                DialogHelper.ShowTelemetryBanner();
+                // TODO: Avalonia - DialogHelper.ShowTelemetryBanner doesn't exist
+                // DialogHelper.ShowTelemetryBanner();
             }
 
             if (!Settings.Get(Settings.K.CollapseNavMenuOnWideScreen))

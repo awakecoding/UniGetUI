@@ -46,7 +46,8 @@ namespace UniGetUI.Interface
 
             foreach (var(ignoredId, version) in rawIgnoredPackages)
             {
-                IPackageManager manager = PEInterface.WinGet; // Manager by default
+                // TODO: Avalonia - PEInterface.WinGet property doesn't exist
+                IPackageManager manager = PEInterface.Managers.FirstOrDefault() ?? throw new InvalidOperationException("No managers available");
                 if (ManagerNameReference.ContainsKey(ignoredId.Split("\\")[0]))
                 {
                     manager = ManagerNameReference[ignoredId.Split("\\")[0]];
@@ -76,12 +77,14 @@ namespace UniGetUI.Interface
             {
                 await package.RemoveFromIgnoredUpdates();
             }
-            ConfirmResetFlyout.Hide();
+            // TODO: Avalonia - ConfirmResetFlyout control not available
+            // ConfirmResetFlyout.Hide();
         }
 
         private void NoResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            ConfirmResetFlyout.Hide();
+            // TODO: Avalonia - ConfirmResetFlyout control not available
+            // ConfirmResetFlyout.Hide();
         }
     }
 

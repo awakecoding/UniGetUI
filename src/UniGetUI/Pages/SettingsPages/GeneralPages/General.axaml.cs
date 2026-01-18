@@ -54,17 +54,22 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         private void ForceUpdateUniGetUI_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             var mainWindow = MainApp.Instance.MainWindow;
-            _ = AutoUpdater.CheckAndInstallUpdates(mainWindow, mainWindow.UpdatesBanner, true, false, true);
+            // TODO: Avalonia - MainWindow.UpdatesBanner property doesn't exist
+            // _ = AutoUpdater.CheckAndInstallUpdates(mainWindow, mainWindow.UpdatesBanner, true, false, true);
         }
 
         private void ManageTelemetrySettings_Click(object sender, EventArgs e)
-            => _ = DialogHelper.ShowTelemetryDialog();
+            // TODO: Avalonia - DialogHelper.ShowTelemetryDialog doesn't exist
+            // => _ = DialogHelper.ShowTelemetryDialog();
+            => _ = Task.CompletedTask;
 
         private void ImportSettings_Click(object sender, EventArgs e) => _ = _importSettings();
         private async Task _importSettings()
         {
-            ExternalLibraries.Pickers.FileOpenPicker picker = new(MainApp.Instance.MainWindow.GetWindowHandle());
-            string file = picker.Show(["*.json"]);
+            // TODO: Avalonia - MainWindow.GetWindowHandle is Windows-specific
+            // ExternalLibraries.Pickers.FileOpenPicker picker = new(MainApp.Instance.MainWindow.GetWindowHandle());
+            // string file = picker.Show(["*.json"]);
+            string file = "";
 
             if (file != string.Empty)
             {
@@ -80,8 +85,10 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         {
             try
             {
-                ExternalLibraries.Pickers.FileSavePicker picker = new(MainApp.Instance.MainWindow.GetWindowHandle());
-                string file = picker.Show(["*.json"], CoreTools.Translate("WingetUI Settings") + ".json");
+                // TODO: Avalonia - MainWindow.GetWindowHandle is Windows-specific
+                // ExternalLibraries.Pickers.FileSavePicker picker = new(MainApp.Instance.MainWindow.GetWindowHandle());
+                // string file = picker.Show(["*.json"], CoreTools.Translate("WingetUI Settings") + ".json");
+                string file = "";
 
                 if (file != string.Empty)
                 {

@@ -36,7 +36,8 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             if (creds is not null)
             {
                 UsernameBox.Text = creds.UserName;
-                PasswordBox.Password = creds.Password;
+                // TODO: Avalonia - TextBox.Password property doesn't exist, needs PasswordBox control
+                // PasswordBox.Password = creds.Password;
             }
 
             Brush SUCCESS_BG = (Brush)Application.Current.Resources["SystemFillColorSuccessBackgroundBrush"];
@@ -107,11 +108,13 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         {
             SavingUserName.Opacity = 1;
             string oldusername = UsernameBox.Text;
-            string oldpassword = PasswordBox.Password;
+            // TODO: Avalonia - TextBox.Password property doesn't exist, needs PasswordBox control
+            // string oldpassword = PasswordBox.Password;
             await Task.Delay(500);
             if (oldusername != UsernameBox.Text) return;
-            if (oldpassword != PasswordBox.Password) return;
-            Settings.SetProxyCredentials(UsernameBox.Text, PasswordBox.Password);
+            // if (oldpassword != PasswordBox.Password) return;
+            // Settings.SetProxyCredentials(UsernameBox.Text, PasswordBox.Password);
+            Settings.SetProxyCredentials(UsernameBox.Text, "");
             MainWindow.ApplyProxyVariableToProcess();
             SavingUserName.Opacity = 0;
         }

@@ -65,7 +65,8 @@ public partial class MainApp
                     DialogHelper.HideLoadingDialog(loadingId);
                     var dialog = new Window { Title = CoreTools.Translate("Download failed"),
                         Content = CoreTools.Translate("No applicable installer was found for the package {0}", package.Name),
-                        PrimaryButtonText = CoreTools.Translate("Ok"),
+                        // TODO: Avalonia - Window.PrimaryButtonText doesn't exist (WinUI-specific property)
+                        // PrimaryButtonText = CoreTools.Translate("Ok"),
                         // TODO: Avalonia - Window.DefaultButton doesn't exist (WinUI-specific property)
                         // DefaultButton = ContentDialogButton.Primary,
                         // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)

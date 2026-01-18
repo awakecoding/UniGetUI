@@ -260,7 +260,9 @@ public class AutoUpdater
 
         });
 
-        if (AutoLaunch && !Window.Visible)
+        // TODO: Avalonia - Window.Visible property doesn't exist
+        // if (AutoLaunch && !Window.Visible)
+        if (AutoLaunch && !Window.IsVisible)
         {
             Logger.Debug("AutoLaunch is enabled and the Window is hidden, launching installer...");
         }

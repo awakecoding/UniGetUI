@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#if WINDOWS
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.System.Com;
@@ -50,3 +51,4 @@ public class WindowsPackageManagerStandardFactory : WindowsPackageManagerFactory
         }
     }
 }
+#endif

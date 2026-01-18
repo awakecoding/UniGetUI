@@ -19,8 +19,9 @@ namespace UniGetUI.Interface.Pages.AboutPages
         {
             InitializeComponent();
             VersionText.Text = CoreTools.Translate("You have installed WingetUI Version {0}", CoreData.VersionName);
-            DisclaimerBanner.Title = CoreTools.Translate("Disclaimer");
-            DisclaimerBanner.Message = CoreTools.Translate("UniGetUI is not related to any of the compatible package managers. UniGetUI is an independent project.");
+            // TODO: Avalonia - DisclaimerBanner control properties
+            // DisclaimerBanner.Title = CoreTools.Translate("Disclaimer");
+            // DisclaimerBanner.Message = CoreTools.Translate("UniGetUI is not related to any of the compatible package managers. UniGetUI is an independent project.");
         }
     }
 }

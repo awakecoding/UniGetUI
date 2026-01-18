@@ -47,7 +47,9 @@ namespace UniGetUI.Pages.SettingsPages
                 };
                 button.CornerRadius = first ? new CornerRadius(8, 8, 0, 0) : new CornerRadius(0);
                 button.BorderThickness = first ? new Thickness(1) : new Thickness(1,0,1,1);
-                button.Click += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
+                // TODO: Avalonia - SettingsPageButton.Click event handler
+                // button.Click += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
+                button.Tapped += (_, _) => NavigationRequested?.Invoke(this, manager.GetType());
 
                 var statusIcon = new TextBlock() { FontSize = 12, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
                 var statusText = new TextBlock() { FontSize = 12, FontWeight = FontWeight.SemiBold, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
@@ -95,7 +97,7 @@ namespace UniGetUI.Pages.SettingsPages
                 {
                     if (_isLoadingToggles) return;
 
-                    bool disabled = !toggle.IsChecked;
+                    bool disabled = !(toggle.IsChecked ?? false);
                     int loadingId = DialogHelper.ShowLoadingDialog(CoreTools.Translate("Please wait..."));
                     Settings.SetDictionaryItem(Settings.K.DisabledManagers, manager.Name, disabled);
                     await Task.Run(manager.Initialize);

@@ -89,12 +89,14 @@ namespace UniGetUI.Interface
             {
                 shortcut.ResetShortcut();
             }
-            ConfirmResetFlyout.Hide();
+            // TODO: Avalonia - ConfirmResetFlyout control not available
+            // ConfirmResetFlyout.Hide();
         }
 
         private void NoResetButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            ConfirmResetFlyout.Hide();
+            // TODO: Avalonia - ConfirmResetFlyout control not available
+            // ConfirmResetFlyout.Hide();
         }
 
         private void HandleAllDesktop_Checked(object sender, Avalonia.Interactivity.RoutedEventArgs e)

@@ -440,8 +440,10 @@ namespace UniGetUI.Interface.Dialogs
                     DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                     {
                         Text = $"  • {dep.Name}",
-                        FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
-                        FontWeight = FontWeight.SemiBold
+                        // TODO: Avalonia - Run.FontStyle and Run.FontWeight properties don't exist
+                        //                         FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
+                        // TODO: Avalonia - Run.FontStyle and Run.FontWeight properties don't exist
+                        //                         FontWeight = FontWeight.SemiBold
                     });
 
                     string line = $" (";

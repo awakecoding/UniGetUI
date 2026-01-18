@@ -36,7 +36,9 @@ namespace UniGetUI.Interface.Widgets
         public ComboboxCard()
         {
             _combobox.MinWidth = 200;
-            _combobox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = _elements });
+            // TODO: Avalonia - SetBinding method not available, use [!ItemsSource] binding in XAML
+            // _combobox.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = _elements });
+            _combobox.ItemsSource = _elements;
             Content = _combobox;
         }
 

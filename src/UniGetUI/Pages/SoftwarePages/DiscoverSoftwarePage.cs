@@ -51,7 +51,8 @@ namespace UniGetUI.Interface.SoftwarePages
             InstantSearchCheckbox.IsVisible = false;
 
             MegaFindButton.Click += Event_SearchPackages;
-            MegaQueryBlock.KeyUp += (s, e) => { if (e.Key == VirtualKey.Enter) { Event_SearchPackages(s, e); } };
+            // TODO: Avalonia - VirtualKey enum doesn't exist, use Key enum
+            MegaQueryBlock.KeyUp += (s, e) => { if (e.Key == Avalonia.Input.Key.Enter) { Event_SearchPackages(s, e); } };
         }
 
         public override void SearchBox_QuerySubmitted(object? sender, Avalonia.Interactivity.RoutedEventArgs args)

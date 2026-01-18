@@ -553,15 +553,17 @@ public static partial class DialogHelper
         // dialog.CloseButtonText = CoreTools.Translate("Close");
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.None;
         var result = await ShowDialogAsync(dialog);
-        if(result is ContentDialogResult.Primary) Window.NavigationPage.NavigateTo(PageType.Discover);
-        else if(result is ContentDialogResult.Secondary) Window.NavigationPage.NavigateTo(PageType.Installed);
+        // TODO: Avalonia - MainWindow.NavigationPage property doesn't exist
+        // if(result is ContentDialogResult.Primary) Window.NavigationPage.NavigateTo(PageType.Discover);
+        // else if(result is ContentDialogResult.Secondary) Window.NavigationPage.NavigateTo(PageType.Installed);
     }
 
     public static void ShowDismissableBalloon(string title, string message)
     {
-        Window.DismissableNotification.Title = title;
-        Window.DismissableNotification.Content = new TextBlock() { Text = message, TextWrapping = Avalonia.Media.TextWrapping.Wrap };
-        Window.DismissableNotification.IsOpen = true;
+        // TODO: Avalonia - MainWindow.DismissableNotification property doesn't exist
+        // Window.DismissableNotification.Title = title;
+        // Window.DismissableNotification.Content = new TextBlock() { Text = message, TextWrapping = Avalonia.Media.TextWrapping.Wrap };
+        // Window.DismissableNotification.IsOpen = true;
     }
 
     public static async Task<string?> AskForBackupSelection(IEnumerable<string> availableBackups)
@@ -571,11 +573,17 @@ public static partial class DialogHelper
         // TODO: Avalonia - dialog.PrimaryButtonText = CoreTools.Translate("Open");
         // TODO: Avalonia - dialog.SecondaryButtonText = CoreTools.Translate("Cancel");
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Primary;
-        dialog.IsPrimaryButtonEnabled = false;
+        // TODO: Avalonia - Window.IsPrimaryButtonEnabled property doesn't exist
+        // dialog.IsPrimaryButtonEnabled = false;
 
-        RadioButtons buttons = new RadioButtons();
+        // TODO: Avalonia - RadioButtons.Items, SelectedItem, SelectionChanged don't exist
+        // RadioButtons buttons = new RadioButtons();
+        // foreach(var name in availableBackups) buttons.Items.Add(name);
+        // buttons.SelectionChanged += (_, _) => dialog.IsPrimaryButtonEnabled = true;
+
+        ListBox buttons = new ListBox();
         foreach(var name in availableBackups) buttons.Items.Add(name);
-        buttons.SelectionChanged += (_, _) => dialog.IsPrimaryButtonEnabled = true;
+        buttons.SelectionChanged += (_, _) => { }; // dialog.IsPrimaryButtonEnabled = true;
 
         dialog.Content = new StackPanel()
         {
@@ -591,13 +599,14 @@ public static partial class DialogHelper
                 new ScrollViewer()
                 {
                     Content = buttons,
-                    HorizontalScrollMode = ScrollMode.Disabled
+                    // TODO: Avalonia - ScrollViewer.HorizontalScrollMode doesn't exist
+                    // HorizontalScrollMode = ScrollMode.Disabled
                 }
             }
         };
 
         if(await ShowDialogAsync(dialog) is ContentDialogResult.Primary)
-            return buttons.SelectedItem.ToString() ?? null;
+            return buttons.SelectedItem?.ToString() ?? null;
 
         return null;
     }

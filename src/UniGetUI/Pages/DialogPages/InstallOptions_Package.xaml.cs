@@ -423,8 +423,10 @@ namespace UniGetUI.Interface.Dialogs
 
         private void SelectDir_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
-            string folder = openPicker.Show();
+            // TODO: Avalonia - MainWindow.GetWindowHandle is Windows-specific
+            // ExternalLibraries.Pickers.FolderPicker openPicker = new(MainApp.Instance.MainWindow.GetWindowHandle());
+            // string folder = openPicker.Show();
+            string folder = "";
             if (folder != string.Empty)
             {
                 CustomInstallLocation.Text = folder;

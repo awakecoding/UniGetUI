@@ -97,12 +97,7 @@ namespace UniGetUI.Interface.Widgets
                 Children = { _loading, _checkbox },
             };
             //Header = _textblock;
-            Header = new StackPanel()
-            {
-                Spacing = 4,
-                Orientation = Orientation.Vertical,
-                Children = { _textblock, _warningBlock }
-            };
+            Header = _textblock.Text ?? "";
 
             _checkbox.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
             _checkbox.IsCheckedChanged += (s, e) => _ = _checkbox_Toggled();
@@ -119,14 +114,14 @@ namespace UniGetUI.Interface.Widgets
                 await SecureSettings.TrySet(setting_name, (_checkbox.IsChecked ?? false) ^ IS_INVERTED ^ ForceInversion);
                 StateChanged?.Invoke(this, EventArgs.Empty);
                 _textblock.Opacity = (_checkbox.IsChecked ?? false) ? 1 : 0.7;
-                (_checkbox.IsChecked ?? false) = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 Logger.Warn(ex);
-                (_checkbox.IsChecked ?? false) = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
+                _checkbox.IsChecked = SecureSettings.Get(setting_name) ^ IS_INVERTED ^ ForceInversion;
                 _loading.IsVisible = false;
                 _checkbox.IsEnabled = true;
             }

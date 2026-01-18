@@ -22,16 +22,18 @@ namespace UniGetUI.Interface
         public AboutUniGetUI()
         {
             InitializeComponent();
-            SelectorBarItemPage1.Text = CoreTools.Translate("About");
-            SelectorBarItemPage2.Text = CoreTools.Translate("Third-party licenses");
-            SelectorBarItemPage3.Text = CoreTools.Translate("Contributors");
-            SelectorBarItemPage4.Text = CoreTools.Translate("Translators");
-            SelectorBarItemPage5.Text = CoreTools.Translate("Support me");
+            // TODO: Avalonia - TabItem.Text changed to Header in Avalonia
+            SelectorBarItemPage1.Header = CoreTools.Translate("About");
+            SelectorBarItemPage2.Header = CoreTools.Translate("Third-party licenses");
+            SelectorBarItemPage3.Header = CoreTools.Translate("Contributors");
+            SelectorBarItemPage4.Header = CoreTools.Translate("Translators");
+            SelectorBarItemPage5.Header = CoreTools.Translate("Support me");
         }
 
         private void SelectorBar_SelectionChanged(TabControl sender, SelectionChangedEventArgs args)
         {
-            SelectorBarItem selectedItem = sender.SelectedItem;
+            // TODO: Avalonia - SelectorBarItem type doesn't exist, using object
+            object selectedItem = sender.SelectedItem;
             int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
             Type pageType = currentSelectedIndex switch
             {
