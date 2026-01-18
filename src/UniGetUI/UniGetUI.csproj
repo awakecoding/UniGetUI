@@ -174,9 +174,7 @@
     <None Update="Assets\Images\*.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Images\*.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <AvaloniaResource Include="Assets\Images\*.ico" />
     <None Update="Assets\Utilities\install_scoop.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

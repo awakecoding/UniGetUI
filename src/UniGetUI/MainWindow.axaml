@@ -7,7 +7,7 @@
         Title="UniGetUI"
         Width="1200" Height="800"
         WindowStartupLocation="CenterScreen"
-        Icon="/Assets/Images/icon.ico"
+        Icon="avares://UniGetUI/Assets/Images/icon.ico"
         TransparencyLevelHint="Blur"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="PreferSystemChrome"
