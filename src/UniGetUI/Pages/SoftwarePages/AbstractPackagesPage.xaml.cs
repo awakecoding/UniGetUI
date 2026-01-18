@@ -137,7 +137,8 @@ namespace UniGetUI.Interface
         {
             get
             {
-                if(CurrentPackageList.SelectedItem is PackageWrapper w)
+                // TODO: Avalonia - ItemsControl doesn't have SelectedItem, cast to ListBox
+                if(CurrentPackageList is ListBox listBox && listBox.SelectedItem is PackageWrapper w)
                     return w.Package;
 
                 var fp = FilteredPackages.GetCheckedPackages();
@@ -591,11 +592,16 @@ namespace UniGetUI.Interface
         protected void ClearSourcesList()
         {
             UsedManagers.Clear();
-            SourcesTreeView?.RootNodes?.Clear();
+            // TODO: Avalonia - TreeView.RootNodes doesn't exist, use Items instead
+            SourcesTreeView?.Items?.Clear();
             UsedSourcesForManager.Clear();
             RootNodeForManager.Clear();
             NodesForSources.Clear();
-            LocalPackagesNode?.Children?.Clear();
+            // TODO: Avalonia - TreeViewItem.Children doesn't exist, use Items instead
+            if (LocalPackagesNode != null)
+            {
+                (LocalPackagesNode as TreeViewItem)?.Items?.Clear();
+            }
         }
 
         /// <summary>
@@ -658,7 +664,6 @@ namespace UniGetUI.Interface
                 return;
 
             Avalonia.Threading.Dispatcher.UIThread.Post(
-                DispatcherQueuePriority.Low,
                 () =>
                 {
                     // TODO: Avalonia - ItemsControl.FindDescendant<T>() doesn't exist in Avalonia
@@ -681,12 +686,14 @@ namespace UniGetUI.Interface
                     //     }
                     // }
                     // containerToFocus.Focus(); // TODO: Avalonia - FocusState enum not available
-                });
+                }, Avalonia.Threading.DispatcherPriority.Background);
         }
 
         public void PackageList_CharacterReceived(object sender, Avalonia.Input.TextInputEventArgs e)
         {
-            char ch = Char.ToLower(e.Character);
+            // TODO: Avalonia - TextInputEventArgs.Character doesn't exist, use Text property
+            if (string.IsNullOrEmpty(e.Text)) return;
+            char ch = Char.ToLower(e.Text[0]);
 
             if (('a' <= ch && ch <= 'z')
                 || ('0' <= ch && ch <= '9'))
@@ -784,7 +791,8 @@ namespace UniGetUI.Interface
             foreach (Avalonia.AvaloniaObject item in Labels.Keys)
             {
                 string text = Labels[item].Trim();
-                ToolTipService.SetToolTip(item, text);
+                // TODO: Avalonia - ToolTipService is internal, skip for now
+                // ToolTipService.SetToolTip(item, text);
                 if (item is AppBarButton toolButton)
                 {
                     toolButton.IsCompact = Labels[toolButton][0] == ' ';
@@ -823,7 +831,8 @@ namespace UniGetUI.Interface
         /// </summary>
         public void FilterPackages(bool forceQueryUpdate = false)
         {
-            var previousSelection = CurrentPackageList.SelectedItem as PackageWrapper;
+            // TODO: Avalonia - ItemsControl doesn't have SelectedItem, cast to ListBox
+            var previousSelection = (CurrentPackageList as ListBox)?.SelectedItem as PackageWrapper;
 
             List<IManagerSource> visibleSources = [];
             List<IPackageManager> visibleManagers = [];

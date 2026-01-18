@@ -358,12 +358,14 @@ namespace UniGetUI.Interface.SoftwarePages
                 if (await package.HasUpdatesIgnoredAsync())
                 {
                     MenuIgnoreUpdates.Text = CoreTools.Translate("Do not ignore updates for this package anymore");
-                    MenuIgnoreUpdates.Icon = new TextBlock { Glyph = "\uE77A" };
+                    // TODO: Avalonia - TextBlock.Glyph doesn't exist, use Text instead
+                    MenuIgnoreUpdates.Icon = new TextBlock { Text = "\uE77A" };
                 }
                 else
                 {
                     MenuIgnoreUpdates.Text = CoreTools.Translate("Ignore updates for this package");
-                    MenuIgnoreUpdates.Icon = new TextBlock { Glyph = "\uE718" };
+                    // TODO: Avalonia - TextBlock.Glyph doesn't exist, use Text instead
+                    MenuIgnoreUpdates.Icon = new TextBlock { Text = "\uE718" };
                 }
                 MenuIgnoreUpdates.IsEnabled = true;
             }

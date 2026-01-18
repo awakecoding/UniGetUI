@@ -15,6 +15,8 @@ using UniGetUI.PackageEngine.PackageClasses;
 using UniGetUI.PackageEngine.PackageLoader;
 using UniGetUI.PackageEngine.Serializable;
 using UniGetUI.Pages.SettingsPages.GeneralPages;
+// TODO: Avalonia - Using project's ContentDialogResult enum
+using ContentDialogResult = UniGetUI.Interface.ContentDialogResult;
 
 namespace UniGetUI.Pages.DialogPages;
 
@@ -28,7 +30,8 @@ public static partial class DialogHelper
         var options = await InstallOptionsFactory.LoadForPackageAsync(package);
         var (dialogOptions, dialogResult) = await ShowInstallOptions(package, operation, options);
 
-        if (dialogResult is not ContentDialogResult.None)
+        // TODO: Avalonia - Convert bool? to ContentDialogResult check
+        if (dialogResult == true || dialogResult == false)
         {
             Logger.Debug($"Saving updated options for package {package.Id}");
             await InstallOptionsFactory.SaveForPackageAsync(dialogOptions, package);
@@ -38,7 +41,7 @@ public static partial class DialogHelper
             Logger.Debug($"Install options dialog for {package.Id} was canceled, no changes will be saved");
         }
 
-        return dialogResult is ContentDialogResult.Secondary;
+        return dialogResult == false; // Secondary button (false) means continue
     }
 
     /// <summary>
@@ -49,7 +52,8 @@ public static partial class DialogHelper
         var (options, dialogResult) =
             await ShowInstallOptions(importedPackage, OperationType.None, importedPackage.installation_options.Copy());
 
-        if (dialogResult != ContentDialogResult.None)
+        // TODO: Avalonia - dialogResult is bool?, not ContentDialogResult
+        if (dialogResult.HasValue)
         {
             importedPackage.installation_options = options;
             importedPackage.FirePackageVersionChangedEvent();
@@ -99,7 +103,8 @@ public static partial class DialogHelper
         // TODO: Avalonia - dialog.DefaultButton = ContentDialogButton.Secondary;
         dialog.Content = CoreTools.Translate("Do you really want to uninstall {0}?", package.Name);
 
-        return await ShowDialogAsync(dialog) is ContentDialogResult.Primary;
+        // TODO: Avalonia - ShowDialogAsync returns bool?, Primary button is true
+        return await ShowDialogAsync(dialog) == true;
     }
 
     public static async Task<bool> ConfirmUninstallation(IReadOnlyList<IPackage> packages)
@@ -137,11 +142,13 @@ public static partial class DialogHelper
 
         TextBlock PackageListTextBlock =
             new() { FontFamily = new FontFamily("Consolas"), Text = pkgList };
-        p.Children.Add(new ScrollView { Content = PackageListTextBlock, MaxHeight = 200 });
+        // TODO: Avalonia - Use ScrollViewer instead of ScrollView
+        p.Children.Add(new ScrollViewer { Content = PackageListTextBlock, MaxHeight = 200 });
 
         dialog.Content = p;
 
-        return await ShowDialogAsync(dialog) is ContentDialogResult.Primary;
+        // TODO: Avalonia - ShowDialogAsync returns bool?, Primary button is true
+        return await ShowDialogAsync(dialog) == true;
     }
 
     public static void ShowSharedPackage_ThreadSafe(string id, string combinedSourceName)
@@ -155,7 +162,8 @@ public static partial class DialogHelper
 
     public static void ShowSharedPackage_ThreadSafe(string id, string managerName, string sourceName)
     {
-        MainApp.Instance.MainWindow.Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        // TODO: Avalonia - Use Avalonia.Threading.Dispatcher.UIThread directly
+        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
         {
             _ = GetPackageFromIdAndManager(id, managerName, sourceName, "DEFAULT");
         });
@@ -297,7 +305,7 @@ public static partial class DialogHelper
         }
 
 #if WINDOWS
-        IntPtr hWnd = Window.GetWindowHandle();
+        IntPtr hWnd = MainApp.Instance.MainWindow.GetWindowHandle();
 
         NativeHelpers.IDataTransferManagerInterop interop =
             DataTransferManager.As<NativeHelpers.IDataTransferManagerInterop>();
@@ -323,15 +331,15 @@ public static partial class DialogHelper
         dataPackage.Data.Properties.PackageFamilyName = "WingetUI";
     };
 
-    interop.ShowShareUIForWindow(hWnd);
+        interop.ShowShareUIForWindow(hWnd);
 #else
-    // TODO: Implement cross-platform sharing for Avalonia
-    await DialogHelper.ShowErrorDialog(
-        CoreTools.Translate("Sharing not supported"),
-        CoreTools.Translate("Sharing is currently only supported on Windows")
-    );
+        // TODO: Avalonia - Implement cross-platform sharing
+        DialogHelper.ShowDismissableBalloon(
+            CoreTools.Translate("Sharing not supported"),
+            CoreTools.Translate("Sharing is currently only supported on Windows")
+        );
 #endif
-}
+    }
 
     /// <summary>
     /// Returns true if the user confirms to lose unsaved changes, and wants to proceed with the creation of a new bundle

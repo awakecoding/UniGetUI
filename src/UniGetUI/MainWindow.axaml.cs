@@ -222,7 +222,8 @@ namespace UniGetUI.Interface
             }
             catch (Exception ex)
             {
-                Logger.Error("Failed to load window geometry", ex);
+                // TODO: Avalonia - Logger.Error doesn't accept (string, Exception), use Exception overload
+                Logger.Error(ex);
             }
         }
 
@@ -238,7 +239,8 @@ namespace UniGetUI.Interface
             }
             catch (Exception ex)
             {
-                Logger.Error("Failed to save window geometry", ex);
+                // TODO: Avalonia - Logger.Error doesn't accept (string, Exception), use Exception overload
+                Logger.Error(ex);
             }
         }
 
@@ -247,6 +249,9 @@ namespace UniGetUI.Interface
             // System tray icon updates will be implemented here
             Logger.Debug("Updating system tray status");
         }
+
+        // TODO: Avalonia - Stub for WinGetWarningBanner property
+        public WinGetWarningBannerStub WinGetWarningBanner { get; } = new();
 
         public void SwitchToInterface()
         {
@@ -257,5 +262,14 @@ namespace UniGetUI.Interface
                 // For now, just update the content area
             });
         }
+    }
+
+    // TODO: Avalonia - Stub class for WinGetWarningBanner
+    public class WinGetWarningBannerStub
+    {
+        public bool IsOpen { get; set; }
+        public string Title { get; set; } = "";
+        public string Message { get; set; } = "";
+        public Button? ActionButton { get; set; }
     }
 }

@@ -135,8 +135,8 @@ namespace UniGetUI.Interface.Dialogs
             PlaceholderText.Text = CoreTools.Translate("{0} Install options are currently locked because {0} follows the default install options.", package.Name);
 
             KillProcessesLabel.Text = CoreTools.Translate("Select the processes that should be closed before this package is installed, updated or uninstalled.");
-            // TODO: Avalonia - TextBox.PlaceholderText changed to Watermark in Avalonia
-            KillProcessesBox.Watermark = CoreTools.Translate("Write here the process names here, separated by commas (,)");
+            // TODO: Avalonia - ListBox doesn't have Watermark property, that's for TextBox
+            // KillProcessesBox.Watermark = CoreTools.Translate("Write here the process names here, separated by commas (,)");
 
             packageInstallLocation = Package.Manager.DetailsHelper.GetInstallLocation(package) ?? CoreTools.Translate("Unset or unknown");
 
@@ -469,7 +469,8 @@ namespace UniGetUI.Interface.Dialogs
 
         private void LayoutGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(LayoutGrid.ActualSize.Y > 1 && LayoutGrid.ActualSize.Y < double.PositiveInfinity) MaxHeight = LayoutGrid.ActualSize.Y;
+            // TODO: Avalonia - ActualSize doesn't exist, use Bounds.Width/Height instead
+            if(LayoutGrid.Bounds.Height > 1 && LayoutGrid.Bounds.Height < double.PositiveInfinity) MaxHeight = LayoutGrid.Bounds.Height;
         }
 
         private void UnlockSettingsButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -493,34 +494,37 @@ namespace UniGetUI.Interface.Dialogs
 
         private void KillProcessesBox_TokenItemAdding(TextBox sender, object args)
         {
-            args.Item = _runningProcesses.FirstOrDefault((item) => item.Name.Contains(args.TokenText));
-            if(args.Item is null)
-            {
-                string text = args.TokenText;
-                if (!text.EndsWith(".exe")) text += ".exe";
-                args.Item = new IOP_Proc(text);
-            }
+            // TODO: Avalonia - TokenText and Item properties don't exist on object, comment out token handling
+            // args.Item = _runningProcesses.FirstOrDefault((item) => item.Name.Contains(args.TokenText));
+            // if(args.Item is null)
+            // {
+            //     string text = args.TokenText;
+            //     if (!text.EndsWith(".exe")) text += ".exe";
+            //     args.Item = new IOP_Proc(text);
+            // }
         }
 
         private void KillProcessesBox_TextChanged(AutoCompleteBox sender, Avalonia.Interactivity.RoutedEventArgs args) => _ = _killProcessesBox_TextChanged();
         private async Task _killProcessesBox_TextChanged()
         {
-            var text = KillProcessesBox.Text;
-            await Task.Delay(100);
-            if (text != KillProcessesBox.Text)
-                return;
+            // TODO: Avalonia - ListBox.Text property doesn't exist, comment out text handling
+            // var text = KillProcessesBox.Text;
+            // await Task.Delay(100);
+            // if (text != KillProcessesBox.Text)
+            //     return;
 
-            SuggestedProcesses.Clear();
-            if (text.Trim() != "")
-            {
-                if (!text.EndsWith(".exe"))
-                    text = text.Trim() + ".exe";
-                SuggestedProcesses.Add(new(text));
-                foreach (var item in _runningProcesses.Where(x => x.Name.Contains(KillProcessesBox.Text)))
-                {
-                    SuggestedProcesses.Add(item);
-                }
-            }
+            // SuggestedProcesses.Clear();
+            // if (text.Trim() != "")
+            // {
+            //     if (!text.EndsWith(".exe"))
+            //         text = text.Trim() + ".exe";
+            //     SuggestedProcesses.Add(new(text));
+            //     foreach (var item in _runningProcesses.Where(x => x.Name.Contains(KillProcessesBox.Text)))
+            //     {
+            //         SuggestedProcesses.Add(item);
+            //     }
+            // }
+            await Task.CompletedTask;
         }
 
         private void SettingsTabBar_SelectionChanged(object sender, SelectionChangedEventArgs e)

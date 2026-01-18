@@ -157,7 +157,8 @@ namespace UniGetUI.Interface.Dialogs
             MainActionButton.Padding = new Thickness(0);
             var textBlock = new TextBlock()
             {
-                TextWrapping = Avalonia.Media.TextWrapping.WrapWholeWords,
+                // TODO: Avalonia - TextWrapping.WrapWholeWords doesn't exist, use Wrap
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
                 Padding = new Thickness(0),
                 TextAlignment = TextAlignment.Center
             };
@@ -360,14 +361,16 @@ namespace UniGetUI.Interface.Dialogs
 
             // Basic details section
             SetTextToItem(DescriptionContent, details.Description);
-            SetTextToItem(HomepageUrl_Content, details.HomepageUrl);
+            // TODO: Avalonia - Convert Uri to string for TextBlock
+            SetTextToItem(HomepageUrl_Content, details.HomepageUrl?.ToString());
             SetTextToItem(Author_Content, details.Author);
             SetTextToItem(Publisher_Content, details.Publisher);
 
             if (details.License is not null && details.LicenseUrl is not null)
             {
                 SetTextToItem(License_Content_Text, details.License);
-                SetTextToItem(License_Content_Uri, details.LicenseUrl, "(", ")");
+                // TODO: Avalonia - Convert Uri to string with prefix/suffix
+                SetTextToItem(License_Content_Uri, $"({details.LicenseUrl})");
             }
             else if (details.License is not null && details.LicenseUrl is null)
             {
@@ -377,16 +380,19 @@ namespace UniGetUI.Interface.Dialogs
             else if (details.License is null && details.LicenseUrl is not null)
             {
                 SetTextToItem(License_Content_Text, "");
-                SetTextToItem(License_Content_Uri, details.LicenseUrl);
+                // TODO: Avalonia - Convert Uri to string
+                SetTextToItem(License_Content_Uri, details.LicenseUrl?.ToString());
             }
             else
             {
                 SetTextToItem(License_Content_Text, null);
-                SetTextToItem(License_Content_Uri, details.LicenseUrl);
+                // TODO: Avalonia - Convert Uri to string
+                SetTextToItem(License_Content_Uri, details.LicenseUrl?.ToString());
             }
 
             // Extended details section
-            SetTextToItem(ManifestUrl_Content, details.ManifestUrl);
+            // TODO: Avalonia - Convert Uri to string for TextBlock
+            SetTextToItem(ManifestUrl_Content, details.ManifestUrl?.ToString());
             if (Package.Manager == PEInterface.Chocolatey)
             {
                 SetTextToItem(InstallerHash_Label, CoreTools.Translate("Installer SHA512") + ": ");
@@ -407,11 +413,13 @@ namespace UniGetUI.Interface.Dialogs
                 SetTextToItem(InstallerSize_Content, "");
                 SetTextToItem(DownloadInstaller_Button, CoreTools.Translate("Installer not available"));
             }
-            SetTextToItem(InstallerUrl_Content, details.InstallerUrl);
+            // TODO: Avalonia - Convert Uri to string for TextBlock
+            SetTextToItem(InstallerUrl_Content, details.InstallerUrl?.ToString());
             SetTextToItem(InstallerType_Content, details.InstallerType);
             SetTextToItem(UpdateDate_Content, details.UpdateDate);
             SetTextToItem(ReleaseNotes_Content, details.ReleaseNotes);
-            SetTextToItem(ReleaseNotesUrl_Content, details.ReleaseNotesUrl);
+            // TODO: Avalonia - Convert Uri to string for TextBlock
+            SetTextToItem(ReleaseNotesUrl_Content, details.ReleaseNotesUrl?.ToString());
 
             if (!details.Package.Manager.Capabilities.CanListDependencies)
             {
@@ -419,8 +427,8 @@ namespace UniGetUI.Interface.Dialogs
                 DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                 {
                     Text = CoreTools.Translate("Not available"),
-                    // TODO: Avalonia - Run.Foreground not supported
-                    //Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
+                    // TODO: Avalonia - Run.Foreground not supported, comment out
+                    // Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
                 });
             }
             else if (details.Dependencies.Any())
@@ -443,12 +451,14 @@ namespace UniGetUI.Interface.Dialogs
                     DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                     {
                         Text = line,
-                        // TODO: Avalonia - Run.FontStyle not supported
-                        //FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
+                        // TODO: Avalonia - Run.FontStyle not supported, comment out
+                        // FontStyle = dep.Mandatory? FontStyle.Normal : FontStyle.Italic,
                     });
-                    DependenciesParagraph.Inlines.Add(new LineBreak());
+                    // TODO: Avalonia - LineBreak to Inline conversion handled by implicit operators
+                    DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.LineBreak());
                 }
-                if(DependenciesParagraph.Inlines.Any() && DependenciesParagraph.Inlines.Last() is LineBreak)
+                // TODO: Avalonia - Check for LineBreak type properly
+                if(DependenciesParagraph.Inlines.Any() && DependenciesParagraph.Inlines.Last() is Avalonia.Controls.Documents.LineBreak)
                     DependenciesParagraph.Inlines.RemoveAt(DependenciesParagraph.Inlines.Count-1);
             }
             else
@@ -457,7 +467,8 @@ namespace UniGetUI.Interface.Dialogs
                 DependenciesParagraph.Inlines.Add(new Avalonia.Controls.Documents.Run()
                 {
                     Text = "\t" + CoreTools.Translate("No dependencies specified"),
-                    Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
+                    // TODO: Avalonia - Run.Foreground not supported, comment out
+                    // Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127)),
                 });
             }
 
@@ -479,13 +490,15 @@ namespace UniGetUI.Interface.Dialogs
             if (s is null)
             {
                 r.Text = CoreTools.Translate("Not available");
-                r.Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127));
+                // TODO: Avalonia - Run.Foreground not supported, comment out
+                // r.Foreground = new SolidColorBrush(color: Color.FromArgb(255, 127, 127, 127));
             }
             else
             {
                 r.Text = s;
+                // TODO: Avalonia - Run.Foreground not supported, comment out
                 // r.ClearValue(TextElement.ForegroundProperty); // TextElement not available in Avalonia
-                r.Foreground = Brushes.Black; // TODO: Use theme-appropriate color
+                // r.Foreground = Brushes.Black; // TODO: Use theme-appropriate color
             }
         }
 
