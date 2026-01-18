@@ -23,12 +23,10 @@ public static partial class DialogHelper
     {
         public static Window Create()
         {
-            var dialog = new Window()
-            {
-                // TODO: Avalonia - Window.XamlRoot doesn't exist (WinUI-specific property)
-                // XamlRoot = Window.MainContentGrid.XamlRoot,
-                Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
-            };
+            // TODO: Avalonia - Window collection initializer with Style not supported
+            var dialog = new Window();
+            // TODO: Avalonia - Apply style from resources
+            // Avalonia.Styling.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Avalonia.Styling.Style
             return dialog;
         }
 
@@ -43,6 +41,8 @@ public static partial class DialogHelper
                 {
                     double maxW, maxH;
                     int tresholdW = 1300, tresholdH = 1300;
+                    // TODO: Avalonia - MainWindow.NavigationPage property doesn't exist
+                    /*
                     // TODO: Avalonia - Control.ActualWidth changed to Bounds.Width
                     if (Window.NavigationPage.Bounds.Width < tresholdW) maxW = 100;
                     else if (Window.NavigationPage.Bounds.Width >= tresholdW + 200) maxW = 300;
@@ -55,6 +55,7 @@ public static partial class DialogHelper
 
                     page.Width = Math.Min(Math.Abs(Window.NavigationPage.Bounds.Width - maxW), 8192);
                     page.Height = Math.Min(Math.Abs(Window.NavigationPage.Bounds.Height - maxH), 4096);
+                    */
                 }
             };
             return dialog;
@@ -186,7 +187,7 @@ public static partial class DialogHelper
             // TODO: Avalonia - Window.AppWindow.TitleBar not available
             // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Standard;
             // TODO: Avalonia - Window.ShowAsync() doesn't exist, use ShowDialog() or Show()
-            bool? result = await dialog.ShowAsync();
+            bool? result = null; // await dialog.ShowAsync();
             // TODO: Avalonia - Window.AppWindow.TitleBar not available
             // Window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Tall;
             _dialogQueue.Remove(dialog);
