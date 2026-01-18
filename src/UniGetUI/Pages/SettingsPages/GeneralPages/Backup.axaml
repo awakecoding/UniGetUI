@@ -169,7 +169,7 @@
                 ButtonText="Backup"
                 Click="DoBackup_LOCAL_Click"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL._checkbox.IsOn}"
+                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL.CheckBox.IsChecked}"
                 Text="Perform a local backup now" />
 
             <UserControl Height="16" />
@@ -180,7 +180,7 @@
                 ButtonText="Select"
                 Click="ChangeBackupDirectory_Click"
                 CornerRadius="8"
-                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL._checkbox.IsOn}"
+                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL.CheckBox.IsChecked}"
                 Text="Change backup output directory">
                 <Toolkit:SettingsCard.Description>
                     <StackPanel Orientation="Horizontal" Spacing="5">
@@ -199,7 +199,7 @@
             <widgets:TextboxCard
                 x:Name="ChangeBackupFileNameTextBox"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL._checkbox.IsOn}"
+                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL.CheckBox.IsChecked}"
                 Placeholder="Leave empty for default"
                 SettingName="ChangeBackupFileName"
                 Text="Set a custom backup file name" />
@@ -208,7 +208,7 @@
                 x:Name="EnableBackupTimestampingCheckBox"
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL._checkbox.IsOn}"
+                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL.CheckBox.IsChecked}"
                 SettingName="EnableBackupTimestamping"
                 Text="Add a timestamp to the backup file names" />
         </StackPanel>

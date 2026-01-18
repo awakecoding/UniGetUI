@@ -46,7 +46,7 @@
             <widgets:CheckboxCard
                 x:Name="DisableUpdatesNotifications"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{Binding #DisableNotifications._checkbox.IsOn}"
+                IsEnabled="{Binding #DisableNotifications.CheckBox.IsChecked}"
                 SettingName="DisableUpdatesNotifications"
                 Text="Show a notification when there are available updates" />
 
@@ -54,21 +54,21 @@
                 x:Name="DisableProgressNotifications"
                 BorderThickness="1,0"
                 CornerRadius="0"
-                IsEnabled="{Binding #DisableNotifications._checkbox.IsOn}"
+                IsEnabled="{Binding #DisableNotifications.CheckBox.IsChecked}"
                 SettingName="DisableProgressNotifications"
                 Text="Show a silent notification when an operation is running" />
 
             <widgets:CheckboxCard
                 x:Name="DisableErrorNotifications"
                 CornerRadius="0"
-                IsEnabled="{Binding #DisableNotifications._checkbox.IsOn}"
+                IsEnabled="{Binding #DisableNotifications.CheckBox.IsChecked}"
                 SettingName="DisableUpdatesNotifications"
                 Text="Show a notification when an operation fails" />
             <widgets:CheckboxCard
                 x:Name="DisableSuccessNotifications"
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{Binding #DisableNotifications._checkbox.IsOn}"
+                IsEnabled="{Binding #DisableNotifications.CheckBox.IsChecked}"
                 SettingName="DisableSuccessNotifications"
                 Text="Show a notification when an operation finishes successfully" />
         </StackPanel>

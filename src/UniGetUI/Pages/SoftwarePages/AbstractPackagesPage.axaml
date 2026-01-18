@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="PackageTemplate_List">
+        <DataTemplate x:Key="PackageTemplate_List" x:DataType="pkgClasses:PackageWrapper">
             <widgets:PackageItemContainer
                 CornerRadius="4"
                 DoubleTapped="{Binding PackageItemContainer_DoubleTapped}"
@@ -182,7 +182,7 @@
             </widgets:PackageItemContainer>
         </DataTemplate>
 
-        <DataTemplate x:Key="PackageTemplate_Grid">
+        <DataTemplate x:Key="PackageTemplate_Grid" x:DataType="pkgClasses:PackageWrapper">
             <widgets:PackageItemContainer
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 CornerRadius="4"
@@ -297,7 +297,7 @@
             </widgets:PackageItemContainer>
         </DataTemplate>
 
-        <DataTemplate x:Key="PackageTemplate_Icons">
+        <DataTemplate x:Key="PackageTemplate_Icons" x:DataType="pkgClasses:PackageWrapper">
             <widgets:PackageItemContainer
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 CornerRadius="4"

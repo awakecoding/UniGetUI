@@ -44,7 +44,7 @@
             <widgets:TextboxCard
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{Binding #EnableProxy._checkbox.IsOn}"
+                IsEnabled="{Binding #EnableProxy.CheckBox.IsChecked}"
                 Placeholder="Enter proxy URL here"
                 SettingName="ProxyURL"
                 Text="Proxy URL"
@@ -55,7 +55,7 @@
             <widgets:CheckboxCard
                 x:Name="EnableProxyAuth"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{Binding #EnableProxy._checkbox.IsOn}"
+                IsEnabled="{Binding #EnableProxy.CheckBox.IsChecked}"
                 SettingName="EnableProxyAuth"
                 StateChanged="EnableProxy_OnStateChanged"
                 Text="Authenticate to the proxy with an user and a password">
@@ -68,7 +68,7 @@
             <controls:SettingsCard
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{Binding #EnableProxyAuth._checkbox.IsOn}">
+                IsEnabled="{Binding #EnableProxyAuth.CheckBox.IsChecked}">
                 <controls:SettingsCard.Header>
                     <widgets:TranslatedTextBlock Text="Credentials" />
                 </controls:SettingsCard.Header>

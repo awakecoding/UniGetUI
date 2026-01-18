@@ -34,7 +34,7 @@
                 x:Name="UpdatesCheckIntervalSelector"
                 BorderThickness="1,0"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{x:Bind DisableAutoCheckForUpdates._checkbox.IsOn, Mode=OneWay}"
+                IsEnabled="{x:Bind DisableAutoCheckForUpdates.CheckBox.IsChecked, Mode=OneWay}"
                 SettingName="UpdatesCheckInterval"
                 Text="Check for updates every:"
                 ValueChanged="ShowRestartBanner" />
@@ -47,7 +47,7 @@
             <widgets:CheckboxCard
                 x:Name="AutomaticallyUpdatePackages"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{Binding #DisableAutoCheckForUpdates._checkbox.IsOn}"
+                IsEnabled="{Binding #DisableAutoCheckForUpdates.CheckBox.IsChecked}"
                 SettingName="AutomaticallyUpdatePackages"
                 Text="Install available updates automatically" />
 
@@ -55,7 +55,7 @@
                 BorderThickness="1,0"
                 CornerRadius="0"
                 ForceInversion="True"
-                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages.CheckBox.IsChecked}"
                 SettingName="DisableAUPOnMeteredConnections"
                 Text="Do not automatically install updates when the network connection is metered" />
 
@@ -63,14 +63,14 @@
                 BorderThickness="1,1,1,0"
                 CornerRadius="0"
                 ForceInversion="True"
-                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages.CheckBox.IsChecked}"
                 SettingName="DisableAUPOnBattery"
                 Text="Do not automatically install updates when the device runs on battery" />
 
             <widgets:CheckboxCard
                 CornerRadius="0,0,8,8"
                 ForceInversion="True"
-                IsEnabled="{Binding #AutomaticallyUpdatePackages._checkbox.IsOn}"
+                IsEnabled="{Binding #AutomaticallyUpdatePackages.CheckBox.IsChecked}"
                 SettingName="DisableAUPOnBatterySaver"
                 Text="Do not automatically install updates when the battery saver is on" />
 

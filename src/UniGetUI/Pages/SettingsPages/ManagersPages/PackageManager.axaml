@@ -170,7 +170,7 @@
             <UserControl
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                IsEnabled="{Binding #EnableManager._checkbox.IsOn}">
+                IsEnabled="{Binding #EnableManager.CheckBox.IsChecked}">
                 <StackPanel
                     Name="ExtraControls"
                     HorizontalAlignment="Stretch"

@@ -20,6 +20,9 @@ namespace UniGetUI.Interface.Widgets
         public TextBlock _warningBlock;
         protected bool IS_INVERTED;
 
+        // Property to expose _checkbox for XAML binding
+        public ToggleSwitch CheckBox => _checkbox;
+
         private Settings.K setting_name = Settings.K.Unset;
         public Settings.K SettingName
         {
