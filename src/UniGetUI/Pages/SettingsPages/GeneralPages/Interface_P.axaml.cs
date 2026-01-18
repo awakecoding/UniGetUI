@@ -58,7 +58,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         public void ShowRestartBanner(object sender, EventArgs e)
             => RestartRequired?.Invoke(this, e);
 
-        private void ResetIconCache_OnClick(object sender, EventArgs e)
+        private void ResetIconCache_OnClick(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
         private void ThemeSelector_ValueChanged(object sender, EventArgs e)
             => MainApp.Instance.MainWindow.ApplyTheme();
 
-        private void EditAutostartSettings_Click(object sender, EventArgs e)
+        private void EditAutostartSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             => CoreTools.Launch("ms-settings:startupapps");
     }
 }

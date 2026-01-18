@@ -173,15 +173,12 @@
                 ButtonText="Select"
                 Click="ChangeBackupDirectory_Click"
                 CornerRadius="8"
-                IsEnabled="{Binding #EnablePackageBackupCheckBox_LOCAL.CheckBox.IsChecked}"
                 Text="Change backup output directory">
-                <Toolkit:SettingsCard.Description>
-                    <StackPanel Orientation="Horizontal" Spacing="5">
-                        <TextBlock Name="BackupDirectoryLabel" VerticalAlignment="Center" />
-                        <HyperlinkButton Name="ResetBackupDirectory" Click="ResetBackupPath_Click" />
-                        <HyperlinkButton Name="OpenBackupDirectory" Click="OpenBackupPath_Click" />
-                    </StackPanel>
-                </Toolkit:SettingsCard.Description>
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <TextBlock Name="BackupDirectoryLabel" VerticalAlignment="Center" />
+                    <HyperlinkButton Name="ResetBackupDirectory" Click="ResetBackupPath_Click" />
+                    <HyperlinkButton Name="OpenBackupDirectory" Click="OpenBackupPath_Click" />
+                </StackPanel>
             </widgets:ButtonCard>
 
             <widgets:TranslatedTextBlock

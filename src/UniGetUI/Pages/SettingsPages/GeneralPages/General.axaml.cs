@@ -58,12 +58,12 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             // _ = AutoUpdater.CheckAndInstallUpdates(mainWindow, mainWindow.UpdatesBanner, true, false, true);
         }
 
-        private void ManageTelemetrySettings_Click(object sender, EventArgs e)
+        private void ManageTelemetrySettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
             // TODO: Avalonia - DialogHelper.ShowTelemetryDialog doesn't exist
             // => _ = DialogHelper.ShowTelemetryDialog();
             => _ = Task.CompletedTask;
 
-        private void ImportSettings_Click(object sender, EventArgs e) => _ = _importSettings();
+        private void ImportSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _importSettings();
         private async Task _importSettings()
         {
             // TODO: Avalonia - MainWindow.GetWindowHandle is Windows-specific
@@ -80,7 +80,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void ExportSettings_Click(object sender, EventArgs e) => _ = _exportSettings();
+        private void ExportSettings_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e) => _ = _exportSettings();
         private static async Task _exportSettings()
         {
             try
@@ -106,7 +106,7 @@ namespace UniGetUI.Pages.SettingsPages.GeneralPages
             }
         }
 
-        private void ResetWingetUI(object sender, EventArgs e)
+        private void ResetWingetUI(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             try
             {

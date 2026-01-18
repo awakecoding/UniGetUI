@@ -4,7 +4,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
-    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:converters="using:UniGetUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:UniGetUI.Pages.SettingsPages.GeneralPages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -35,10 +35,8 @@
                 CornerRadius="8,8,0,0"
                 SettingName="EnableProxy"
                 StateChanged="EnableProxy_OnStateChanged"
-                Text="Connect the internet using a custom proxy">
-                <widgets:CheckboxCard.Description>
-                    <widgets:TranslatedTextBlock Text="Please note that not all package managers may fully support this feature" />
-                </widgets:CheckboxCard.Description>
+                Text="Connect the internet using a custom proxy"
+                WarningText="Please note that not all package managers may fully support this feature">
             </widgets:CheckboxCard>
 
             <widgets:TextboxCard
@@ -58,23 +56,17 @@
                 IsEnabled="{Binding #EnableProxy.CheckBox.IsChecked}"
                 SettingName="EnableProxyAuth"
                 StateChanged="EnableProxy_OnStateChanged"
-                Text="Authenticate to the proxy with an user and a password">
-                <widgets:CheckboxCard.Description>
-                    <widgets:TranslatedTextBlock Text="Please note that not all package managers may fully support this feature" />
-                </widgets:CheckboxCard.Description>
+                Text="Authenticate to the proxy with an user and a password"
+                WarningText="Please note that not all package managers may fully support this feature">
             </widgets:CheckboxCard>
 
 
             <controls:SettingsCard
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
+                Header="Credentials"
+                Description="It is not guaranteed that the provided credentials will be stored safely, so you may as well not use the credentials of your bank account"
                 IsEnabled="{Binding #EnableProxyAuth.CheckBox.IsChecked}">
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock Text="Credentials" />
-                </controls:SettingsCard.Header>
-                <controls:SettingsCard.Description>
-                    <widgets:TranslatedTextBlock Text="It is not guaranteed that the provided credentials will be stored safely, so you may as well not use the credentials of your bank account" />
-                </controls:SettingsCard.Description>
                 <controls:SettingsCard.Content>
                     <StackPanel Orientation="Vertical" Spacing="0">
                         <ProgressBar
@@ -100,12 +92,8 @@
 
             <UserControl Height="16" />
 
-            <controls:SettingsCard x:Name="ProxyCompatTable" CornerRadius="8">
-                <controls:SettingsCard.Header>
-                    <widgets:TranslatedTextBlock Text="Proxy compatibility table" />
-                </controls:SettingsCard.Header>
-                <controls:SettingsCard.Description>
-                    <Grid Margin="0,16,0,0">
+            <controls:SettingsCard x:Name="ProxyCompatTable" CornerRadius="8" Header="Proxy compatibility table">
+                <Grid Margin="0,16,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -153,7 +141,6 @@
                             Orientation="Vertical"
                             Spacing="6" />
                     </Grid>
-                </controls:SettingsCard.Description>
             </controls:SettingsCard>
 
 

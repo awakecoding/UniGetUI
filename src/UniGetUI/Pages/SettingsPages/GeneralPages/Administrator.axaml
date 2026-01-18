@@ -101,7 +101,6 @@
             <widgets:SecureCheckboxCard
                 x:Name="AllowImportingCLIArguments"
                 CornerRadius="8,8,0,0"
-                IsEnabled="{ReflectionBinding #AllowCLIArguments.CheckBox.IsChecked}"
                 SettingName="AllowImportingCLIArguments"
                 Text="Allow importing custom command-line arguments when importing packages from a bundle"
                 WarningText="Malformed command-line arguments can break packages, or even allow a malicious actor to gain privileged execution. Therefore, importing custom command-line arguments is disabled by default" />
@@ -110,7 +109,6 @@
                 x:Name="AllowImportingPrePostInstallCommands"
                 BorderThickness="1,0,1,1"
                 CornerRadius="0,0,8,8"
-                IsEnabled="{ReflectionBinding #AllowPrePostInstallCommands.CheckBox.IsChecked}"
                 SettingName="AllowImportPrePostOpCommands"
                 Text="Allow importing custom pre-install and post-install commands when importing packages from a bundle"
                 WarningText="Pre and post install commands can do very nasty things to your device, if designed to do so. It can be very dangerous to import the commands from a bundle, unless you trust the source of that package bundle" />
